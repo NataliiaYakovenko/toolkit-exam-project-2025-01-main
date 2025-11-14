@@ -5,7 +5,6 @@
   "type": "module",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
-    "@vitejs/plugin-react": "^4.3.1",
     "axios": "^1.2.0",
     "browserslist-to-esbuild": "^2.1.1",
     "card-validator": "^8.1.1",
@@ -22,6 +21,7 @@
     "react-confirm-alert": "^3.0.6",
     "react-credit-cards-2": "^1.0.1",
     "react-dom": "^18.2.0",
+    "react-scripts":"5.0.1",
     "react-flickity-component": "^4.0.7",
     "react-icons": "^4.7.1",
     "react-input-mask": "^2.0.4",
@@ -33,14 +33,11 @@
     "redux": "^4.2.0",
     "require-context": "^1.1.0",
     "socket.io-client": "^4.5.4",
-    "vite": "^5.3.1",
-    "vite-tsconfig-paths": "^4.3.2",
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "vite",
-    "build": "vite dev",
-    "preview": "vite preview",
+    "start": "react-scripts-start",
+    "build": "react-scripts-build",
     "storybook": "start-storybook",
     "build-storybook": "build-storybook -s public"
   },
