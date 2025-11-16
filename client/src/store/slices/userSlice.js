@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as restController from '../../api/rest/restController';
 import { controller } from '../../api/ws/socketController';
-import { rejectedReducer } from '../../utils/store';
+import { rejectedReducer } from '../store';
 import { changeEditModeOnUserProfile } from './userProfileSlice';
 
 const USER_SLICE_NAME = 'user';
@@ -48,17 +48,17 @@ export const updateUser = createAsyncThunk(
 );
 
 const reducers = {
-  clearUserStore: state => {
+  clearUserStore: (state) => {
     state.error = null;
     state.data = null;
   },
-  clearUserError: state => {
+  clearUserError: (state) => {
     state.error = null;
   },
 };
 
-const extraReducers = builder => {
-  builder.addCase(getUser.pending, state => {
+const extraReducers = (builder) => {
+  builder.addCase(getUser.pending, (state) => {
     state.isFetching = true;
     state.error = null;
     state.data = null;

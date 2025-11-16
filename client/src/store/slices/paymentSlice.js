@@ -8,7 +8,7 @@ import {
   decorateAsyncThunk,
   pendingReducer,
   rejectedReducer,
-} from '../../utils/store';
+} from '../store';
 
 const PAYMENT_SLICE_NAME = 'payment';
 

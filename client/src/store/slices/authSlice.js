@@ -6,7 +6,7 @@ import {
   pendingReducer,
   fulfilledReducer,
   rejectedReducer,
-} from '../../utils/store';
+} from '../store';
 
 const AUTH_SLICE_NAME = 'auth';
 

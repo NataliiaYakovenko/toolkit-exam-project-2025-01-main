@@ -6,7 +6,7 @@ import {
   pendingReducer,
   fulfilledReducer,
   rejectedReducer,
-} from '../../utils/store';
+} from '../store';
 
 const CONTEST_UPDATION_SLICE_NAME = 'contestUpdation';
 
