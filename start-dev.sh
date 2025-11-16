@@ -13,7 +13,7 @@ echo ""
 
 # Run Sequalize's migrations.
 echo "-----> Running application migrations"
-docker exec -it exam-project-server-dev-1 sequelize db:migrate
+docker exec -it toolkit-exam-project-2025-01-main-server-dev-1 npx sequelize db:migrate
 echo ""
 
 # Run Sequalize's seeds.
