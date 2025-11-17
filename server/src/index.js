@@ -1,4 +1,5 @@
 const http = require('http');
+const path = require('path');
 // ============================
 require('dotenv').config();
 const express = require('express');
@@ -8,13 +9,14 @@ const router = require('./router/index');
 const controller = require('./socketInit');
 const handlerError = require('./handlerError/handler');
 const multerHandler = require('./handlerError/multerHandler');
+const { FILES_PATH } = require('./constants');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/public', express.static('public'));
+app.use('/public', express.static(path.join(FILES_PATH)));
 app.use(router);
 app.use(multerHandler);
 app.use(handlerError);
