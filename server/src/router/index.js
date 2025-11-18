@@ -58,9 +58,10 @@ router.post(
   contestController.getContests,
 );
 
-router.post(
+router.get(
   '/getUser',
   checkToken.checkAuth,
+  userController.getUserByPk,
 );
 
 router.get(
