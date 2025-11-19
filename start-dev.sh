@@ -18,7 +18,7 @@ echo ""
 
 # Run Sequalize's seeds.
 echo "-----> Running application seeds"
-docker exec -it exam-project-server-dev-1 sequelize db:seed:all
+docker exec -it toolkit-exam-project-2025-01-main-server-dev-1 npx sequelize db:seed:all
 echo "<----- Seeds created"
 
 ended_at=$(date +"%s")
