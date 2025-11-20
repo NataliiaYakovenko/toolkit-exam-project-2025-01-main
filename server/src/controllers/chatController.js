@@ -1,27 +1,30 @@
 const Conversation = require('../models/mongoModels/conversation');
 const Message = require('../models/mongoModels/Message');
 const Catalog = require('../models/mongoModels/Catalog');
-const moment = require('moment');
 const db = require('../models');
 const userQueries = require('./queries/userQueries');
 const controller = require('../socketInit');
-const _ = require('lodash');
+
 
 module.exports.addMessage = async (req, res, next) => {
-  const participants = [req.tokenData.userId, req.body.recipient];
-  participants.sort(
-    (participant1, participant2) => participant1 - participant2);
   try {
-    const newConversation = await Conversation.findOneAndUpdate({
-      participants,
-    },
-    { participants, blackList: [false, false], favoriteList: [false, false] },
-    {
-      upsert: true,
-      new: true,
-      setDefaultsOnInsert: true,
-      useFindAndModify: false,
-    });
+    const participants = [req.tokenData.userId, req.body.recipient];
+    participants.sort(
+      (participant1, participant2) => participant1 - participant2);
+    if(!req.body.recipient || !req.body.messageBody){
+      return res.status(400).send('Bad request');
+    }
+    if(req.body.recipient === req.tokenData.userId){
+      return res.status(400).send('Cannot send message to yourself');
+    }
+    const newConversation = await Conversation.findOneAndUpdate({ participants },
+      { participants, blackList: [false, false], favoriteList: [false, false] },
+      {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true,
+        useFindAndModify: false,
+      });
     const message = new Message({
       sender: req.tokenData.userId,
       body: req.body.messageBody,
@@ -60,7 +63,7 @@ module.exports.addMessage = async (req, res, next) => {
         },
       },
     });
-    res.send({
+    return res.status(200).send({
       message,
       preview: Object.assign(preview, { interlocutor: req.body.interlocutor }),
     });
@@ -70,10 +73,18 @@ module.exports.addMessage = async (req, res, next) => {
 };
 
 module.exports.getChat = async (req, res, next) => {
-  const participants = [req.tokenData.userId, req.body.interlocutorId];
-  participants.sort(
-    (participant1, participant2) => participant1 - participant2);
   try {
+    if(!req.body.interlocutorId){
+      return res.status(400).send('Interlocutor is not indicated');
+    }
+
+    if(req.body.interlocutorId === req.tokenData.userId){
+      return res.status(400).send('Cannot get chat with yourself');
+    }
+
+    const participants = [req.tokenData.userId, req.body.interlocutorId];
+    participants.sort(
+      (participant1, participant2) => participant1 - participant2);
     const messages = await Message.aggregate([
       {
         $lookup: {
@@ -99,7 +110,7 @@ module.exports.getChat = async (req, res, next) => {
 
     const interlocutor = await userQueries.findUser(
       { id: req.body.interlocutorId });
-    res.send({
+    return res.status(200).send({
       messages,
       interlocutor: {
         firstName: interlocutor.firstName,
@@ -116,6 +127,9 @@ module.exports.getChat = async (req, res, next) => {
 
 module.exports.getPreview = async (req, res, next) => {
   try {
+    if(!req.tokenData || !req.tokenData.userId){
+      return res.status(401).send('User authentication required');
+    }
     const conversations = await Message.aggregate([
       {
         $lookup: {
@@ -174,51 +188,74 @@ module.exports.getPreview = async (req, res, next) => {
         }
       });
     });
-    res.send(conversations);
+    return res.status(200).send(conversations);
   } catch (err) {
     next(err);
   }
 };
 
 module.exports.blackList = async (req, res, next) => {
-  const predicate = 'blackList.' +
-    req.body.participants.indexOf(req.tokenData.userId);
   try {
+    if(!req.body.participants || !Array.isArray(req.body.participants)){
+      return res.status(400).send('Participants are required');
+    }
+    if(req.body.participants.length !== 2){
+      return res.status(400).send('Participants must be 2');
+    }
+    if(typeof req.body.blackListFlag !== 'boolean'){
+      return res.status(400).send('BlackListFlag boolean is required');
+    }
+    const predicate = 'blackList.' +
+    req.body.participants.indexOf(req.tokenData.userId);
     const chat = await Conversation.findOneAndUpdate(
       { participants: req.body.participants },
       { $set: { [ predicate ]: req.body.blackListFlag } }, { new: true });
-    res.send(chat);
     const interlocutorId = req.body.participants.filter(
       (participant) => participant !== req.tokenData.userId)[ 0 ];
     controller.getChatController().emitChangeBlockStatus(interlocutorId, chat);
+    return res.status(200).send(chat);
   } catch (err) {
-    res.send(err);
+    next(err);
   }
 };
 
 module.exports.favoriteChat = async (req, res, next) => {
-  const predicate = 'favoriteList.' +
-    req.body.participants.indexOf(req.tokenData.userId);
   try {
+    if(!req.body.participants || !Array.isArray(req.body.participants)){
+      return res.status(400).send('Participants are required');
+    }
+    if(req.body.participants.length !== 2){
+      return res.status(400).send('Participants must be 2');
+    }
+    if(typeof req.body.favoriteFlag !== 'boolean'){
+      return res.status(400).send('FavoriteFlag boolean is required');
+    }
+    const predicate = 'favoriteList.' +
+    req.body.participants.indexOf(req.tokenData.userId);
     const chat = await Conversation.findOneAndUpdate(
       { participants: req.body.participants },
       { $set: { [ predicate ]: req.body.favoriteFlag } }, { new: true });
-    res.send(chat);
+    return res.status(200).send(chat);
   } catch (err) {
-    res.send(err);
+    next(err);
   }
 };
 
 module.exports.createCatalog = async (req, res, next) => {
-  console.log(req.body);
-  const catalog = new Catalog({
-    userId: req.tokenData.userId,
-    catalogName: req.body.catalogName,
-    chats: [req.body.chatId],
-  });
   try {
+    if(!req.body.catalogName){
+      return res.status(400).send('Catalog name is required');
+    }
+    if(!req.body.chatId){
+      return res.status(400).send('Chat ID is required');
+    }
+    const catalog = new Catalog({
+      userId: req.tokenData.userId,
+      catalogName: req.body.catalogName,
+      chats: [req.body.chatId],
+    });
     await catalog.save();
-    res.send(catalog);
+    return res.status(201).send(catalog);
   } catch (err) {
     next(err);
   }
@@ -226,11 +263,17 @@ module.exports.createCatalog = async (req, res, next) => {
 
 module.exports.updateNameCatalog = async (req, res, next) => {
   try {
+    if(!req.body.catalogId){
+      return res.status(400).send('Catalog ID is required');
+    }
+    if(!req.body.catalogName){
+      return res.status(400).send('Catalog name is required');
+    }
     const catalog = await Catalog.findOneAndUpdate({
       _id: req.body.catalogId,
       userId: req.tokenData.userId,
     }, { catalogName: req.body.catalogName }, { new: true });
-    res.send(catalog);
+    return res.status(200).send(catalog);
   } catch (err) {
     next(err);
   }
@@ -238,11 +281,17 @@ module.exports.updateNameCatalog = async (req, res, next) => {
 
 module.exports.addNewChatToCatalog = async (req, res, next) => {
   try {
+    if(!req.body.catalogId){
+      return res.status(400).send('Catalog ID is required');
+    }
+    if(!req.body.chatId){
+      return res.status(400).send('Chat ID is required');
+    }
     const catalog = await Catalog.findOneAndUpdate({
       _id: req.body.catalogId,
       userId: req.tokenData.userId,
     }, { $addToSet: { chats: req.body.chatId } }, { new: true });
-    res.send(catalog);
+    return res.status(200).send(catalog);
   } catch (err) {
     next(err);
   }
@@ -250,11 +299,17 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
 
 module.exports.removeChatFromCatalog = async (req, res, next) => {
   try {
+    if(!req.body.catalogId){
+      return res.status(400).send('Catalog ID is required');
+    }
+    if(!req.body.chatId){
+      return res.status(400).send('Chat ID is required');
+    }
     const catalog = await Catalog.findOneAndUpdate({
       _id: req.body.catalogId,
       userId: req.tokenData.userId,
     }, { $pull: { chats: req.body.chatId } }, { new: true });
-    res.send(catalog);
+    return res.status(200).send(catalog);
   } catch (err) {
     next(err);
   }
@@ -262,9 +317,12 @@ module.exports.removeChatFromCatalog = async (req, res, next) => {
 
 module.exports.deleteCatalog = async (req, res, next) => {
   try {
+    if(!req.body.catalogId){
+      return res.status(400).send('Catalog ID is required');
+    }
     await Catalog.remove(
       { _id: req.body.catalogId, userId: req.tokenData.userId });
-    res.end();
+    return res.status(200).end();
   } catch (err) {
     next(err);
   }
@@ -282,7 +340,10 @@ module.exports.getCatalogs = async (req, res, next) => {
         },
       },
     ]);
-    res.send(catalogs);
+    if(!catalogs || catalogs.length === 0){
+      return res.status(200).send([]);
+    }
+    return res.status(200).send(catalogs);
   } catch (err) {
     next(err);
   }
