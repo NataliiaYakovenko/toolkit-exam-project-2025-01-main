@@ -15,7 +15,6 @@ module.exports.dataForContest = async (req, res, next) => {
     if (!characteristic1 && !characteristic2) {
       return res.status(400).send('At least one characteristic is required');
     }
-    console.log(req.body, characteristic1, characteristic2);
     const types = [characteristic1, characteristic2, 'industry'].filter(
       Boolean,
     );
@@ -44,14 +43,17 @@ module.exports.dataForContest = async (req, res, next) => {
 
 module.exports.getContestById = async (req, res, next) => {
   try {
-    if (!req.headers.contestid) {
+    const { contestid } = req.headers;
+    const { role, userId } = req.tokenData;
+
+    if (!contestid) {
       return res.status(400).send('Contest ID is required');
     }
-    if (isNaN(Number(req.headers.contestid))) {
+    if (isNaN(Number(contestid))) {
       return res.status(400).send('Contest ID must be a number');
     }
     let contestInfo = await db.Contests.findOne({
-      where: { id: req.headers.contestid },
+      where: { id: contestid },
       order: [[db.Offers, 'id', 'asc']],
       include: [
         {
@@ -65,8 +67,8 @@ module.exports.getContestById = async (req, res, next) => {
           model: db.Offers,
           required: false,
           where:
-            req.tokenData.role === CONSTANTS.CREATOR
-              ? { userId: req.tokenData.userId }
+            role === CONSTANTS.CREATOR
+              ? { userId }
               : {},
           attributes: { exclude: ['userId', 'contestId'] },
           include: [
@@ -80,7 +82,7 @@ module.exports.getContestById = async (req, res, next) => {
             {
               model: db.Ratings,
               required: false,
-              where: { userId: req.tokenData.userId },
+              where: { userId },
               attributes: { exclude: ['userId', 'offerId'] },
             },
           ],
@@ -106,10 +108,12 @@ module.exports.getContestById = async (req, res, next) => {
 
 module.exports.downloadFile = async (req, res, next) => {
   try {
-    if (!req.params.fileName) {
+    const { fileName } = req.params;
+
+    if (!fileName) {
       return res.status(400).send('File name is required');
     }
-    const file = CONSTANTS.CONTESTS_DEFAULT_DIR + req.params.fileName;
+    const file = CONSTANTS.CONTESTS_DEFAULT_DIR + fileName;
     if (!fs.existsSync(file)) {
       return res.status(404).send('File not found');
     }
@@ -121,21 +125,21 @@ module.exports.downloadFile = async (req, res, next) => {
 
 module.exports.updateContest = async (req, res, next) => {
   try {
-    if (!req.body.contestId) {
+    const { contestId, ...updateData }= req.body;
+    const { userId } = req.tokenData;
+    if (!contestId) {
       return res.status(400).send('Contest ID is required');
     }
-    if (isNaN(Number(req.body.contestId))) {
+    if (isNaN(Number(contestId))) {
       return res.status(400).send('Contest ID must be a number');
     }
     if (req.file) {
-      req.body.fileName = req.file.filename;
-      req.body.originalFileName = req.file.originalname;
+      updateData.fileName = req.file.filename;
+      updateData.originalFileName = req.file.originalname;
     }
-    const contestId = req.body.contestId;
-    delete req.body.contestId;
-    const updatedContest = await contestQueries.updateContest(req.body, {
+    const updatedContest = await contestQueries.updateContest(updateData, {
       id: contestId,
-      userId: req.tokenData.userId,
+      userId,
     });
     if(!updatedContest){
       return res.status(404).send('Contest not found');
@@ -146,19 +150,21 @@ module.exports.updateContest = async (req, res, next) => {
   }
 };
 
+
 module.exports.setNewOffer = async (req, res, next) => {
   try {
-    if(!req.body.contestId){
+    const { contestId, contestType, customerId } = req.body;
+    if(!contestId){
       return res.status(400).send('Contest ID is required');
     }
-    if(!req.body.contestType){
+    if(!contestType){
       return res.status(400).send('Contest type is required');
     }
-    if(!req.body.customerId){
+    if(!customerId){
       return res.status(400).send('Customer ID is required');
     }
     const obj = {};
-    if (req.body.contestType === CONSTANTS.LOGO_CONTEST) {
+    if (contestType === CONSTANTS.LOGO_CONTEST) {
       if(!req.file){
         return res.status(400).send('File is required for logo contest');
       }
@@ -168,7 +174,7 @@ module.exports.setNewOffer = async (req, res, next) => {
       obj.text = req.body.offerData;
     }
     obj.userId = req.tokenData.userId;
-    obj.contestId = req.body.contestId;
+    obj.contestId = contestId;
     const result = await contestQueries.createOffer(obj);
     if(!result){
       return res.status(400).send('Invalid data for creating offer');
@@ -177,7 +183,7 @@ module.exports.setNewOffer = async (req, res, next) => {
     delete result.userId;
     controller
       .getNotificationController()
-      .emitEntryCreated(req.body.customerId);
+      .emitEntryCreated(customerId);
     const User = Object.assign({}, req.tokenData, { id: req.tokenData.userId });
     return res.status(200).send(Object.assign({}, result, { User }));
   } catch (err) {
@@ -269,30 +275,31 @@ const resolveOffer = async (
 module.exports.setOfferStatus = async (req, res, next) => {
   let transaction;
   try{
-    if(!req.body.command){
+    const { command, offerId, creatorId, contestId, orderId, priority } =req.body;
+    if(!command){
       return res.status(400).send('Command is required');
     }
-    if(!req.body.offerId){
+    if(!offerId){
       return res.status(400).send('Offer ID is required');
     }
-    if (req.body.command === 'reject') {
+    if (command === 'reject') {
       const offer = await rejectOffer(
-        req.body.offerId,
-        req.body.creatorId,
-        req.body.contestId,
+        offerId,
+        creatorId,
+        contestId,
       );
       return res.status(200).send(offer);
-    } else if (req.body.command === 'resolve') {
-      if (!req.body.contestId) {
+    } else if (command === 'resolve') {
+      if (!contestId) {
         return res.status(400).send('Contest ID is required for resolve');
       }
       transaction = await db.sequelize.transaction();
       const winningOffer = await resolveOffer(
-        req.body.contestId,
-        req.body.creatorId,
-        req.body.orderId,
-        req.body.offerId,
-        req.body.priority,
+        contestId,
+        creatorId,
+        orderId,
+        offerId,
+        priority,
         transaction,
       );
       await transaction.commit();
