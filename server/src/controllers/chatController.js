@@ -3,7 +3,7 @@ const Message = require('../models/mongoModels/Message');
 const Catalog = require('../models/mongoModels/Catalog');
 const db = require('../models');
 const userQueries = require('../queries/userQueries');
-const controller = require('../socketInit');
+const controller = require('../sockets/socketInit');
 
 
 module.exports.addMessage = async (req, res, next) => {

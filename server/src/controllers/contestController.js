@@ -2,7 +2,7 @@ const fs = require('fs');
 const db = require('../models');
 const contestQueries = require('../queries/contestQueries');
 const userQueries = require('../queries/userQueries');
-const controller = require('../socketInit');
+const controller = require('../sockets/socketInit');
 const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../constants');
 
