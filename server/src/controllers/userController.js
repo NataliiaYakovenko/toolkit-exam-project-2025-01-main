@@ -6,9 +6,9 @@ const NotUniqueEmail = require('../errors/NotUniqueEmail');
 const moment = require('moment');
 const { v4: uuid } = require('uuid');
 const controller = require('../socketInit');
-const userQueries = require('./queries/userQueries');
-const bankQueries = require('./queries/bankQueries');
-const ratingQueries = require('./queries/ratingQueries');
+const userQueries = require('../queries/userQueries');
+const bankQueries = require('../queries/bankQueries');
+const ratingQueries = require('../queries/ratingQueries');
 
 module.exports.login = async (req, res, next) => {
   try {
