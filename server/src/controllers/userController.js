@@ -12,7 +12,13 @@ const ratingQueries = require('./queries/ratingQueries');
 
 module.exports.login = async (req, res, next) => {
   try {
+    if(!req.body.email || !req.body.password){
+      return res.status(400).send('Email and password are required');
+    }
     const foundUser = await userQueries.findUser({ email: req.body.email });
+    if(!foundUser){
+      return res.status(401).send('Email or password are invalid');
+    }
     await userQueries.passwordCompare(req.body.password, foundUser.password);
     const accessToken = jwt.sign(
       {
@@ -27,19 +33,23 @@ module.exports.login = async (req, res, next) => {
         rating: foundUser.rating,
       },
       CONSTANTS.JWT_SECRET,
-      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME }
+      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME },
     );
     await userQueries.updateUser({ accessToken }, foundUser.id);
-    res.send({ token: accessToken });
+    return res.status(200).send({ token: accessToken });
   } catch (err) {
     next(err);
   }
 };
+
 module.exports.registration = async (req, res, next) => {
   try {
     const newUser = await userQueries.userCreation(
-      Object.assign(req.body, { password: req.hashPass })
+      Object.assign(req.body, { password: req.hashPass }),
     );
+    if(!newUser){
+      return res.status(500).send('User registration failed');
+    }
     const accessToken = jwt.sign(
       {
         firstName: newUser.firstName,
@@ -53,10 +63,10 @@ module.exports.registration = async (req, res, next) => {
         rating: newUser.rating,
       },
       CONSTANTS.JWT_SECRET,
-      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME }
+      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME },
     );
     await userQueries.updateUser({ accessToken }, newUser.id);
-    res.send({ token: accessToken });
+    return res.status(201).send({ token: accessToken });
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       next(new NotUniqueEmail());
@@ -85,9 +95,21 @@ module.exports.changeMark = async (req, res, next) => {
   let sum = 0;
   let avg = 0;
   let transaction;
-  const { isFirst, offerId, mark, creatorId } = req.body;
-  const userId = req.tokenData.userId;
   try {
+    const { isFirst, offerId, mark, creatorId } = req.body;
+    const userId = req.tokenData.userId;
+    if(!offerId || !mark || !creatorId){
+      return res.status(400).send('Missing required fields');
+    }
+    if(userId === creatorId){
+      return res.status(403).send('Users cannot rate their own offers');
+    }
+    if(typeof mark !== 'number'){
+      return res.status(400).send('Mark must be a number');
+    }
+    if(mark <= 0){
+      return res.status(400).send('Mark cannot be negative number');
+    }
     transaction = await bd.sequelize.transaction({
       isolationLevel:
         bd.Sequelize.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED,
@@ -112,7 +134,7 @@ module.exports.changeMark = async (req, res, next) => {
     await userQueries.updateUser({ rating: avg }, creatorId, transaction);
     transaction.commit();
     controller.getNotificationController().emitChangeMark(creatorId);
-    res.send({ userId: creatorId, rating: avg });
+    return res.status(200).send({ userId: creatorId, rating: avg });
   } catch (err) {
     transaction.rollback();
     next(err);
@@ -122,21 +144,26 @@ module.exports.changeMark = async (req, res, next) => {
 module.exports.payment = async (req, res, next) => {
   let transaction;
   try {
+    if(!req.body.number || !req.body.cvc || !req.body.expiry || !req.body.price || !req.body.contests){
+      return res.status(400).send('Missing required fields');
+    }
+    if(typeof req.body.price !== 'number' || req.body.price <= 0){
+      return res.status(400).send('Price must be a positive number');
+    }
     transaction = await bd.sequelize.transaction();
     await bankQueries.updateBankBalance(
       {
         balance: bd.sequelize.literal(`
-                CASE
-            WHEN "cardNumber"='${req.body.number.replace(
-              / /g,
-              ''
-            )}' AND "cvc"='${req.body.cvc}' AND "expiry"='${req.body.expiry}'
-                THEN "balance"-${req.body.price}
-            WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' AND "cvc"='${
-          CONSTANTS.SQUADHELP_BANK_CVC
-        }' AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
-                THEN "balance"+${req.body.price} END
-        `),
+             CASE
+               WHEN "cardNumber"='${req.body.number.replace(/ /g, '')}'
+                 AND "cvc"='${req.body.cvc}' 
+                 AND "expiry"='${req.body.expiry}'
+               THEN "balance"-${req.body.price}
+               WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' 
+                 AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}' 
+                 AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
+               THEN "balance"+${req.body.price} 
+             END`),
       },
       {
         cardNumber: {
@@ -146,7 +173,7 @@ module.exports.payment = async (req, res, next) => {
           ],
         },
       },
-      transaction
+      transaction,
     );
     const orderId = uuid();
     req.body.contests.forEach((contest, index) => {
@@ -165,7 +192,7 @@ module.exports.payment = async (req, res, next) => {
     });
     await bd.Contests.bulkCreate(req.body.contests, transaction);
     transaction.commit();
-    res.send();
+    return res.status(200).send();
   } catch (err) {
     transaction.rollback();
     next(err);
@@ -181,7 +208,10 @@ module.exports.updateUser = async (req, res, next) => {
       req.body,
       req.tokenData.userId,
     );
-    res.send({
+    if(!updatedUser){
+      return res.status(404).send('User not found');
+    }
+    return res.status(200).send({
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
       displayName: updatedUser.displayName,
@@ -199,30 +229,28 @@ module.exports.updateUser = async (req, res, next) => {
 module.exports.cashout = async (req, res, next) => {
   let transaction;
   try {
+    if(!req.body.number || !req.body.expiry || !req.body.cvc || !req.body.sum){
+      return res.status(400).send('Missing required fields');
+    }
     transaction = await bd.sequelize.transaction();
     const updatedUser = await userQueries.updateUser(
       { balance: bd.sequelize.literal('balance - ' + req.body.sum) },
       req.tokenData.userId,
-      transaction
+      transaction,
     );
     await bankQueries.updateBankBalance(
       {
-        balance: bd.sequelize.literal(`CASE 
-                WHEN "cardNumber"='${req.body.number.replace(
-                  / /g,
-                  ''
-                )}' AND "expiry"='${req.body.expiry}' AND "cvc"='${
-          req.body.cvc
-        }'
-                    THEN "balance"+${req.body.sum}
-                WHEN "cardNumber"='${
-                  CONSTANTS.SQUADHELP_BANK_NUMBER
-                }' AND "expiry"='${
-          CONSTANTS.SQUADHELP_BANK_EXPIRY
-        }' AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}'
-                    THEN "balance"-${req.body.sum}
-                 END
-                `),
+        balance: bd.sequelize.literal(`
+          CASE 
+                WHEN "cardNumber"='${req.body.number.replace(/ /g, '')}'
+                  AND "expiry"='${req.body.expiry}'
+                  AND "cvc"='${req.body.cvc}'
+                THEN "balance"+${req.body.sum}
+                WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}'
+                  AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
+                  AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}'
+                THEN "balance"-${req.body.sum}
+          END`),
       },
       {
         cardNumber: {
@@ -232,10 +260,10 @@ module.exports.cashout = async (req, res, next) => {
           ],
         },
       },
-      transaction
+      transaction,
     );
     transaction.commit();
-    res.send({ balance: updatedUser.balance });
+    return res.status(200).send({ balance: updatedUser.balance });
   } catch (err) {
     transaction.rollback();
     next(err);
