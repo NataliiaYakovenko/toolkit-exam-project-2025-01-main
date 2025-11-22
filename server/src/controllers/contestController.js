@@ -359,7 +359,7 @@ module.exports.getContests = async(req, res, next) => {
     if(!req.tokenData || !req.tokenData.userId){
       return res.status(401).send('User is required');
     }
-    const { typeIndex, contestId, industry, awardSort, limit, offset, ownEntries } = req.body;
+    const { typeIndex, contestId, industry, awardSort, limit, offset, ownEntries } = req.query;
     if(limit && (isNaN(Number(limit)) || Number(limit) <= 0)){
       return res.status(400).send('Limit must be a positive number');
     }
@@ -377,7 +377,7 @@ module.exports.getContests = async(req, res, next) => {
       include: [
         {
           model: db.Offers,
-          required: ownEntries,
+          required: false,
           where: ownEntries ? { userId: req.tokenData.userId } : {},
           attributes: ['id'],
         },

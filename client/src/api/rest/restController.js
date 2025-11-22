@@ -44,8 +44,10 @@ export const getActiveContests = ({
   industry,
   awardSort,
   ownEntries,
+
 }) =>
   http.get('getAllContests', {
+    params:{
     offset,
     limit,
     typeIndex,
@@ -53,6 +55,7 @@ export const getActiveContests = ({
     industry,
     awardSort,
     ownEntries,
+    }
   });
 
 export const getContestById = data =>
