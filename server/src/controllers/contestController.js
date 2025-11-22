@@ -257,16 +257,19 @@ const resolveOffer = async (
       arrayRoomsId.push(offer.userId);
     }
   });
+  // controller
+  //   .getNotificationController()
+  //   .emitChangeOfferStatus(
+  //     creatorId,
+  //     'Someone of yours offers was rejected',
+  //     contestId,
+  //   );
   controller
     .getNotificationController()
     .emitChangeOfferStatus(
-      arrayRoomsId,
-      'Someone of yours offers was rejected',
-      contestId,
-    );
-  controller
-    .getNotificationController()
-    .emitChangeOfferStatus(creatorId, 'Someone of your offers WIN', contestId);
+      creatorId,
+      'Someone of your offers WIN',
+      contestId);
   return updatedOffers[0].dataValues;
 };
 
