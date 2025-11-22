@@ -223,7 +223,6 @@ const resolveOffer = async (
             WHEN "orderId"='${orderId}' 
             AND "priority"=${priority + 1} 
             THEN '${CONSTANTS.CONTEST_STATUS_ACTIVE}'
-            CONSTANTS.CONTEST_STATUS_ACTIVE
             ELSE '${CONSTANTS.CONTEST_STATUS_PENDING}'
             END
     `),
@@ -308,9 +307,6 @@ module.exports.setOfferStatus = async (req, res, next) => {
       return res.status(400).send('Invalid command');
     }
   }catch(err){
-    if (transaction) {
-      await transaction.rollback();
-    }
     next(err);
   }
 };
