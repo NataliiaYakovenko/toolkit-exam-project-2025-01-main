@@ -32,6 +32,7 @@ const ChatInput = (props) => {
             classes={{
               container: styles.container,
               input: styles.input,
+              warning: styles.fieldWarning,
               notValid: styles.notValid,
             }}
           />
