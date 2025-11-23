@@ -257,13 +257,6 @@ const resolveOffer = async (
       arrayRoomsId.push(offer.userId);
     }
   });
-  // controller
-  //   .getNotificationController()
-  //   .emitChangeOfferStatus(
-  //     creatorId,
-  //     'Someone of yours offers was rejected',
-  //     contestId,
-  //   );
   controller
     .getNotificationController()
     .emitChangeOfferStatus(
