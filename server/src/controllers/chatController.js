@@ -77,7 +77,7 @@ module.exports.addMessage = async (req, res, next) => {
 
 module.exports.getChat = async (req, res, next) => {
   try {
-    const { interlocutorId } = req.body;
+    const { interlocutorId } = req.query;
     const { userId } = req.tokenData;
 
     if(!interlocutorId){
@@ -115,7 +115,7 @@ module.exports.getChat = async (req, res, next) => {
     ]);
 
     const interlocutor = await userQueries.findUser(
-      { id: req.body.interlocutorId });
+      { id: req.query.interlocutorId });
     return res.status(200).send({
       messages,
       interlocutor: {
@@ -130,6 +130,7 @@ module.exports.getChat = async (req, res, next) => {
     next(err);
   }
 };
+
 
 module.exports.getPreview = async (req, res, next) => {
   try {
