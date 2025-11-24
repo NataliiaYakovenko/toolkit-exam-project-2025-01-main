@@ -24,7 +24,7 @@ const initialState = {
   imagePath: null,
 };
 
-//---------- getContestById
+
 export const getContestById = decorateAsyncThunk({
   key: `${CONTEST_BY_ID_SLICE_NAME}/getContest`,
   thunk: async payload => {
