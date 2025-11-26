@@ -8,6 +8,13 @@ import { getUser } from '../../store/slices/userSlice';
 import withRouter from '../../hocs/withRouter';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobileMenuOpen: false,
+    };
+  }
+
   componentDidMount() {
     if (!this.props.data) {
       this.props.getUser();
@@ -22,6 +29,18 @@ class Header extends React.Component {
 
   startContests = () => {
     this.props.navigate('/startContest');
+  };
+
+  toggleMobileMenu = () => {
+    this.setState((prevState) => ({
+      isMobileMenuOpen: !prevState.isMobileMenuOpen,
+    }));
+  };
+
+  closeMobileMenu = () => {
+    this.setState({
+      isMobileMenuOpen: false,
+    });
   };
 
   renderLoginButtons = () => {
@@ -44,12 +63,20 @@ class Header extends React.Component {
             />
             <ul>
               <li>
-                <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+                <Link
+                  to="/dashboard"
+                  style={{ textDecoration: 'none' }}
+                  onClick={this.closeMobileMenu}
+                >
                   <span>View Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link to="/account" style={{ textDecoration: 'none' }}>
+                <Link
+                  to="/account"
+                  style={{ textDecoration: 'none' }}
+                  onClick={this.closeMobileMenu}
+                >
                   <span>My Account</span>
                 </Link>
               </li>
@@ -57,6 +84,7 @@ class Header extends React.Component {
                 <Link
                   to="http://www.google.com"
                   style={{ textDecoration: 'none' }}
+                  onClick={this.closeMobileMenu}
                 >
                   <span>Messages</span>
                 </Link>
@@ -65,12 +93,20 @@ class Header extends React.Component {
                 <Link
                   to="http://www.google.com"
                   style={{ textDecoration: 'none' }}
+                  onClick={this.closeMobileMenu}
                 >
                   <span>Affiliate Dashboard</span>
                 </Link>
               </li>
               <li>
-                <span onClick={this.logOut}>Logout</span>
+                <span
+                  onClick={() => {
+                    this.logOut();
+                    this.toggleMobileMenu();
+                  }}
+                >
+                  Logout
+                </span>
               </li>
             </ul>
           </div>
@@ -86,10 +122,18 @@ class Header extends React.Component {
     }
     return (
       <>
-        <Link to="/login" style={{ textDecoration: 'none' }}>
+        <Link
+          to="/login"
+          style={{ textDecoration: 'none' }}
+          onClick={this.closeMobileMenu}
+        >
           <span className={styles.btn}>LOGIN</span>
         </Link>
-        <Link to="/registration" style={{ textDecoration: 'none' }}>
+        <Link
+          to="/registration"
+          style={{ textDecoration: 'none' }}
+          onClick={this.closeMobileMenu}
+        >
           <span className={styles.btn}>SIGN UP</span>
         </Link>
       </>
@@ -131,7 +175,18 @@ class Header extends React.Component {
               alt="blue_logo"
             />
           </a>
-          <div className={styles.leftNav}>
+          <div
+            className={`${styles.burgerMenu} ${
+              this.state.isMobileMenuOpen ? styles.active : ''
+            }`}
+            onClick={this.toggleMobileMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div className={`${styles.leftNav} ${this.state.isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
             <div className={styles.nav}>
               <ul>
                 <li>
@@ -142,28 +197,28 @@ class Header extends React.Component {
                   />
                   <ul>
                     <li>
-                      <a href="http://www.google.com">Beauty</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>BEAUTY</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">Consulting</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>CONSULTING</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">E-Commerce</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>E-COMMERCE</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">Fashion & Clothing</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>FASHION & CLOTHING</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">Finance</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>FINANCE</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">Real Estate</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>REAL ESTATE</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">Tech</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>TECH</a>
                     </li>
                     <li className={styles.last}>
-                      <a href="http://www.google.com">More Categories</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>MORE CATEGORIES</a>
                     </li>
                   </ul>
                 </li>
@@ -175,96 +230,96 @@ class Header extends React.Component {
                   />
                   <ul>
                     <li>
-                      <a href="http://www.google.com">HOW IT WORKS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>HOW IT WORKS</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">PRICING</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>PRICING</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">AGENCY SERVICE</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>AGENCY SERVICE</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">ACTIVE CONTESTS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>ACTIVE CONTESTS</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">WINNERS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>WINNERS</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">LEADERBOARD</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>LEADERBOARD</a>
                     </li>
                     <li className={styles.last}>
-                      <a href="http://www.google.com">BECOME A CREATIVE</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>BECOME A CREATIVE</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <span>Our Work</span>
+                  <span>OUR WORK</span>
                   <img
                     src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
                     alt="menu"
                   />
                   <ul>
                     <li>
-                      <a href="http://www.google.com">NAMES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>NAMES</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">TAGLINES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>TAGLINES</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">LOGOS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>LOGOS</a>
                     </li>
                     <li className={styles.last}>
-                      <a href="http://www.google.com">TESTIMONIALS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>TESTIMONIALS</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <span>Names For Sale</span>
+                  <span>NAMES FOR SALE</span>
                   <img
                     src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
                     alt="menu"
                   />
                   <ul>
                     <li>
-                      <a href="http://www.google.com">POPULAR NAMES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>POPULAR NAMES</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">SHORT NAMES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>SHORT NAMES</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">INTRIGUING NAMES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>INTRIGUING NAMES</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">NAMES BY CATEGORY</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>NAMES BY CATEGORY</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">VISUAL NAME SEARCH</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>VISUAL NAME SEARCH</a>
                     </li>
                     <li className={styles.last}>
-                      <a href="http://www.google.com">SELL YOUR DOMAINS</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>SELL YOUR DOMAINS</a>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <span>Blog</span>
+                  <span>BLOG</span>
                   <img
                     src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
                     alt="menu"
                   />
                   <ul>
                     <li>
-                      <a href="http://www.google.com">ULTIMATE NAMING GUIDE</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>ULTIMATE NAMING GUIDE</a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>
                         POETIC DEVICES IN BUSINESS NAMING
                       </a>
                     </li>
                     <li>
-                      <a href="http://www.google.com">CROWDED BAR THEORY</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>CROWDED BAR THEORY</a>
                     </li>
                     <li className={styles.last}>
-                      <a href="http://www.google.com">ALL ARTICLES</a>
+                      <a href="http://www.google.com" onClick={this.closeMobileMenu}>ALL ARTICLES</a>
                     </li>
                   </ul>
                 </li>
@@ -273,7 +328,7 @@ class Header extends React.Component {
             {this.props.data && this.props.data.role !== CONSTANTS.CREATOR && (
               <div
                 className={styles.startContestBtn}
-                onClick={this.startContests}
+                onClick={() => { this.startContests(); this.closeMobileMenu(); }}
               >
                 START CONTEST
               </div>
