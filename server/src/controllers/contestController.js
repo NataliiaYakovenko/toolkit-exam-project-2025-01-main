@@ -338,9 +338,10 @@ module.exports.getCustomersContests = async (req, res, next) => {
       (contest) =>
         (contest.dataValues.count = contest.dataValues.Offers.length),
     );
-    let haveMore = true;
-    if (contests.length === 0) {
-      haveMore = false;
+
+    let haveMore = false;
+    if (limit) {
+      haveMore = contests.length === Number(limit);
     }
     return res.status(200).send({ contests, haveMore });
   }catch(err){
@@ -381,9 +382,10 @@ module.exports.getContests = async(req, res, next) => {
       (contest) =>
         (contest.dataValues.count = contest.dataValues.Offers.length),
     );
-    let haveMore = true;
-    if (contests.length === 0) {
-      haveMore = false;
+
+    let haveMore = false;
+    if (limit) {
+      haveMore = contests.length === Number(limit);
     }
     return res.status(200).send({ contests, haveMore });
   }catch(err){

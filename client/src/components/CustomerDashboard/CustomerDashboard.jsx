@@ -28,6 +28,7 @@ class CustomerDashboard extends React.Component {
   getContests = () => {
     this.props.getContests({
       limit: 8,
+      offset: 0,
       contestStatus: this.props.customerFilter,
     });
   };
@@ -114,7 +115,7 @@ class CustomerDashboard extends React.Component {
         </div>
         <div className={styles.contestsContainer}>
           {error ? (
-            <TryAgain getData={this.tryToGetContest()} />
+            <TryAgain getData={this.tryToGetContest} />
           ) : (
             <ContestsContainer
               isFetching={this.props.isFetching}
