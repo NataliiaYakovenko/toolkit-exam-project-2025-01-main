@@ -130,6 +130,7 @@
           &:last-child li
             ul
               width: 200px
+   
 
           li
             display: flex
@@ -148,7 +149,13 @@
               flex-direction: row
               align-items: center
               justify-content: space-between
-              
+            &:last-child
+              &:hover
+                ul
+                  left: unset
+                  right: 0  
+
+
 
             &:hover
               span
@@ -166,7 +173,6 @@
                 left: 0
                 background-color: white
                 width: 200px
-
                 @media(max-width: 768px)
                   position: static
                   border: none
