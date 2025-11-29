@@ -84,7 +84,7 @@ class CustomerDashboard extends React.Component {
                 CONSTANTS.CONTEST_STATUS_ACTIVE !== customerFilter,
             })}
           >
-            Active Contests
+            Active contests
           </div>
           <div
             onClick={() =>

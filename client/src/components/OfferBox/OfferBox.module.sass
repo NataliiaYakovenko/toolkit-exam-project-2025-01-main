@@ -64,7 +64,7 @@
     align-items: center
     justify-content: space-between
     position: relative
-    @media(max-width: 500px)
+    @media(max-width: 550px)
       flex-direction: column
 
     .userInfo
@@ -77,12 +77,12 @@
       font-size: 26px
       transition: font-size 0.2s
       color: #4e618d
+      @media(max-width: 500px)
+        align-self: flex-end
       @media(max-width: 450px)
         top: 30px
       @media(max-width: 380px)
         top: 100px
-        align-self: flex-end
-      @media(max-width: 500px)
         align-self: flex-end
 
       &:hover
