@@ -12,11 +12,14 @@
   @media(max-width: 450px)
     padding: 10px 0
 
+
   i
     position: absolute
     left: calc(100% - 35px)
     top: -15px
     font-size: 54px
+    // @media(max-width: 450px)
+    //   margin-right: -30px
 
   .reject
     color: red
@@ -77,13 +80,11 @@
       font-size: 26px
       transition: font-size 0.2s
       color: #4e618d
+      @media(max-width: 850px)
+        top: -30px
       @media(max-width: 500px)
         align-self: flex-end
-      @media(max-width: 450px)
-        top: 30px
-      @media(max-width: 380px)
-        top: 100px
-        align-self: flex-end
+        left: -5px
 
       &:hover
         font-size: 34px
