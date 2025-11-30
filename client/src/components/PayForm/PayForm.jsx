@@ -82,7 +82,7 @@ const PayForm = (props) => {
                   <span>Card Number</span>
                   <PayInput
                     isInputMask
-                    mask="9999 9999 9999 9999 999"
+                    mask="9999 9999 9999 9999"
                     name="number"
                     classes={{
                       container: styles.inputContainer,
@@ -116,8 +116,8 @@ const PayForm = (props) => {
                   <div className={styles.smallInput}>
                     <span>* Security Code</span>
                     <PayInput
-                      isInputMask
-                      mask="9999"
+                      // isInputMask
+                      // mask="999"
                       name="cvc"
                       classes={{
                         container: styles.inputContainer,
@@ -125,7 +125,8 @@ const PayForm = (props) => {
                         notValid: styles.notValid,
                         error: styles.error,
                       }}
-                      type="text"
+                      type="password"
+                      inputMode="numeric" 
                       label="cvc"
                       changeFocus={changeFocusOnCard}
                     />

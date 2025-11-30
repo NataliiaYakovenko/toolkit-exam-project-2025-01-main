@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import { useField } from 'formik';
 
 const PayInput = props => {
-  const { label, changeFocus, classes, isInputMask, mask } = props;
+  const { label, changeFocus, classes, isInputMask, mask, type = 'text' } = props;
   const [field, meta] = useField(props.name);
   const { touched, error } = meta;
 
@@ -19,7 +19,7 @@ const PayInput = props => {
           })}
         />
         {touched && error && (
-          <span className={classes.error}>{error.message}!</span>
+          <span className={classes.error}>{error}</span>
         )}
       </div>
     );
@@ -31,6 +31,7 @@ const PayInput = props => {
           mask={mask}
           maskChar={null}
           {...field}
+          type={type}
           placeholder={label}
           className={classNames(classes.input, {
             [classes.notValid]: touched && error,
@@ -38,7 +39,7 @@ const PayInput = props => {
           onFocus={() => changeFocus(field.name)}
         />
         {touched && error && (
-          <span className={classes.error}>{error.message}!</span>
+          <span className={classes.error}>{error}</span>
         )}
       </div>
     );
@@ -47,6 +48,7 @@ const PayInput = props => {
     <div className={classes.container}>
       <input
         {...field}
+        type={type}
         placeholder={label}
         className={classNames(classes.input, {
           [classes.notValid]: touched && error,
@@ -54,7 +56,7 @@ const PayInput = props => {
         onFocus={() => changeFocus(field.name)}
       />
       {touched && error && (
-        <span className={classes.error}>{error.message}!</span>
+        <span className={classes.error}>{error}</span>
       )}
     </div>
   );
