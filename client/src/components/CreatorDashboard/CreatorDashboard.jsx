@@ -106,7 +106,9 @@ class CreatorDashboard extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getDataForContest();
+    this.props.getDataForContest({
+      characteristic1: 'industry'
+    });
     if (
       this.parseUrlForParams(this.props.location.search) &&
       !this.props.contests.length
@@ -306,7 +308,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getContests({ requestData: data, role: CONSTANTS.CREATOR })),
   clearContestsList: () => dispatch(clearContestsList()),
   newFilter: (filter) => dispatch(setNewCreatorFilter(filter)),
-  getDataForContest: () => dispatch(getDataForContest()),
+  getDataForContest: (data) => dispatch(getDataForContest(data)),
 });
 
 export default withRouter(
