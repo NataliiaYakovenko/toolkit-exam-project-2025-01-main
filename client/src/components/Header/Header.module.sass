@@ -104,17 +104,14 @@
         overflow-y: auto
         z-index: 1000
         margin: 0
- 
 
         &.mobileMenuOpen
           right: 0
           color: white
  
-
       .nav
         display: flex 
    
-
         ul
           margin: 0
           list-style: none
@@ -143,18 +140,21 @@
               margin-right: 3px
             @media(max-width: 768px)
               width: 100%
-              padding: 12px 0 
+              padding: 12px 20px
               margin: 0
               border-bottom: 1px solid #ebebeb
               flex-direction: row
               align-items: center
               justify-content: space-between
+              box-sizing: border-box
+              overflow: visible
+              z-index: 1001
+
             &:last-child
               &:hover
                 ul
                   left: unset
                   right: 0  
-
 
 
             &:hover
@@ -163,12 +163,11 @@
                 @media(max-width: 768px)
                   color: white
                 
-
               ul
                 display: block
                 position: absolute
                 border: 1px solid #eee
-                z-index: 1000
+                z-index: 1002
                 top:100%
                 left: 0
                 background-color: white
@@ -179,6 +178,9 @@
                   box-shadow: none
                   margin-top: 10px 
                   width: 100%
+                  z-index: 1003
+                  background-color: #3a4a6c 
+                  
 
             ul
               padding: 0
@@ -189,39 +191,36 @@
                 width: 100%
                 position: static
                 
-
               .last
                 width: 100%
                 padding-top: 8px
                 box-sizing: border-box
                 border-top: 1px solid aquamarine
 
-               
+           
               li
                 box-sizing: border-box
                 width: 100%
                 padding: 10px 15px
                 display: flex
                 justify-content: flex-start
-                margin-right: 0 
-            
-               
+                margin-right: 0           
                 @media(max-width: 768px)
                   padding: 5px 0 5px 20px
                   border-bottom: none
                   background-color: #495d8b
+                  z-index: 1004
                
        
-
                 &:hover
                   background: #f9fafb
+                  @media(max-width: 768px)
+                    background-color: #2d3a57
 
                 a
                   font-size: 12px
                   text-decoration: none
-                  color: #333
-
-                              
+                  color: #333           
                   @media(max-width: 768px)
                     color: #28d2d0
                     font-size: 17px
@@ -234,14 +233,17 @@
               font-size: 15px
               font-weight: 300
               padding: 15px 0
-       
-
               @media(max-width: 768px)
                 color: white
                 padding: 15px 0
-                font-size: 28px
+                font-size: 24px
                 font-weight: 500
                 text-decoration: none
+                word-wrap: break-word 
+                overflow-wrap: break-word 
+                white-space: normal 
+                width: 100% 
+                box-sizing: border-box
 
                 &:hover
                   background-color: rgba(255, 255, 255, 0.1);
@@ -279,13 +281,18 @@
         align-items: center
         padding: 0 15px
         border-right: 1px solid #ebebeb
-        
+        position: relative
+        z-index: 1005
+        height: 100%
 
         &:hover
           ul
             display: block
             position: absolute
-            top: 45px
+            top: 100%
+            color: #f27e51
+            z-index: 1006
+      
 
         ul
           border: 1px solid #eee
@@ -296,18 +303,22 @@
           width: 180px
           display: none
 
+
           li
             text-align: left
 
             &:hover
               background: #f9fafb
+            
+            
 
             span
               display: inline-block
               padding: 5px 15px
               color: #333
               font-size: 16px
-
+              &:hover
+                color: #f27e51
         img
           width: 20px
           height: 20px
