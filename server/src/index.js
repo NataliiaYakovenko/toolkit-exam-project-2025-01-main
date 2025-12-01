@@ -7,8 +7,8 @@ const cors = require('cors');
 require('./dbMongo/mongoose');
 const router = require('./routers/index');
 const controller = require('./sockets/socketInit');
-const handlerError = require('./handlerError/handler');
-const multerHandler = require('./handlerError/multerHandler');
+const handlerError = require('./middlewares/handlerError/handler');
+const multerHandler = require('./middlewares/handlerError/multerHandler');
 const { FILES_PATH } = require('./constants');
 
 const PORT = process.env.PORT || 5000;
