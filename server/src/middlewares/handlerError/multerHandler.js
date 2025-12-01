@@ -1,5 +1,5 @@
 const { MulterError } = require('multer');
-const BadRequestError = require('../errors/BadRequestError');
+const BadRequestError = require('../../errors/BadRequestError');
 
 module.exports = (err, req, res, next) => {
   if (err instanceof MulterError) {
