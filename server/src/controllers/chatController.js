@@ -88,48 +88,47 @@ module.exports.getChat = async (req, res, next) => {
       return res.status(400).send('Cannot get chat with yourself');
     }
 
-    const participants = [userId, interlocutorId];
-    participants.sort(
-      (participant1, participant2) => participant1 - participant2);
-    const messages = await Message.aggregate([
-      {
-        $lookup: {
-          from: 'conversations',
-          localField: 'conversation',
-          foreignField: '_id',
-          as: 'conversationData',
-        },
-      },
-      { $match: { 'conversationData.participants': participants } },
-      { $sort: { createdAt: 1 } },
-      {
-        $project: {
-          '_id': 1,
-          'sender': 1,
-          'body': 1,
-          'conversation': 1,
-          'createdAt': 1,
-          'updatedAt': 1,
-        },
-      },
-    ]);
+    const participants = [userId, interlocutorId].sort();
+    const conversation = await Conversation.findOne({
+      participants: { $all: participants },
+      $expr: { $eq: [{ $size: '$participants' }, 2] },
+    });
 
-    const interlocutor = await userQueries.findUser(
-      { id: req.query.interlocutorId });
+    if (!conversation) {
+      return res.status(200).send({
+        messages: [],
+        interlocutor: await getUserInfo(interlocutorId),
+      });
+    }
+
+    const messages = await Message.find({
+      conversation: conversation._id,
+    })
+      .sort({ createdAt: 1 })
+      .select('_id sender body conversation createdAt updatedAt');
+
+    const interlocutor = await getUserInfo(interlocutorId);
+
     return res.status(200).send({
       messages,
-      interlocutor: {
-        firstName: interlocutor.firstName,
-        lastName: interlocutor.lastName,
-        displayName: interlocutor.displayName,
-        id: interlocutor.id,
-        avatar: interlocutor.avatar,
-      },
+      interlocutor,
     });
+
   } catch (err) {
     next(err);
   }
 };
+
+async function getUserInfo(userId) {
+  const user = await userQueries.findUser({ id: userId });
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    displayName: user.displayName,
+    id: user.id,
+    avatar: user.avatar,
+  };
+}
 
 
 module.exports.getPreview = async (req, res, next) => {
