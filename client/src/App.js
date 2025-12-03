@@ -20,6 +20,7 @@ import ChatContainer from './components/Chat/ChatComponents/ChatContainer/ChatCo
 import Layout from './pages/Layout/Layout';
 import OnlyNotAuthorizedUserRoute from './components/Routes/OnlyNotAuthorizedUserRoute/OnlyNotAuthorizedUserRoute';
 import PrivateRoute from './components/Routes/PrivateRoute/PrivateRoute';
+import HowItWorksPage from './pages/HowItWorksPage/HowItWorksPage';
 
 class App extends Component {
   render() {
@@ -76,11 +77,12 @@ class App extends Component {
                 }
               />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/contest/:id" element={<ContestPage />}/>
-              <Route path="/account" element={<UserProfile />}/>
+              <Route path="/contest/:id" element={<ContestPage />} />
+              <Route path="/account" element={<UserProfile />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Route>
+          <Route path="/howItWorks" element={<HowItWorksPage />} />
         </Routes>
         <ChatContainer />
       </Router>
