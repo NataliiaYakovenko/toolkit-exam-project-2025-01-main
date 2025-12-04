@@ -1,5 +1,5 @@
 import React from 'react';
-import HowItWorksHeader from '../../components/HowItWorks/HowItWorksHeader/HowItWorksHeader';
+import HowItWorksHeader from '../../components/HowItWorks/HowItWorksHeader/HowItWorksHeaderMain/HowItWorksHeaderMain';
 import HowItWorksSection from '../../components/HowItWorks/HowItWorksSection/How ItWorksSection';
 import HowItWorksFooter from '../../components/HowItWorks/HowItWorksFooter/HowItWorksFooter';
 
