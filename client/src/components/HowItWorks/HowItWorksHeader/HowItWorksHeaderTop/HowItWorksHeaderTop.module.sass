@@ -1,0 +1,146 @@
+
+
+.containerTop
+  box-sizing: border-box
+  margin: 0
+  padding: 0
+
+
+  .wrapperBunner
+    background-image: url(https://www.atom.com/public/images/black_friday_sale/timer_banner.png)
+    background-size: cover
+    background-position: center
+    padding: 8px 0 11px 0
+    font-family: "Product Sans", sans-serif
+
+    .bunner
+      display: flex
+      align-items: center
+      justify-content: space-between
+      gap: 25px
+      margin-right: 10%
+      @media (max-width: 775px)
+        margin-right: 5%
+   
+
+      .leftBunner
+        width: 500px
+        @media (max-width: 775px)
+          width: 0
+  
+
+      .middleBunner
+        color: #fff
+        white-space: nowrap
+        display: flex
+        flex-direction: column
+        align-items: center
+        gap: 10px
+        @media (max-width: 775px)
+          align-items: flex-start
+          width: 1440px
+
+        .title
+          font-size: 20px
+          margin: 0 0 5px 0
+          font-weight: bold
+       
+        .subtitle
+          font-size: 14px
+          margin: 0
+          @media (max-width: 775px)
+            display: none
+
+        .mobileSubtitle 
+          display: none
+          @media (max-width: 775px)
+            display: block
+          
+        .mobileButtonShopNow 
+          display: none
+          @media (max-width: 775px)
+            display: block
+            line-height: 30px
+            color: #fff
+            font-weight: bold
+            font-size: 14px            
+           
+  
+
+      .rightBunner
+        display: flex
+        justify-content: center
+        align-items: flex-start
+        gap: 25px
+        height: 50px
+        white-space: nowrap
+        @media (max-width: 775px)
+          flex-direction: column 
+          gap: 15px
+         
+
+        .hurryText
+          font-size: 12px
+          color: #fff   
+          margin: 0
+          line-height: 35px
+          @media (max-width: 775px)
+            display: none 
+
+        .mobileHurryText
+          display: none
+          @media (max-width: 775px)
+            display: block
+            font-size: 14
+            color: #fff   
+            margin: 0
+
+
+        .bannerTimer
+          display: flex
+          text-align: center
+          gap: 10px
+          color: #fff 
+
+          .timerItem
+       
+            .timerNumber
+              background: rgba(41, 13, 14, 0.6)
+              font-weight: bold
+              margin: 0
+              width: 35px
+              height: 35px
+              font-size: 20px
+              line-height: 35px
+              border-radius: 5px
+              @media (max-width: 775px)
+               
+
+            .timerLabel
+              font-size: 10px
+              text-transform: uppercase
+              position: relative
+              margin-top: 5px  
+
+        .buttonShopNow
+          display: block
+          line-height: 30px
+          color: #fff
+          font-weight: bold
+          font-size: 14px
+          border: 1px solid #fff
+          border-radius: 20px
+          padding: 0 15px
+          margin-top: 10px
+          text-decoration: none
+          @media (max-width: 775px)
+            display: none 
+
+
+
+
+
+
+
+
+
