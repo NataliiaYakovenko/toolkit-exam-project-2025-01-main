@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './DomainForSale.module.sass';
 import FeatureCard from '../Common/FeatureCard/FeatureCard';
 import CONSTANTS from '../../../../../../constants';
+import FeatureList from '../Common/FeatureList/FeatureList';
 
 class DomainForSale extends React.Component {
   constructor(props) {
@@ -38,106 +39,60 @@ class DomainForSale extends React.Component {
               discription="Find one-word domains with modern extensions like .ai, .io, and .xyz."
             />
           </div>
-          
 
           <div className={styles.domainsCenter}>
-            <h4 className={styles.domainsCenterTitle}>
-              Top Domain Collections
-            </h4>
+            <FeatureList
+              tittle="Top Domain Collections"
+              link1="https://www.atom.com/premium-domains-for-sale/tld/.ai"
+              titleLink1=".ai Domains"
+              mark="Popular"
+              link2="https://www.atom.com/premium-domains-for-sale/length/Short"
+              titleLink2="Short Domains"
+              link3="https://www.atom.com/premium-domains-for-sale/type_of_name/One%20Word"
+              titleLink3=" One-Word Domains"
+              link4="https://www.atom.com/premium-domains-for-sale/length/3%20Letters"
+              titleLink4="3 Letter Domains"
+              link5="https://www.atom.com/premium-domains-for-sale/length/4%20Letters"
+              titleLink5="4 Letter Domains"
+              link6="https://www.atom.com/premium-domains-for-sale/length/5%20Letters"
+              titleLink6="5 Letter Domains"
+              link7="https://www.atom.com/cctld/buy-domains"
+              titleLink7="Country-Specific Domains"
+            />
+            <FeatureList />
 
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/tld/.ai"
-            >
-              .ai Domains
-            </a>
-            <span className={styles.domainsCenterMark}>Popular</span>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/length/Short"
-            >
-              Short Domains
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/type_of_name/One%20Word"
-            >
-              One-Word Domains
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/length/3%20Letters"
-            >
-              3 Letter Domains
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/length/4%20Letters"
-            >
-              4 Letter Domains
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/premium-domains-for-sale/length/5%20Letters"
-            >
-              5 Letter Domains
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/cctld/buy-domains"
-            >
-              Country-Specific Domains
-            </a>
-
-            <h4 className={styles.domainsCenterTitle}>Domain Services</h4>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/pay"
-            >
-              Domain Transactions
-            </a>
-            <span className={styles.domainsCenterMark}>AtomPay</span>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/domain-broker"
-            >
-              Domain Broker
-            </a>
-
-            <a
-              className={styles.domainsCenterLink}
-              href="https://www.atom.com/auctions/all"
-            >
-              Domain Auction
-            </a>
+            <FeatureList
+              tittle="Domain Services"
+              link1="https://www.atom.com/pay"
+              titleLink1="Domain Transactions"
+              mark="AtomPay"
+              link2="https://www.atom.com/domain-broker"
+              titleLink2="Domain Broker"
+              link3="https://www.atom.com/auctions/all"
+              titleLink3="Domain Auction"
+            />
           </div>
 
           <a
-            className={styles.getStarted}
+            className={styles.getStarted}   style={{
+            backgroundImage: `url(${CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS_BACKGROUND})`,
+          }}
             href="https://www.atom.com/premium-domains-for-sale"
           >
             <img
               className={styles.getStartedImage}
-              src="https://www.atom.com/public/images/common/get_started.png"
+              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS}
               alt="Work process"
             />
             <img
               className={styles.getStartedDandruff}
-              src="https://img.atom.com/public/images/common/search.svg"
+              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_DUNDRUFF}
               alt="dandruff"
             />
             <span className={styles.getStartTitle}>Get Started</span>
             <img
               className={styles.getStartedArrow}
-              src="https://img.atom.com/public/images/payments/arrow_right_black.svg"
+              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
               alt="arrow"
             />
             <p className={styles.getStartComment}>
