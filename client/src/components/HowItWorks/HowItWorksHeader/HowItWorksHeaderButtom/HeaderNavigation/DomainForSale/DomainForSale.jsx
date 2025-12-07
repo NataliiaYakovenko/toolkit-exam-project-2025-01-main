@@ -17,24 +17,24 @@ class DomainForSale extends React.Component {
           <div className={styles.domainsLeft}>
             <FeatureCard
               link="https://accessibe.com/blog/knowledgebase/screen-reader-guide"
-              leftIcon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PREMIUM}
-              leftIconAlt="Premium Domain Marketplace"
+              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PREMIUM}
+              IconAlt="Premium Domain Marketplace"
               title="Premium Domain Marketplace"
               discription="Explore 300,000+ expert-curated, brandable domains to elevate your business."
             />
 
             <FeatureCard
               link="https://www.atom.com/ultra-premium-marketplace/all"
-              leftIcon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ULTRA}
-              leftIconAlt="Ultra Premium Marketplace"
+              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ULTRA}
+              IconAlt="Ultra Premium Marketplace"
               title="Ultra Premium Marketplace"
               discription="Discover the world’s most coveted and powerful domains for top-tier brands."
             />
 
             <FeatureCard
               link="https://www.atom.com/sapphire/all"
-              leftIcon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SAPPHIRE}
-              leftIconAlt="Sapphire Marketplace"
+              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SAPPHIRE}
+              IconAlt="Sapphire Marketplace"
               title="Sapphire Marketplace"
               discription="Find one-word domains with modern extensions like .ai, .io, and .xyz."
             />

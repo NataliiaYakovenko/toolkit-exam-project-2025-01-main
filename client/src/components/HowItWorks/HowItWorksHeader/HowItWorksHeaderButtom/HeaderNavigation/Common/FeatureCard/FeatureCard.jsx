@@ -5,22 +5,22 @@ import CONSTANTS from'../../../../../../../constants'
 const FeatureCard = (props) => {
   return (
     <div className={styles.featureWrapper}>
-      <a className={styles.featureLeftLink} href={props.link}>
+      <a className={styles.featureLink} href={props.link}>
         <img
-          className={styles.featureLeftIcon}
-          src={props.leftIcon}
-          alt={props.leftIconAlt}
+          className={styles.featureIcon}
+          src={props.Icon}
+          alt={props.IconAlt}
         />
-        <h3 className={styles.featureLeftTitle}>
+        <h3 className={styles.featureTitle}>
           {props.title}
 
           <img
-            className={styles.featureLeftArrow}
+            className={styles.featureArrow}
             src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
             alt="arrow"
           />
         </h3>
-        <p className={styles.featureLeftComment}>{props.discription}</p>
+        <p className={styles.featureComment}>{props.discription}</p>
       </a>
 
       
