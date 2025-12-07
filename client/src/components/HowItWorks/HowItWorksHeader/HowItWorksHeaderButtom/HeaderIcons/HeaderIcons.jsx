@@ -9,7 +9,7 @@ import { FaHeart } from 'react-icons/fa';
 import CONSTANTS from '../../../../constants';
 
 
-class HowItWorksHeaderIcons extends React.Component {
+class HeaderIcons extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -94,4 +94,4 @@ class HowItWorksHeaderIcons extends React.Component {
   }
 }
 
-export default HowItWorksHeaderIcons;
+export default HeaderIcons;
