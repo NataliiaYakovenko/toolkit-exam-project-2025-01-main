@@ -15,6 +15,8 @@ module.exports = {
   OFFER_STATUS_PENDING: 'pending',
   STATIC_IMAGES_PATH: '/staticImages/',
   ANONYM_IMAGE_PATH: '/staticImages/anonym.png',
+  HOW_IT_WORKS_HEADER_BACKGROUND: '/howItWorks/header/backgroundTopHeader.png',
+  HOW_IT_WORKS_HEADER_LOGO_ATOM: '/howItWorks/header/logoAtom.png',
   HOW_IT_WORKS_HEADER_TARGET: '/staticImages/target.png',
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',

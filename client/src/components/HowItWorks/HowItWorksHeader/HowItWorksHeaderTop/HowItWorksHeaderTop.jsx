@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './HowItWorksHeaderTop.module.sass';
+import CONSTANTS from '../../../../constants';
 
 class HowItWorksHeaderTop extends React.Component {
   constructor(props) {
@@ -10,7 +11,12 @@ class HowItWorksHeaderTop extends React.Component {
   render() {
     return (
       <div className={styles.containerTop}>
-        <div className={styles.wrapperBunner}>
+        <div
+          className={styles.wrapperBunner}
+          style={{
+            backgroundImage: `url(${CONSTANTS.HOW_IT_WORKS_HEADER_BACKGROUND})`,
+          }}
+        >
           <div className={styles.bunner}>
             <div className={styles.leftBunner}></div>
 
