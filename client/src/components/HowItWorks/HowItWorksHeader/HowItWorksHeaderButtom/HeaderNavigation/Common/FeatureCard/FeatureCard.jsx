@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './FeatureCard.module.sass';
-import CONSTANTS from'../../../../../../../constants'
+import CONSTANTS from '../../../../../../../constants';
 
 const FeatureCard = (props) => {
   return (
@@ -11,19 +11,19 @@ const FeatureCard = (props) => {
           src={props.Icon}
           alt={props.IconAlt}
         />
-        <h3 className={styles.featureTitle}>
-          {props.title}
+        <div className={styles.containerTitleAndDiscription}>
+          <h3 className={styles.featureTitle}>
+            {props.title}
 
-          <img
-            className={styles.featureArrow}
-            src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
-            alt="arrow"
-          />
-        </h3>
-        <p className={styles.featureComment}>{props.discription}</p>
+            <img
+              className={styles.featureArrow}
+              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
+              alt="arrow"
+            />
+          </h3>
+          <p className={styles.featureComment}>{props.discription}</p>
+        </div>
       </a>
-
-      
     </div>
   );
 };

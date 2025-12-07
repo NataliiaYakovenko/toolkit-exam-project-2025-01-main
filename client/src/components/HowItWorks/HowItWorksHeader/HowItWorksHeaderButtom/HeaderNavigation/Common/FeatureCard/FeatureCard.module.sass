@@ -1,47 +1,50 @@
 
-  .featureLeft
+.featureWrapper
+  display: block
+  padding: 10px 25px 0 10px
+  width: 410px
+  line-height: 20px
+ 
 
-    .featureWrapper
-      display: block
-      padding: 25px
-      width: 410px
-      line-height: 20px
+  .featureLink
+    display: flex
+    align-items: center
+    gap: 25px
+    text-decoration: none
+    margin-bottom: 25px
+    
 
-      .featureLink
-        display: flex
-        align-items: center
-        gap: 25px
-        text-decoration: none
-        margin-bottom: 25px
+    .featureIcon
+      transition: all ease .5s
+      overflow: hidden
+      min-width: 65px
+      width: 70px
+      height: 70px
 
-        .featureIcon
-          transition: all ease .5s
-          overflow: hidden
-          min-width: 65px
-          width: 270px
-          height: 185px
+    .featureTitle
+      display: flex
+      font-size: 18px
+      color: #222
+      font-weight: 700
+      align-items: center
+      padding: 0 0 5px 0
+      column-gap: 10px
+      white-space: nowrap
 
-        .featureTitle
-          display: flex
-          font-size: 18px
-          color: #222
-          font-weight: 700
-          align-items: center
-          padding: 0 0 5px 0
-          column-gap: 10px
-          white-space: nowrap
+      .featureArrow
+        position: relative
+        top: 1px
+        margin-left: 0
+        right: 0
+        transition: all ease .3s
+        width: 7px
+        height: 12px
 
-          .featureArrow
-            position: relative
-            top: 1px
-            margin-left: 0
-            right: 0
-            transition: all ease .3s
-            width: 7px
-            height: 12px
+    .featureComment
+      color: #757575
+      font-size: 14px
+      margin: 0
+      font-weight: 400
+      overflow-wrap: break-word
 
-        .featureComment
-          color: #757575
-          font-size: 14px
-          margin: 0
-          font-weight: 400   
+    

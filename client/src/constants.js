@@ -22,7 +22,11 @@ module.exports = {
   HOW_IT_WORKS_HEADER_ICON_SAPPHIRE: '/howItWorks/header/icon3.svg',
   HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS: '/howItWorks/header/icon4.png',
   HOW_IT_WORKS_HEADER_ICON_DUNDRUFF: '/howItWorks/header/icon5.svg',
-  HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS_BACKGROUND: '/howItWorks/header/icon6.svg',
+  HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS_BACKGROUND:
+    '/howItWorks/header/icon6.svg',
+  HOW_IT_WORKS_HEADER_ICON_GENERATOR: '/howItWorks/header/icon7.svg',
+  HOW_IT_WORKS_HEADER_ICON_TOOL: '/howItWorks/header/icon8.svg',
+  HOW_IT_WORKS_HEADER_ICON_LOOKUP: '/howItWorks/header/icon9.svg',
   HOW_IT_WORKS_HEADER_ICON_ARROW: '/howItWorks/header/iconArrow.svg',
   HOW_IT_WORKS_HEADER_TARGET: '/staticImages/target.png',
   BASE_URL: `http://${serverIP}:${serverPort}/`,
