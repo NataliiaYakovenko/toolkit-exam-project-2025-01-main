@@ -5,6 +5,7 @@ import DomainForSale from '../HeaderNavigation/DomainForSale/DomainForSale';
 import FreeDomainTools from '../HeaderNavigation/FreeDomainTools/FreeDomainTools';
 import NamingBrandingService from '../HeaderNavigation/NamingBrandingService/NamingBrandingService';
 import WyAtom from '../HeaderNavigation/WyAtom/WyAtom';
+import HeaderIcons from '../HeaderIcons/IconsContact/IconsContact'
 
 const HowItWorksHeaderButtom = () => {
   const [activeTab, setActiveTab] = useState('');
@@ -16,6 +17,7 @@ const HowItWorksHeaderButtom = () => {
           <div>
             <HowItWorksHeaderLogo />
           </div>
+
           <div className={styles.navigationContainer}>
             <div className={styles.navigationWrapper}>
               <ul>
@@ -68,6 +70,10 @@ const HowItWorksHeaderButtom = () => {
               </ul>
               
             </div>
+          </div>
+
+          <div>
+            <HeaderIcons/>
           </div>
         </div>
       </div>

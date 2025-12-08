@@ -37,6 +37,8 @@ module.exports = {
   HOW_IT_WORKS_HEADER_ICON_MCP_SERVER: '/howItWorks/header/icon17.svg', 
   HOW_IT_WORKS_HEADER_ICON_LABEL: '/howItWorks/header/icon18.svg', 
   HOW_IT_WORKS_HEADER_ICON_ATOM_CONNECT: '/howItWorks/header/icon19.svg', 
+  HOW_IT_WORKS_HEADER_ICON_SEARCH: '/howItWorks/header/icon20.svg', 
+  HOW_IT_WORKS_HEADER_ICON_SEARCH_WHITE: '/howItWorks/header/icon21.svg', 
   HOW_IT_WORKS_HEADER_ICON_ARROW: '/howItWorks/header/iconArrow.svg',
   HOW_IT_WORKS_HEADER_TARGET: '/staticImages/target.png',
   BASE_URL: `http://${serverIP}:${serverPort}/`,

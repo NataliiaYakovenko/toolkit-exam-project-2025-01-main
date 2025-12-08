@@ -1,0 +1,80 @@
+.iconsContactContainer
+  position: relative
+
+  .search
+    font-size: 16px
+    font-weight: 400px
+    display: block
+    line-height: 1.5
+    unicode-bidi: isolate
+    box-sizing: border-box
+    cursor: pointer
+    border-radius: 50%
+    transition: all ease .3s
+    margin: 0
+    flex-shrink: 0
+    width: 30px
+    height: 30px
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: 23px auto
+    background-color: #eee
+    color: #343434
+    display: flex
+    align-items: center
+    justify-content: center
+
+    &:hover
+      background-color: #ddd
+
+  .searchForm
+    position: fixed
+    top: 200px 
+    left: 0
+    width: 100%
+    background: white
+    z-index: 1000
+    padding: 20px 0 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15)
+    animation: slideDown 0.3s ease
+
+    .searchFormOpen
+      max-width: 1440px
+      margin: 0 auto
+      pading: 0 15px
+      position: relative
+      display: flex
+      align-items: center
+      justify-content: space-between  
+
+      .searchInput
+        border: none
+        outline: 0
+        display: block
+        width: 100%
+        text-align: left
+        background: #fff
+        height: 40px
+        line-height: 60px
+        color: #343434
+        font-size: 18px
+
+      .btnSearch
+        position: absolute
+        right: 5px
+        top: -4px
+        background: #ff6955
+        font-size: 16px
+        width: 68px
+        height: 54px
+        padding: 0
+        cursor: pointer
+        border: none
+        border-radius: 40%
+        transition: all ease .6s
+        box-shadow: 3px 3px 10px 0 rgb(255 104 85 / .3)
+        background-repeat: no-repeat
+        background-position: center
+  
+        &:hover
+          background-color: #e55a2b
