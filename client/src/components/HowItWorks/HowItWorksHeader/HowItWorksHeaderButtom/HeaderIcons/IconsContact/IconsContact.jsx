@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import CONSTANTS from '../../../../../../constants';
 import styles from './IconsContact.module.sass';
 import ContactForm from '../ContactForm/ContactForm';
+import CommunicationWithUser from '../CommunicationWithUser/CommunicationWithUser';
 
 const IconsContact = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -61,58 +62,29 @@ const IconsContact = () => {
           >
             <img src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_USER} alt="user" />
           </div>
-          {activeTab === 'contactForm' && <ContactForm/>}
+          {activeTab === 'contactForm' && <ContactForm />}
         </div>
 
- 
+        <div className={styles.communicationWithUserContainer}>
+          <div
+            className={styles.communicationWithUserIcon}
+            onMouseEnter={() => setActiveTab('communicationWithUser')}
+            onMouseLeave={() => setActiveTab('')}
+          >
+            <img src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PHONE} alt="phone" />
+          </div>
+          {activeTab === 'communicationWithUser' && <CommunicationWithUser />}
+        </div>
 
-
-
-        {/* <li>
-              <a href="/">
-                <MdLocalPhone />
-                <ul>
-              
-                  <li>
-                    <a href="/">
-                      <MdLocalPhone />
-                      <span>(877) 355-3585</span>
-                    </a>
-                  </li>
-         
-                  <li>
-                    <a href="/">
-                      <BsChatLeftDotsFill />
-                      <span>Chat</span>
-                    </a>
-                  </li>
-             
-                        <li>
-                    <a href="/">
-                      <MdEmail />
-                      <span>Email</span>
-                    </a>
-                  </li>
-         
-                  <li>
-                    <a href="/">
-                      <img
-                        src={CONSTANTS.HOW_IT_WORKS_HEADER_TARGET}
-                        alt="Help Desk"
-                      />
-                      <span>Help Desk</span>
-                    </a>
-                  </li>
-
-                  
-                  <a href="/">
-                    <FaHeart />
-                  </a>
-
-                  
-                </ul>
-              </a>
-            </li> */}
+        <div className={styles.likesContainer}>
+          <a href="https://www.atom.com/shortlisted-domains">
+            <img
+              className={styles.likesIcon}
+              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_HEART}
+              alt="Heart"
+            />
+          </a>
+        </div>
       </div>
     </>
   );
