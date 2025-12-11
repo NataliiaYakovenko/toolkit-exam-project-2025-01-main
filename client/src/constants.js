@@ -47,6 +47,7 @@ module.exports = {
   HOW_IT_WORKS_HEADER_ICON_HELP_DESK: '/howItWorks/header/icon27.svg',    
   HOW_IT_WORKS_HEADER_ICON_ARROW: '/howItWorks/header/iconArrow.svg',
   HOW_IT_WORKS_HEADER_ICON_HEART: '/howItWorks/header/icon28.svg', 
+  HOW_IT_WORKS_HEADER_ICON_SEARCH_ARROW: '/howItWorks/header/icon29.svg',  
   HOW_IT_WORKS_HEADER_TARGET: '/staticImages/target.png',
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
