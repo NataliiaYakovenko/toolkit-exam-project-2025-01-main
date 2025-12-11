@@ -6,7 +6,7 @@ import FreeDomainTools from '../HeaderNavigation/FreeDomainTools/FreeDomainTools
 import NamingBrandingService from '../HeaderNavigation/NamingBrandingService/NamingBrandingService';
 import WyAtom from '../HeaderNavigation/WyAtom/WyAtom';
 import HeaderIcons from '../HeaderIcons/IconsContact/IconsContact';
-import HeaderMobile from '../HeaderMobile/HeaderMobile';
+import HeaderMobile from '../HeaderMobile/MobileFormMain/MobileFormMain';
 
 const HowItWorksHeaderButtom = () => {
   const [activeTab, setActiveTab] = useState('');
