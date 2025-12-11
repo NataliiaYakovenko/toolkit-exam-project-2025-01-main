@@ -61,14 +61,11 @@ const HowItWorksHeaderButtom = () => {
             </div>
           </div>
 
-          <div>
+          <div className={styles.headerIconsContainer}>
             <HeaderIcons />
+            <HeaderMobile className={styles.headerMobileContainer} />
           </div>
         </div>
-      </div>
-
-      <div>
-        <HeaderMobile />
       </div>
     </div>
   );
