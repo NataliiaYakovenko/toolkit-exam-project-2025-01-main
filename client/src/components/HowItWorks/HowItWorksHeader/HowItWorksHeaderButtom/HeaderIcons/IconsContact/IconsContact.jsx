@@ -19,6 +19,10 @@ const IconsContact = () => {
 
   return (
     <>
+      {isSearchOpen && (
+        <div className={styles.overlay} onClick={toggleSearch} />
+      )}
+
       <div className={styles.iconsContactContainer}>
         <div
           className={`${styles.search} ${
@@ -54,23 +58,23 @@ const IconsContact = () => {
           </div>
         )}
 
-        <div className={styles.userContactFormContainer}>
-          <div
-            className={styles.userContactFormIcon}
-            onMouseEnter={() => setActiveTab('contactForm')}
-            onMouseLeave={() => setActiveTab('')}
-          >
+        <div
+          onMouseEnter={() => setActiveTab('contactForm')}
+          onMouseLeave={() => setActiveTab('')}
+          className={styles.userContactFormContainer}
+        >
+          <div className={styles.userContactFormIcon}>
             <img src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_USER} alt="user" />
           </div>
           {activeTab === 'contactForm' && <ContactForm />}
         </div>
 
-        <div className={styles.communicationWithUserContainer}>
-          <div
-            className={styles.communicationWithUserIcon}
-            onMouseEnter={() => setActiveTab('communicationWithUser')}
-            onMouseLeave={() => setActiveTab('')}
-          >
+        <div
+          onMouseEnter={() => setActiveTab('communicationWithUser')}
+          onMouseLeave={() => setActiveTab('')}
+          className={styles.communicationWithUserContainer}
+        >
+          <div className={styles.communicationWithUserIcon}>
             <img src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PHONE} alt="phone" />
           </div>
           {activeTab === 'communicationWithUser' && <CommunicationWithUser />}

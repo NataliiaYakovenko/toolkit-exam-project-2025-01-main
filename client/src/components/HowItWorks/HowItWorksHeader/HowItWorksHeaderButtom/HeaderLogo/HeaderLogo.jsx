@@ -7,7 +7,7 @@ class HowItWorksHeaderLogo extends React.Component {
     return (
       <>
         <div className={styles.headerLogo}>
-          <a href="/">
+          <a href="https://www.atom.com/">
             <img src={CONSTANTS.HOW_IT_WORKS_HEADER_LOGO_ATOM} alt="logo" />
           </a>
         </div>

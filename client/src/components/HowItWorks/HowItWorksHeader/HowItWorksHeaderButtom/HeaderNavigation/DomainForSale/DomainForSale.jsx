@@ -59,8 +59,6 @@ class DomainForSale extends React.Component {
               link7="https://www.atom.com/cctld/buy-domains"
               titleLink7="Country-Specific Domains"
             />
-            <FeatureList />
-
             <FeatureList
               tittle="Domain Services"
               link1="https://www.atom.com/pay"
@@ -74,27 +72,32 @@ class DomainForSale extends React.Component {
           </div>
 
           <a
-            className={styles.getStarted}   style={{
-            backgroundImage: `url(${CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS_BACKGROUND})`,
-          }}
+            className={styles.getStarted}
+            style={{
+              backgroundImage: `url(${CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS_BACKGROUND})`,
+            }}
             href="https://www.atom.com/premium-domains-for-sale"
           >
-            <img
-              className={styles.getStartedImage}
-              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS}
-              alt="Work process"
-            />
-            <img
-              className={styles.getStartedDandruff}
-              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_DUNDRUFF}
-              alt="dandruff"
-            />
-            <span className={styles.getStartTitle}>Get Started</span>
-            <img
-              className={styles.getStartedArrow}
-              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
-              alt="arrow"
-            />
+            <div className={styles.imageWrapper}>
+              <img
+                className={styles.getStartedImage}
+                src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_WORK_PROCESS}
+                alt="Work process"
+              />
+            </div>
+            <div className={styles.getStartedSearch}>
+              <img
+                className={styles.getStartedDandruff}
+                src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_DUNDRUFF}
+                alt="dandruff"
+              />
+              <span className={styles.getStartTitle}>Get Started</span>
+              <img
+                className={styles.getStartedArrow}
+                src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
+                alt="arrow"
+              />
+            </div>
             <p className={styles.getStartComment}>
               Find your perfect domain today and buy instantly in the Atom.com
               marketplace.

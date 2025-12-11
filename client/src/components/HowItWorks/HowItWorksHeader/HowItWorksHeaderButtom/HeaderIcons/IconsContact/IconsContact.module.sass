@@ -1,3 +1,13 @@
+.overlay
+  position: fixed
+  top: 230px 
+  left: 0
+  width: 100%
+  height: calc(100% - 146px)
+  background-color: rgb(0 0 0 / .1)
+  z-index: 998 
+  animation: fadeIn 0.3s ease   
+
 .iconsContactContainer
   position: relative
   display: flex
@@ -22,22 +32,28 @@
     background-repeat: no-repeat
     background-position: center center
     background-size: 23px auto
-    background-color: #eee
     color: #343434
     display: flex
     align-items: center
     justify-content: center
+    @media( max-width: 770px )
+      display: none
 
-    &:hover
-      background-color: #ddd
-
+    &.searchActive
+      background-color:#ddd
+ 
   .searchForm
-    position: fixed
-    top: 200px 
+    z-index: 998
+    visibility: visible
+    opacity: 1
     left: 0
+    right: 0
+    position: fixed
+    background: transparent
+    border-top: 1px solid #edeff3
+    transition: all ease .3s
+    top: 146px 
     width: 100%
-    background: white
-    z-index: 1000
     padding: 20px 0 
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15)
     animation: slideDown 0.3s ease
@@ -50,18 +66,18 @@
       display: flex
       align-items: center
       justify-content: space-between  
-
+      
       .searchInput
         border: none
         outline: 0
         display: block
         width: 100%
-        text-align: left
-        background: #fff
+        text-align: left  
         height: 40px
         line-height: 60px
         color: #343434
         font-size: 18px
+        box-shadow: none
 
       .btnSearch
         position: absolute
@@ -82,6 +98,7 @@
   
         &:hover
           background-color: #e55a2b
+    
 
   .userContactFormContainer
     .userContactFormIcon
@@ -93,15 +110,19 @@
       flex-shrink: 0
       margin: 0
 
+
   .communicationWithUserContainer
+    margin-top: -4px   
+
     .communicationWithUserIcon
       cursor: pointer
       background-repeat: no-repeat
       background-position: center center
-      background-size: 20px auto
       width: 20px
+      height: 20px
       flex-shrink: 0
       margin: 0
 
   .likesContainer
+    margin-top: -4px   
     .likesIcon   

@@ -5,12 +5,13 @@ const FeatureList = (props) => {
   return (
     <div className={styles.featureListCenter}>
       <h4 className={styles.featureListCenterTitle}>{props.tittle}</h4>
-      <div className={styles.wrapperLinkWitkMark}>
-        <a className={styles.featureListCenterLink} href={props.link1}>
-          <p>{props.titleLink1}</p>
-        </a>
-        <span className={styles.featureListCenterMark}>{props.mark}</span>
-      </div>
+
+      <a className={styles.featureListCenterLink} href={props.link1}>
+        <p>{props.titleLink1}</p>
+        {props.mark && (
+          <span className={styles.featureListCenterMark}>{props.mark}</span>
+        )}
+      </a>
 
       <a className={styles.featureListCenterLink} href={props.link2}>
         <p>{props.titleLink2}</p>
@@ -23,9 +24,6 @@ const FeatureList = (props) => {
         <p>{props.titleLink4}</p>
       </a>
 
-      <a className={styles.featureListCenterLink} href={props.link6}>
-        <p>{props.titleLink5}</p>
-      </a>
       <a className={styles.featureListCenterLink} href={props.link5}>
         <p>{props.titleLink5}</p>
       </a>

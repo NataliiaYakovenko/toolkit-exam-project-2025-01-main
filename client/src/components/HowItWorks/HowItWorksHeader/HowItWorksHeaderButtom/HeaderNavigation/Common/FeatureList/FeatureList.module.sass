@@ -11,23 +11,29 @@
       color: #222
       margin-bottom: 5px
 
-    .wrapperLinkWitkMark 
-      .featureListCenterLink
-        display: inline-block
-        margin: 3px 0 3px -8px
-        padding: 4px 8px
-        font-size: 15px
-        color: #656565  
+    .featureListCenterLink
+      display: flex
+      align-items: center
+      width: fit-content
+      margin: 3px 0 
+      padding: 4px 8px
+      font-size: 15px
+      color: #656565
+      text-decoration: none
+      border-radius: 8px
+      &:hover
+        color: #637cf7
+        background: #eaeeff
  
-      .featureListCenterMark
-        background: linear-gradient(89.52deg, #7088ff .42%, #3a4991 114.33%)
-        box-shadow: 1px 1px 2px rgb(0 0 0 / .15)
-        border-radius: 15px
-        line-height: 22px
-        color: #fff
-        display: inline-block
-        padding: 0 8px
-        margin-left: 5px
-        position: relative
-        top: 0
-        font-size: 13px 
+    .featureListCenterMark
+      background: linear-gradient(89.52deg, #7088ff .42%, #3a4991 114.33%)
+      box-shadow: 1px 1px 2px rgb(0 0 0 / .15)
+      border-radius: 15px
+      line-height: 22px
+      color: #fff
+      display: inline-block
+      padding: 0 8px
+      margin-left: 15px
+      position: relative
+      top: 0
+      font-size: 13px 

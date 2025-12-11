@@ -1,20 +1,27 @@
 .headerButtom
   z-index: 999
-  background-color: #fbfbff
+  background-color:#fff
   position: relative
   transition: all ease .3s
   padding: 15px 0
   box-shadow: 0 2px 6px 0 rgb(0 0 0 / .12)
   
   .headerContainer
+    width: 80%
+    margin: 0 auto
+    padding: 0 20px
+
     .headerWrapper
       display: flex
       align-items: center
       justify-content: space-between
+      gap: 15px
 
-      .navigationContainer
-       
+      .navigationContainer       
         .navigationWrapper
+          @media( max-width: 770px )
+            display: none
+              
           ul
             display: flex
             justify-content: space-between

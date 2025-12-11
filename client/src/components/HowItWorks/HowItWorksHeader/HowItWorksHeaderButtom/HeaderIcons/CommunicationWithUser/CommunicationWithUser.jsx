@@ -1,7 +1,9 @@
 import React from 'react';
 import UserContactInfo from '../Common/UserContactInfo/UserContactInfo';
 import CONSTANTS from '../../../../../../constants';
-import styles from './CommunicationWithUser';
+import styles from './CommunicationWithUser.module.sass';
+
+
 
 const CommunicationWithUser = () => {
   return (
