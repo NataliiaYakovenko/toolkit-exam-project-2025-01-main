@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './MobileNavigation.module.sass';
 import CONSTANTS from '../../../../../../constants';
-import DomainForSale from '../../HeaderNavigation/DomainForSale/DomainForSale';
+import DomainForSaleMobile from '../../HeaderMobile/DomainForSeleMobail/DomainForSaleMobile';
 import FreeDomainTools from '../../HeaderNavigation/FreeDomainTools/FreeDomainTools';
 import NamingBrandingService from '../../HeaderNavigation/NamingBrandingService/NamingBrandingService';
 import WyAtom from '../../HeaderNavigation/WyAtom/WyAtom';
@@ -42,12 +42,12 @@ const MobileNavigation = () => {
     <div>
       <div className={styles.mobileNavigation}>
         <ul>
-          {isDomainsOpen && <DomainForSale />}
           <li className={styles.navigationValues}>
             <div className={styles.navigationName} onClick={toggleDomains}>
               <span>Domains for Sale</span>
               {arrowDown(isDomainsOpen)}
             </div>
+            {isDomainsOpen && <DomainForSaleMobile />}
           </li>
 
           {isToolsOpen && <FreeDomainTools />}

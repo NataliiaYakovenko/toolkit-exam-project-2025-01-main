@@ -6,13 +6,16 @@ const FeatureCard = (props) => {
   return (
     <div className={styles.featureWrapper}>
       <a className={styles.featureLink} href={props.link}>
-        <img
-          className={styles.featureIcon}
-          src={props.Icon}
-          alt={props.IconAlt}
-        />
+        {props.showIcon !== false && props.Icon && (
+          <img
+            className={styles.featureIcon}
+            src={props.Icon}
+            alt={props.IconAlt || ''}
+          />
+        )}
+
         <div className={styles.containerTitleAndDiscription}>
-          <h3 className={styles.featureTitle}>
+          <h3 className={`${styles.featureTitle} ${props.titleClassName || ''}`}>
             {props.title}
 
             <img
