@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './MobileNavigation.module.sass';
 import CONSTANTS from '../../../../../../constants';
 import DomainForSaleMobile from '../../HeaderMobile/DomainForSeleMobail/DomainForSaleMobile';
-import FreeDomainTools from '../../HeaderNavigation/FreeDomainTools/FreeDomainTools';
+import FreeDomainToolsMobile from '../FreeDomainToolsMobile/FreeDomainToolsMobile';
 import NamingBrandingService from '../../HeaderNavigation/NamingBrandingService/NamingBrandingService';
 import WyAtom from '../../HeaderNavigation/WyAtom/WyAtom';
 
@@ -50,12 +50,12 @@ const MobileNavigation = () => {
             {isDomainsOpen && <DomainForSaleMobile />}
           </li>
 
-          {isToolsOpen && <FreeDomainTools />}
           <li className={styles.navigationValues}>
             <div className={styles.navigationName} onClick={toggleTools}>
               <span> Free Domain Tools</span>
               {arrowDown(isToolsOpen)}
             </div>
+            {isToolsOpen && <FreeDomainToolsMobile />}
           </li>
 
           {isNamingOpen && <NamingBrandingService />}
