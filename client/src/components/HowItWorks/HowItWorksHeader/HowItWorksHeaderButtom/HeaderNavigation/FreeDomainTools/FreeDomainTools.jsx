@@ -16,24 +16,24 @@ class FreeDomainTools extends React.Component {
           <div className={styles.wrapperTools}>
             <FeatureCard
               link="https://www.atom.com/domain-name-generator"
-              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_GENERATOR}
-              IconAlt="Generator"
+              icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_GENERATOR}
+              iconAlt="Generator"
               title="AI Domain Name Generator"
               discription="Get hundreds of smart domain ideas in seconds."
             />
 
             <FeatureCard
               link="https://www.atom.com/domain-appraisal"
-              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_TOOL}
-              IconAlt="Tool"
+              icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_TOOL}
+              iconAlt="Tool"
               title="AI Domain Appraisal Tool"
               discription="Instantly check your domain’s market"
             />
 
             <FeatureCard
               link="https://www.atom.com/whois"
-              Icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_LOOKUP}
-              IconAlt="LookUp"
+              icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_LOOKUP}
+              iconAlt="LookUp"
               title="WHOIS Domain Lookup"
               discription="Find domain ownership and registration details."
             />

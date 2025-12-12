@@ -2,37 +2,23 @@ import React from 'react';
 import styles from './FeatureList.module.sass';
 
 const FeatureList = (props) => {
-  return (
-    <div className={styles.featureListCenter}>
-      <h4 className={styles.featureListCenterTitle}>{props.tittle}</h4>
+  const list = [];
 
-      <a className={styles.featureListCenterLink} href={props.link1}>
-        <p>{props.titleLink1}</p>
-        {props.mark && (
-          <span className={styles.featureListCenterMark}>{props.mark}</span>
+  for (let item of props.items) {
+    list.push(
+      <a className={styles.featureListCenterLink} href={item.link}>
+        <p>{item.title}</p>
+        {item.mark && (
+          <span className={styles.featureListCenterMark}>{item.mark}</span>
         )}
       </a>
+    );
+  }
 
-      <a className={styles.featureListCenterLink} href={props.link2}>
-        <p>{props.titleLink2}</p>
-      </a>
-
-      <a className={styles.featureListCenterLink} href={props.link3}>
-        <p>{props.titleLink3}</p>
-      </a>
-      <a className={styles.featureListCenterLink} href={props.link4}>
-        <p>{props.titleLink4}</p>
-      </a>
-
-      <a className={styles.featureListCenterLink} href={props.link5}>
-        <p>{props.titleLink5}</p>
-      </a>
-      <a className={styles.featureListCenterLink} href={props.link6}>
-        <p>{props.titleLink6}</p>
-      </a>
-      <a className={styles.featureListCenterLink} href={props.link7}>
-        <p>{props.titleLink7}</p>
-      </a>
+  return (
+    <div className={styles.featureListCenter}>
+      <h4 className={styles.featureListCenterTitle}>{props.title}</h4>
+      {list}
     </div>
   );
 };

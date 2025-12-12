@@ -42,6 +42,7 @@ const MobileNavigation = () => {
     <div>
       <div className={styles.mobileNavigation}>
         <ul>
+          
           <li className={styles.navigationValues}>
             <div className={styles.navigationName} onClick={toggleDomains}>
               <span>Domains for Sale</span>

@@ -6,11 +6,11 @@ const FeatureCard = (props) => {
   return (
     <div className={styles.featureWrapper}>
       <a className={styles.featureLink} href={props.link}>
-        {props.showIcon !== false && props.Icon && (
+        {props.showIcon !== false && props.icon && (
           <img
             className={styles.featureIcon}
-            src={props.Icon}
-            alt={props.IconAlt || ''}
+            src={props.icon}
+            alt={props.iconAlt || ''}
           />
         )}
 

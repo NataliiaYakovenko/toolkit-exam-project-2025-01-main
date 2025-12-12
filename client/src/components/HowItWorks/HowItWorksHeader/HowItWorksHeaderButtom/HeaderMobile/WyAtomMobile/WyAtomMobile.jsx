@@ -4,17 +4,17 @@ import FeatureList from '../../HeaderNavigation/Common/FeatureList/FeatureList';
 import FeatureCard from '../../HeaderNavigation/Common/FeatureCard/FeatureCard';
 
 const WyAtomMobile = () => {
+
+  const atomItems =[
+    {link:'https://www.atom.com/AboutUs', title: 'About Us', mark: ''},
+    {link:'https://www.trustpilot.com/review/atom.com', title: 'Testimonials', mark: ''},
+    {link:'https://www.atom.com/blog/', title: 'Blog', mark: ''},
+  ]
+
   return (
     <div className={styles.atomMobileContainer}>
       <div className={styles.atomMobileWrapperTop}>
-        <FeatureList
-          tittle="Atom.com"
-          link1="https://www.atom.com/AboutUs"
-          titleLink1="About Us"
-          link2="https://www.trustpilot.com/review/atom.com"
-          titleLink2="Testimonials"
-          link3="https://www.atom.com/blog/"
-          titleLink3="Blog"
+        <FeatureList title="Atom.com" items={atomItems}
         />
       </div>
 

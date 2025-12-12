@@ -5,6 +5,22 @@ import FeatureList from '../../HeaderNavigation/Common/FeatureList/FeatureList';
 import CONSTANTS from '../../../../../../constants';
 
 const DomainForSaleMobile = () => {
+  const domainItems = [
+    { link: 'https://www.atom.com/premium-domains-for-sale/tld/.ai',title: '.ai Domains', mark: 'Popular',},
+    { link: 'https://www.atom.com/premium-domains-for-sale/length/Short',title: 'Short Domains',mark: '',},
+    { link: 'https://www.atom.com/premium-domains-for-sale/type_of_name/One%20Word',title: 'One-Word Domains', mark: '',},
+    { link: 'https://www.atom.com/premium-domains-for-sale/length/3%20Letters', title: '3 Letter Domains', mark: '', },
+    { link: 'https://www.atom.com/premium-domains-for-sale/length/4%20Letters',title: '4 Letter Domains', mark: '', },
+    { link: 'https://www.atom.com/premium-domains-for-sale/length/5%20Letters',title: '5 Letter Domains', mark: '',},
+    { link: 'https://www.atom.com/cctld/buy-domains',title: 'Country-Specific Domains', mark: '', },
+  ];
+
+  const servicesItem =[
+    {link: 'https://www.atom.com/pay', title: 'Domain Transactions', mark:'AtomPay'},
+    {link: 'https://www.atom.com/domain-broker', title: 'Domain Broker', mark:''},
+    {link: 'https://www.atom.com/auctions/all', title: 'Domain Auction', mark:''}
+  ]
+
   return (
     <div className={styles.domainMobileContainer}>
       <div className={styles.domainsMobileTop}>
@@ -34,34 +50,8 @@ const DomainForSaleMobile = () => {
       </div>
 
       <div className={styles.domainsMobileCenter}>
-        <FeatureList
-          tittle="Top Domain Collections"
-          link1="https://www.atom.com/premium-domains-for-sale/tld/.ai"
-          titleLink1=".ai Domains"
-          mark="Popular"
-          link2="https://www.atom.com/premium-domains-for-sale/length/Short"
-          titleLink2="Short Domains"
-          link3="https://www.atom.com/premium-domains-for-sale/type_of_name/One%20Word"
-          titleLink3=" One-Word Domains"
-          link4="https://www.atom.com/premium-domains-for-sale/length/3%20Letters"
-          titleLink4="3 Letter Domains"
-          link5="https://www.atom.com/premium-domains-for-sale/length/4%20Letters"
-          titleLink5="4 Letter Domains"
-          link6="https://www.atom.com/premium-domains-for-sale/length/5%20Letters"
-          titleLink6="5 Letter Domains"
-          link7="https://www.atom.com/cctld/buy-domains"
-          titleLink7="Country-Specific Domains"
-        />
-        <FeatureList
-          tittle="Domain Services"
-          link1="https://www.atom.com/pay"
-          titleLink1="Domain Transactions"
-          mark="AtomPay"
-          link2="https://www.atom.com/domain-broker"
-          titleLink2="Domain Broker"
-          link3="https://www.atom.com/auctions/all"
-          titleLink3="Domain Auction"
-        />
+        <FeatureList title="Top Domain Collections" items={domainItems} />
+        <FeatureList title="Domain Services" items={servicesItem}/>
       </div>
 
       <a
