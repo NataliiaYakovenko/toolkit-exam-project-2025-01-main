@@ -4,7 +4,7 @@ import CONSTANTS from '../../../../../../constants';
 import DomainForSaleMobile from '../../HeaderMobile/DomainForSeleMobail/DomainForSaleMobile';
 import FreeDomainToolsMobile from '../FreeDomainToolsMobile/FreeDomainToolsMobile';
 import NamingBrandingServiceMobile from '../NamingBrandingServiceMobile/NamingBrandingServiceMobile';
-import WyAtom from '../../HeaderNavigation/WyAtom/WyAtom';
+import WyAtomMobile from '../WyAtomMobile/WyAtomMobile';
 
 const MobileNavigation = () => {
   const [isDomainsOpen, setIsDomainsOpen] = useState(false);
@@ -66,12 +66,12 @@ const MobileNavigation = () => {
             {isNamingOpen && <NamingBrandingServiceMobile />}
           </li>
 
-          {isWyAtomOpen && <WyAtom />}
           <li className={styles.navigationValues}>
             <div className={styles.navigationName} onClick={toggleWayAtom}>
               <span> Wy Atom</span>
               {arrowDown(isWyAtomOpen)}
             </div>
+            {isWyAtomOpen && <WyAtomMobile />}
           </li>
         </ul>
       </div>
