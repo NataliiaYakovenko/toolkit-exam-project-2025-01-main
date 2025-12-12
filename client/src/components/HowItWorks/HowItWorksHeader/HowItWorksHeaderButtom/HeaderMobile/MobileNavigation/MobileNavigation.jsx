@@ -3,7 +3,7 @@ import styles from './MobileNavigation.module.sass';
 import CONSTANTS from '../../../../../../constants';
 import DomainForSaleMobile from '../../HeaderMobile/DomainForSeleMobail/DomainForSaleMobile';
 import FreeDomainToolsMobile from '../FreeDomainToolsMobile/FreeDomainToolsMobile';
-import NamingBrandingService from '../../HeaderNavigation/NamingBrandingService/NamingBrandingService';
+import NamingBrandingServiceMobile from '../NamingBrandingServiceMobile/NamingBrandingServiceMobile';
 import WyAtom from '../../HeaderNavigation/WyAtom/WyAtom';
 
 const MobileNavigation = () => {
@@ -58,12 +58,12 @@ const MobileNavigation = () => {
             {isToolsOpen && <FreeDomainToolsMobile />}
           </li>
 
-          {isNamingOpen && <NamingBrandingService />}
           <li className={styles.navigationValues}>
             <div className={styles.navigationName} onClick={toggleNaming}>
               <span> Naming & Branding Services</span>
               {arrowDown(isNamingOpen)}
             </div>
+            {isNamingOpen && <NamingBrandingServiceMobile />}
           </li>
 
           {isWyAtomOpen && <WyAtom />}
