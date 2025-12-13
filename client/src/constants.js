@@ -48,8 +48,11 @@ module.exports = {
   HOW_IT_WORKS_HEADER_ICON_ARROW: '/howItWorks/header/iconArrow.svg',
   HOW_IT_WORKS_HEADER_ICON_HEART: '/howItWorks/header/icon28.svg', 
   HOW_IT_WORKS_HEADER_ICON_SEARCH_ARROW: '/howItWorks/header/icon29.svg',
-  HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN: '/howItWorks/header/icon30.svg',   
-  HOW_IT_WORKS_HEADER_TARGET: '/staticImages/target.png',
+  HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN: '/howItWorks/header/icon30.svg',
+  HOW_IT_WORKS_SECTION_ICON_ARROW:'/howItWorks/mainSection/icon1.svg',
+  HOW_IT_WORKS_SECTION_ICON_FLASH:'/howItWorks/mainSection/icon2.svg',
+  HOW_IT_WORKS_SECTION_ICON_MONITOR:'/howItWorks/mainSection/icon3.svg',
+  HOW_IT_WORKS_SECTION_ICON_LIGHT:'/howItWorks/mainSection/icon4.svg',      
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
   publicURL:
