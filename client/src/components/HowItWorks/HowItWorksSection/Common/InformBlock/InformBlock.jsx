@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './InformBloc.module.sass';
+import styles from './InformBlock.module.sass';
 import CONSTANTS from '../../../../../constants';
 
-const InformBloc = (props) => {
+const InformBlock = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapperInfo}>
@@ -22,4 +22,4 @@ const InformBloc = (props) => {
   );
 };
 
-export default InformBloc;
+export default InformBlock;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './WaysUseAtom.module.sass';
-import InformBloc from '../Common/InformBloc/InformBloc';
+import InformBlock from '../Common/InformBlock/InformBlock';
 import CONSTANTS from '../../../../constants';
 
 const WaysUseAtom = () => {
@@ -17,7 +17,7 @@ const WaysUseAtom = () => {
           </div>
 
           <div className={styles.lowerPartContainer}>
-            <InformBloc
+            <InformBlock
               icon={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_FLASH}
               altIcon="Flash"
               title="Launch a Contest"
@@ -26,7 +26,7 @@ const WaysUseAtom = () => {
               linkTitle="Launch a Contest"
             />
 
-            <InformBloc
+            <InformBlock
               icon={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_MONITOR}
               altIcon="Monitor"
               title="Explore Names For Sale"
@@ -35,7 +35,7 @@ const WaysUseAtom = () => {
               linkTitle="Explore Names For Sale"
             />
 
-            <InformBloc
+            <InformBlock
               icon={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_LIGHT}
               altIcon="Light"
               title="Agency-level Managed Contests"

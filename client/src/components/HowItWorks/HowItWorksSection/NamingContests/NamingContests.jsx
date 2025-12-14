@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './NamingContests.module.sass';
 import CONSTANTS from '../../../../constants';
-import StepBloc from '../Common/StepBloc/StepBloc';
+import StepBlock from '../Common/StepBlock/StepBlock';
 
 const NamingContests = () => {
   return (
@@ -16,19 +16,19 @@ const NamingContests = () => {
           <h3 className={styles.title}>How Do Naming Contests Work?</h3>
         </div>
         <div className={styles.lowerPart}>
-          <StepBloc
+          <StepBlock
             title="Step 1"
             description="Fill out your Naming Brief and begin receiving name ideas in minutes"
           />
-          <StepBloc
+          <StepBlock
           title='Step2'
           description='Rate the submissions and provide feedback to creatives. Creatives submit even more names based on your feedback.'
           />
-           <StepBloc
+           <StepBlock
           title='Step 3'
           description='Our team helps you test your favorite names with your target audience. We also assist with Trademark screening.'
           />
-           <StepBloc
+           <StepBlock
           title='Step 4'
           description='Pick a Winner. The winner gets paid for their submission.'
           />

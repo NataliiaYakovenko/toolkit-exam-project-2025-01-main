@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './StepBloc.module.sass';
+import styles from './StepBlock.module.sass';
 import CONSTANTS from '../../../../../constants';
 
-const StepBloc = (props) => {
+const StepBlock = (props) => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
@@ -20,4 +20,4 @@ const StepBloc = (props) => {
   );
 };
 
-export default StepBloc;
+export default StepBlock;
