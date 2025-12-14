@@ -52,7 +52,9 @@ module.exports = {
   HOW_IT_WORKS_SECTION_ICON_ARROW:'/howItWorks/mainSection/icon1.svg',
   HOW_IT_WORKS_SECTION_ICON_FLASH:'/howItWorks/mainSection/icon2.svg',
   HOW_IT_WORKS_SECTION_ICON_MONITOR:'/howItWorks/mainSection/icon3.svg',
-  HOW_IT_WORKS_SECTION_ICON_LIGHT:'/howItWorks/mainSection/icon4.svg',      
+  HOW_IT_WORKS_SECTION_ICON_LIGHT:'/howItWorks/mainSection/icon4.svg',
+  HOW_IT_WORKS_SECTION_ICON_CUP:'/howItWorks/mainSection/icon5.svg', 
+  HOW_IT_WORKS_SECTION_ICON_STEP_ARROW:'/howItWorks/mainSection/icon6.svg',     
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
   publicURL:
