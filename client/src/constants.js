@@ -56,7 +56,9 @@ module.exports = {
   HOW_IT_WORKS_SECTION_ICON_CUP:'/howItWorks/mainSection/icon5.svg', 
   HOW_IT_WORKS_SECTION_ICON_STEP_ARROW:'/howItWorks/mainSection/icon6.svg',    
   HOW_IT_WORKS_SECTION_ICON_PLUS:'/howItWorks/mainSection/icon7.svg', 
-  HOW_IT_WORKS_SECTION_ICON_X:'/howItWorks/mainSection/icon8.svg',   
+  HOW_IT_WORKS_SECTION_ICON_X:'/howItWorks/mainSection/icon8.svg',
+  HOW_IT_WORKS_SECTION_ICON_SEARCH:'/howItWorks/mainSection/icon9.svg',
+ 
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
   publicURL:
