@@ -1,16 +1,14 @@
 .searchContainer
-  border: 1px solid red
   box-sizing: border-box
   text-align: center
   background: #fff
-  padding: 80px 0
+  padding: 80px 20px
   font-size: 16px
   font-weight: 400
   color: #19184a
   line-height: 1.5
 
   .searchWrapper
-    border: 1px solid red 
     border-bottom: 1px solid #edeff3
     padding-top: 40px
     padding-bottom: 60px
@@ -35,7 +33,19 @@
         opacity: 1
         visibility: visible
 
-
+      &:focus-within
+        &::before
+          content: ''
+          position: absolute
+          top: -6px  
+          left: -6px
+          right: -6px
+          bottom: -6px
+          border: 3px solid #339bf7
+          border-radius: 0 
+          pointer-events: none  
+          z-index: 0
+   
       .searchDundruff
         width: 20px
         height: 20px
@@ -89,12 +99,15 @@
         padding: 0
         position: absolute
         top: 5px
-        right: 5px
+        right: 10px
         cursor: pointer
         border: none
         border-radius: 40px
         transition: all ease .6s
         box-shadow: 3px 3px 10px 0 rgb(255 104 85 / .3)
+
+        &:hover
+          background-color: #ff533c
         
         .btnSearchDundruff
           width: 21px

@@ -21,7 +21,7 @@ const HowAtomWorks = () => {
               <iframe
                 className={styles.video}
                 src="https://iframe.mediadelivery.net/embed/239474/327efcdd-b1a2-4891-b274-974787ae8362?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
-                title="video"
+                title="Business name"
               />
             </div>
           </div>
