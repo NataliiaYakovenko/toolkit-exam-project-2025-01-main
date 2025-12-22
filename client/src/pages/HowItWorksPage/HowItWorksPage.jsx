@@ -1,7 +1,7 @@
 import React from 'react';
 import HowItWorksHeader from '../../components/HowItWorks/HowItWorksHeader/HowItWorksHeaderMain/HowItWorksHeaderMain';
 import HowItWorksSection from '../../components/HowItWorks/HowItWorksSection/HowItWorksSectionMain/HowItWorksSectionMain';
-import HowItWorksFooter from '../../components/HowItWorks/HowItWorksFooter/HowItWorksFooter';
+import HowItWorksFooter from '../../components/HowItWorks/HowItWorksFooter/HowItWorksFooterMain/HowItWorksFooterMain';
 
 const HowItWorksPage = () => {
   return (
