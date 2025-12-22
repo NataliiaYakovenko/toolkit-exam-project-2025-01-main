@@ -4,18 +4,20 @@ import FeatureList from '../../HeaderNavigation/Common/FeatureList/FeatureList';
 import FeatureCard from '../../HeaderNavigation/Common/FeatureCard/FeatureCard';
 
 const WyAtomMobile = () => {
-
-  const atomItems =[
-    {link:'https://www.atom.com/AboutUs', title: 'About Us', mark: ''},
-    {link:'https://www.trustpilot.com/review/atom.com', title: 'Testimonials', mark: ''},
-    {link:'https://www.atom.com/blog/', title: 'Blog', mark: ''},
-  ]
+  const atomItems = [
+    { link: 'https://www.atom.com/AboutUs', title: 'About Us', mark: '' },
+    {
+      link: 'https://www.trustpilot.com/review/atom.com',
+      title: 'Testimonials',
+      mark: '',
+    },
+    { link: 'https://www.atom.com/blog/', title: 'Blog', mark: '' },
+  ];
 
   return (
     <div className={styles.atomMobileContainer}>
       <div className={styles.atomMobileWrapperTop}>
-        <FeatureList title="Atom.com" items={atomItems}
-        />
+        <FeatureList title="Atom.com" items={atomItems} />
       </div>
 
       <div className={styles.atomMobileWrapperDown}>
@@ -24,7 +26,7 @@ const WyAtomMobile = () => {
           link="https://www.atom.com/connect/distribution-network"
           title="Distribution Network API"
           titleClassName={styles.mobileTitle}
-          discription="Share our premium domains with your clients."
+          description="Share our premium domains with your clients."
           showIcon={false}
         />
 
@@ -32,7 +34,7 @@ const WyAtomMobile = () => {
           link="https://www.atom.com/atom-mcp-server"
           title="MCP Server"
           titleClassName={styles.mobileTitle}
-          discription="Access premium domains, availability checks, and trademark data."
+          description="Access premium domains, availability checks, and trademark data."
           showIcon={false}
         />
 
@@ -40,7 +42,7 @@ const WyAtomMobile = () => {
           link="https://www.atom.com/connect/marketplace-builder"
           title="White Label Marketplace"
           titleClassName={styles.mobileTitle}
-          discription="Offer a turnkey branded domain marketplace on your site."
+          description="Offer a turnkey branded domain marketplace on your site."
           showIcon={false}
         />
 
@@ -48,7 +50,7 @@ const WyAtomMobile = () => {
           link="https://www.atom.com/connect"
           title="Atom Connect"
           titleClassName={styles.mobileTitle}
-          discription="Learn more about our full partner ecosystem."
+          description="Learn more about our full partner ecosystem."
           showIcon={false}
         />
       </div>

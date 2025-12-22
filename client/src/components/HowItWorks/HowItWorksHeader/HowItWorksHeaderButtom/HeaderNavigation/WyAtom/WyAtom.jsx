@@ -27,7 +27,7 @@ const WyAtom =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_NETWORK_API}
               iconAlt="Network API"
               title="Distribution Network API"
-              discription="Share our premium domains with your clients."
+              description="Share our premium domains with your clients."
             />
 
             <FeatureCard
@@ -35,7 +35,7 @@ const WyAtom =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_MCP_SERVER}
               iconAlt="MCP Server"
               title="MCP Server"
-              discription="Access premium domains, availability checks, and trademark
+              description="Access premium domains, availability checks, and trademark
                   data."
             />
 
@@ -44,7 +44,7 @@ const WyAtom =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_LABEL}
               iconAlt="Label"
               title="White Label Marketplace"
-              discription="Offer a turnkey branded domain marketplace on your site."
+              description="Offer a turnkey branded domain marketplace on your site."
             />
 
             <FeatureCard
@@ -52,7 +52,7 @@ const WyAtom =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ATOM_CONNECT}
               iconAlt="Atom Connect"
               title="Atom Connect"
-              discription="Learn more about our full partner ecosystem."
+              description="Learn more about our full partner ecosystem."
             />
           </div>
         </div>

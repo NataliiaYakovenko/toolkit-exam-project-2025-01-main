@@ -14,7 +14,7 @@ const FeatureCard = (props) => {
           />
         )}
 
-        <div className={styles.containerTitleAndDiscription}>
+        <div className={styles.containerTitleAndDescription}>
           <h3 className={`${styles.featureTitle} ${props.titleClassName || ''}`}>
             {props.title}
 
@@ -24,7 +24,7 @@ const FeatureCard = (props) => {
               alt="arrow"
             />
           </h3>
-          <p className={styles.featureComment}>{props.discription}</p>
+          <p className={styles.featureComment}>{props.description}</p>
         </div>
       </a>
     </div>

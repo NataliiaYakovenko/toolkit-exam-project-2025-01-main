@@ -31,7 +31,7 @@ const DomainForSale =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PREMIUM}
               iconAlt="Premium Domain Marketplace"
               title="Premium Domain Marketplace"
-              discription="Explore 300,000+ expert-curated, brandable domains to elevate your business."
+              description="Explore 300,000+ expert-curated, brandable domains to elevate your business."
             />
 
             <FeatureCard
@@ -39,7 +39,7 @@ const DomainForSale =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ULTRA}
               iconAlt="Ultra Premium Marketplace"
               title="Ultra Premium Marketplace"
-              discription="Discover the world’s most coveted and powerful domains for top-tier brands."
+              description="Discover the world’s most coveted and powerful domains for top-tier brands."
             />
 
             <FeatureCard
@@ -47,7 +47,7 @@ const DomainForSale =()=> {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SAPPHIRE}
               iconAlt="Sapphire Marketplace"
               title="Sapphire Marketplace"
-              discription="Find one-word domains with modern extensions like .ai, .io, and .xyz."
+              description="Find one-word domains with modern extensions like .ai, .io, and .xyz."
             />
           </div>
 

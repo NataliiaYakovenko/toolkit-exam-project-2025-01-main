@@ -10,7 +10,7 @@ const FreeDomainToolsMobile = () => {
           link="https://www.atom.com/domain-name-generator"
           title="AI Domain Name Generator"
           titleClassName={styles.mobileTitle}
-          discription="Get hundreds of smart domain ideas in seconds."
+          description="Get hundreds of smart domain ideas in seconds."
           showIcon={false}
         />
 
@@ -18,7 +18,7 @@ const FreeDomainToolsMobile = () => {
           link="https://www.atom.com/domain-appraisal"
           title="AI Domain Appraisal Tool"
           titleClassName={styles.mobileTitle}
-          discription="Instantly check your domain’s market"
+          description="Instantly check your domain’s market"
           showIcon={false}
         />
 
@@ -26,7 +26,7 @@ const FreeDomainToolsMobile = () => {
           link="https://www.atom.com/whois"
           title="WHOIS Domain Lookup"
           titleClassName={styles.mobileTitle}
-          discription="Find domain ownership and registration details."
+          description="Find domain ownership and registration details."
           showIcon={false}
         />
       </div>

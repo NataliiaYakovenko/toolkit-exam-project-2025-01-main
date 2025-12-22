@@ -19,7 +19,7 @@ class FreeDomainTools extends React.Component {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_GENERATOR}
               iconAlt="Generator"
               title="AI Domain Name Generator"
-              discription="Get hundreds of smart domain ideas in seconds."
+              description="Get hundreds of smart domain ideas in seconds."
             />
 
             <FeatureCard
@@ -27,7 +27,7 @@ class FreeDomainTools extends React.Component {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_TOOL}
               iconAlt="Tool"
               title="AI Domain Appraisal Tool"
-              discription="Instantly check your domain’s market"
+              description="Instantly check your domain’s market"
             />
 
             <FeatureCard
@@ -35,7 +35,7 @@ class FreeDomainTools extends React.Component {
               icon={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_LOOKUP}
               iconAlt="LookUp"
               title="WHOIS Domain Lookup"
-              discription="Find domain ownership and registration details."
+              description="Find domain ownership and registration details."
             />
           </div>
         </div>

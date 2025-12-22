@@ -10,21 +10,21 @@ const NamingBrandingServiceMobile = () => {
           link="https://www.atom.com/branding-marketing-naming-contests"
           title="Launch a Naming Contest"
           titleClassName={styles.mobileTitle}
-          discription="Get 1000s of unique names from real creatives."
+          description="Get 1000s of unique names from real creatives."
           showIcon={false}
         />
         <FeatureCard
           link="https://www.atom.com/brand-naming-agency"
           title="Hire Our Naming Agency"
           titleClassName={styles.mobileTitle}
-          discription="Get agency-level naming without agency fees."
+          description="Get agency-level naming without agency fees."
           showIcon={false}
         />
         <FeatureCard
           link="https://www.atom.com/logo-maker"
           title="AI Logo Generator"
           titleClassName={styles.mobileTitle}
-          discription="Create instant, professional logos in minutes."
+          description="Create instant, professional logos in minutes."
           showIcon={false}
         />
       </div>
@@ -34,21 +34,21 @@ const NamingBrandingServiceMobile = () => {
           link="https://www.atom.com/research"
           title="Audience Research"
           titleClassName={styles.mobileTitle}
-          discription="Test almost anything with your target customers."
+          description="Test almost anything with your target customers."
           showIcon={false}
         />
         <FeatureCard
           link="https://trademark.io/"
           title="Trademark Services"
           titleClassName={styles.mobileTitle}
-          discription="Search, file, and protect your trademarks."
+          description="Search, file, and protect your trademarks."
           showIcon={false}
         />
         <FeatureCard
           link="https://trademark.io/brand-monitoring"
           title="Brand monitoring"
           titleClassName={styles.mobileTitle}
-          discription="Track and protect your brand online."
+          description="Track and protect your brand online."
           showIcon={false}
         />
       </div>

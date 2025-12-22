@@ -28,7 +28,7 @@ const DomainForSaleMobile = () => {
           link="https://accessibe.com/blog/knowledgebase/screen-reader-guide"
           title="Premium Domain Marketplace"
           titleClassName={styles.mobileTitle}
-          discription="Explore 300,000+ expert-curated, brandable domains to elevate your business."
+          description="Explore 300,000+ expert-curated, brandable domains to elevate your business."
           showIcon={false}
         />
 
@@ -36,7 +36,7 @@ const DomainForSaleMobile = () => {
           link="https://www.atom.com/ultra-premium-marketplace/all"
           title="Ultra Premium Marketplace"
           titleClassName={styles.mobileTitle}
-          discription="Discover the world’s most coveted and powerful domains for top-tier brands."
+          description="Discover the world’s most coveted and powerful domains for top-tier brands."
           showIcon={false}
         />
 
@@ -44,7 +44,7 @@ const DomainForSaleMobile = () => {
           link="https://www.atom.com/sapphire/all"
           title="Sapphire Marketplace"
           titleClassName={styles.mobileTitle}
-          discription="Find one-word domains with modern extensions like .ai, .io, and .xyz."
+          description="Find one-word domains with modern extensions like .ai, .io, and .xyz."
           showIcon={false}
         />
       </div>
