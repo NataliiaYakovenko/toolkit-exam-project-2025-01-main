@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './HowItWorksHeaderButtom.module.sass';
+import styles from './HowItWorksHeaderBottom.module.sass';
 import HowItWorksHeaderLogo from '../HeaderLogo/HeaderLogo';
 import DomainForSale from '../HeaderNavigation/DomainForSale/DomainForSale';
 import FreeDomainTools from '../HeaderNavigation/FreeDomainTools/FreeDomainTools';
@@ -8,11 +8,11 @@ import WyAtom from '../HeaderNavigation/WyAtom/WyAtom';
 import HeaderIcons from '../HeaderIcons/IconsContact/IconsContact';
 import HeaderMobile from '../HeaderMobile/MobileFormMain/MobileFormMain';
 
-const HowItWorksHeaderButtom = () => {
+const HowItWorksHeaderBottom = () => {
   const [activeTab, setActiveTab] = useState('');
 
   return (
-    <div className={styles.headerButtom}>
+    <div className={styles.headerBottom}>
       <div className={styles.headerContainer}>
         <div className={styles.headerWrapper}>
           <div>
@@ -71,4 +71,4 @@ const HowItWorksHeaderButtom = () => {
   );
 };
 
-export default HowItWorksHeaderButtom;
+export default HowItWorksHeaderBottom;

@@ -1,6 +1,6 @@
 import React from 'react';
 import HowItWorksHeaderTop from '../HowItWorksHeaderTop/HowItWorksHeaderTop';
-import HowItWOrksHeaderButtom from '../HowItWorksHeaderButtom/HowItWorksHeaderButtom/HowItWorksHeaderButtom';
+import HowItWOrksHeaderBottom from '../HowItWorksHeaderBottom/HowItWorksHeaderBottom/HowItWorksHeaderBottom';
 
 class HowItWorksHeaderMain extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class HowItWorksHeaderMain extends React.Component {
         </div>
 
         <div>
-          <HowItWOrksHeaderButtom />
+          <HowItWOrksHeaderBottom />
         </div>
       </div>
     );

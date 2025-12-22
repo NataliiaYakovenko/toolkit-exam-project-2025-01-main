@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './MobileNavigation.module.sass';
 import CONSTANTS from '../../../../../../constants';
-import DomainForSaleMobile from '../../HeaderMobile/DomainForSeleMobail/DomainForSaleMobile';
+import DomainForSaleMobile from '../DomainForSeleMobail/DomainForSaleMobile';
 import FreeDomainToolsMobile from '../FreeDomainToolsMobile/FreeDomainToolsMobile';
 import NamingBrandingServiceMobile from '../NamingBrandingServiceMobile/NamingBrandingServiceMobile';
 import WyAtomMobile from '../WyAtomMobile/WyAtomMobile';
