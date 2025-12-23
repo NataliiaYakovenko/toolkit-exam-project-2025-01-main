@@ -60,6 +60,11 @@ module.exports = {
   HOW_IT_WORKS_SECTION_ICON_SEARCH:'/howItWorks/mainSection/icon9.svg',
   HOW_IT_WORKS_FOOTER_STAR:'/howItWorks/footer/icon1.webp',
   HOW_IT_WORKS_FOOTER_HALFSTAR:'/howItWorks/footer/icon2.webp',
+  HOW_IT_WORKS_FOOTER_FACEBOOK:'/howItWorks/footer/icon3.svg',
+  HOW_IT_WORKS_FOOTER_X:'/howItWorks/footer/icon4.svg',
+  HOW_IT_WORKS_FOOTER_INSTAGRAM:'/howItWorks/footer/icon5.svg',
+  HOW_IT_WORKS_FOOTER_LINKEDIN:'/howItWorks/footer/icon6.svg',
+  HOW_IT_WORKS_FOOTER_YOUTUBE:'/howItWorks/footer/icon7.svg',
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
   publicURL:
