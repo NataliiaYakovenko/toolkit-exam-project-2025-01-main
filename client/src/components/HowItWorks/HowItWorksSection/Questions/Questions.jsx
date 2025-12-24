@@ -5,6 +5,19 @@ import TypesQuestions from './TypesQuestions';
 const Questions = () => {
   const [active, setActive] = useState(0);
 
+  const handlerClick = (index) => {
+    setActive(index);
+
+    const sectionId = `section-${index}`;
+    const element = document.getElementById(sectionId);
+
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
 
   return (
     <div className={styles.section}>
@@ -19,9 +32,7 @@ const Questions = () => {
           ].map((item, index) => (
             <span
               key={index}
-              onClick={() => {
-                setActive(index);
-              }}
+              onClick={() => handlerClick(index)}
               className={`${styles.typeQuestion} ${
                 active === index ? styles.active : ''
               }`}

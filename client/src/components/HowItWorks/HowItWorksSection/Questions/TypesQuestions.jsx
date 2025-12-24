@@ -21,22 +21,82 @@ const TypesQuestions = () => {
     {
       question: 'What if I do not like any submissions?',
       questionOpen: 'What if I do not like any submissions?',
-      text: 'While it is unusually rare that you will not like any names provided, we have a few options in case this problem occurs:',
-      /////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            While it is unusually rare that you will not like any names
+            provided, we have a few options in case this problem occurs:
+          </p>
+          <ul style={{ color: '#525177' }}>
+            <li>
+              If the contest ends and you have not yet found a name that you'd
+              like to move forward with, we can provide complimentary extension
+              of your contest as well as a complimentary consultation with one
+              of our branding consultants (a $99 value).
+            </li>
+            <li>
+              By exploring our premium domain marketplace you can apply the
+              contest award towards the purchase of any name listed for sale.
+            </li>
+            <li>
+              If you choose the Gold package or Platinum package and keep the
+              contest as 'Not Guaranteed', you can request a partial refund if
+              you choose not to move forward with any name from you project.
+              (Please note that the refund is for the contest award). Here is a
+              link to our{' '}
+              <a
+                style={{ color: 'white', textDecoration: 'none' }}
+                href="https://helpdesk.atom.com/en/articles/115621-refund-policy"
+              >
+                Refund Policy
+              </a>
+            </li>
+          </ul>
+        </>
+      ),
     },
     {
       question: 'How much does it cost?',
       questionOpen: 'How much does it cost?',
-      text: 'Our naming competitions start at $299, and our logo design competitions start at $299. Also, there are three additional contest level that each offer more features and benefits. See our ....... for details',
-      ////////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            Our naming competitions start at $299, and our logo design
+            competitions start at $299. Also, there are three additional contest
+            level that each offer more features and benefits. See our {''}
+            <a
+              style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
+              href="https://www.atom.com/pricing"
+            >
+              Pricing Page
+            </a>{' '}
+            {''}
+            for details
+          </p>
+        </>
+      ),
     },
     {
       question:
         'I need both a Name and a Logo. Do you offer any discount for multiple contests?',
       questionOpen:
         'I need both a Name and a Logo. Do you offer any discount for multiple contests?',
-      text: 'Yes! We have many contest bundles - our most popular being our Name, Tagline, and Logo bundle. Bundles allow you to purchase multiple contests at one time and save as much as from $75 - $400. You can learn more about our bundle options on our..........',
-      //////////////////////////////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            'Yes! We have many contest bundles - our most popular being our
+            Name, Tagline, and Logo bundle. Bundles allow you to purchase
+            multiple contests at one time and save as much as from $75 - $400.
+            You can learn more about our bundle options on our
+            <a
+              style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
+              href="https://www.atom.com/pricing"
+            >
+              Pricing Page
+            </a>
+          </p>
+        </>
+      ),
     },
     {
       question: 'What if I want to keep my business idea private?',
@@ -51,8 +111,35 @@ const TypesQuestions = () => {
     {
       question: 'Can I see any examples?',
       questionOpen: 'Can I see any examples?',
-      text: 'Our creatives have submitted more than 6 Million names and thousands of logos on our platform. Here are some examples of Names, Taglines, and Logos that were submitted in recent contests.',
-      ////////////////////////////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            Our creatives have submitted more than 6 Million names and thousands
+            of logos on our platform. Here are some examples of Names, Taglines,
+            and Logos that were submitted in recent contests.
+          </p>
+          <a
+            style={{ color: 'white' }}
+            href="https://www.atom.com/business-name-generator"
+          >
+            Name Examples
+          </a>
+          <br />
+          <a
+            style={{ color: 'white' }}
+            href="https://www.atom.com/tagline-slogan-ideas"
+          >
+            Tagline Examples
+          </a>
+          <br />
+          <a
+            style={{ color: 'white' }}
+            href="https://www.atom.com/logo-design-examples"
+          >
+            Logo Examples
+          </a>
+        </>
+      ),
     },
   ];
 
@@ -80,20 +167,104 @@ const TypesQuestions = () => {
     {
       question: 'What are Managed Contests?',
       questionOpen: 'What are Managed Contests?',
-      text: "The 'Managed' option is a fully managed service by Atom Branding experts. It includes a formal brief preparation by Atom team and management of your contest. Managed Contests are a great fit for companies that are looking for an 'Agency' like experience and they do not want to manage the contest directly. ..........Our branding team has directly managed hundreds of branding projects and has learned several best practices that lead to successful project outcomes. Our team will apply all best practices towards the management of your branding project. Learn more about our ........",
-      //////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            The 'Managed' option is a fully managed service by Atom Branding
+            experts. It includes a formal brief preparation by Atom team and
+            management of your contest. Managed Contests are a great fit for
+            companies that are looking for an 'Agency' like experience and they
+            do not want to manage the contest directly.
+          </p>
+          <p>
+            Our branding team has directly managed hundreds of branding projects
+            and has learned several best practices that lead to successful
+            project outcomes. Our team will apply all best practices towards the
+            management of your branding project.
+          </p>
+          <p>
+            Learn more about our
+            <a
+              style={{ color: 'white', marginLeft: '4px' }}
+              href="https://www.atom.com/managed-contests"
+            >
+              Managed Contests Service
+            </a>
+          </p>
+        </>
+      ),
     },
     {
       question: "What's a typical timeline for a Managed Contest?",
       questionOpen: "What's a typical timeline for a Managed Contest?",
-      text: 'The overall process takes 12-13 days. .............................',
-      //////////////////////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>The overall process takes 12-13 days.</p>
+          <ul style={{ color: '#525177' }}>
+            <li>
+              The Managed projects start with a project kick-off call with your
+              Branding Consultant. You can schedule this call online immediately
+              after making your payment.{' '}
+            </li>
+            <li>
+              After your kick-off call, the Branding consultant will write your
+              project brief and send for your approval within 1 business day.
+            </li>
+            <li>
+              Upon your approval, the contest will go live. The branding
+              consultant will help manage your project throughout the
+              brainstorming phase (typically 5 days).{' '}
+            </li>
+            <li>
+              Upon the completion of brainstorming phase, the branding
+              consultant will work with you to test the top 6 names from your
+              Shortlist (3-5 Days). In addition, the branding consultant will
+              coordinate the detailed Trademark screening (1-3 days)
+            </li>
+          </ul>
+        </>
+      ),
     },
     {
       question: 'How much do Managed Contests cost? ',
       questionOpen: 'How much do Managed Contests cost? ',
-      text: 'We offer two levels of Managed Contests. Standard ($1499) and Enterprise ($2999). The Enterprise managed contest includes: ....................................',
-      ///////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            We offer two levels of Managed Contests. Standard ($1499) and
+            Enterprise ($2999). The Enterprise managed contest includes:
+          </p>
+          <ul style={{ color: '#525177' }}>
+            <li>
+              (1) a $500 award amount (instead of $300), which will attract our
+              top Creatives and provide more options to choose from;{' '}
+            </li>
+            <li>
+              (2) we will ensure a senior member of our branding team is
+              assigned to your project and the branding team will invest about
+              3X more time in the day-to-day management of your project;
+            </li>
+            <li>
+              (3) you will receive more high-end trademark report and 5X more
+              responses for your audience test.
+            </li>
+            <li>
+              Here is a link to our
+              <a
+                style={{
+                  marginLeft: '4px',
+                  marginRight: '4px',
+                  color: 'white',
+                }}
+                href="https://www.atom.com/views/contests/create/managed_contests.php"
+              >
+                Pricing Page
+              </a>
+              with a detailed comparison of the two packages.
+            </li>
+          </ul>
+        </>
+      ),
     },
     {
       question: 'Where are the Branding Consultants located?',
@@ -106,8 +277,27 @@ const TypesQuestions = () => {
     {
       question: 'Can anyone join your platform?',
       questionOpen: 'Can anyone join your platform?',
-      text: "We are open to anyone to signup. However, we have an extensive '........................................................",
-      /////////////////////////////////////////////////////////////////////////////
+      text: (
+        <>
+          <p>
+            We are open to anyone to signup. However, we have an extensive
+            <a
+              style={{
+                marginLeft: '4px',
+                marginRight: '4px',
+                color: 'white',
+              }}
+              href="https://helpdesk.atom.com/en/articles/91702-percentile-ranking-score"
+            >
+              Quality Scoring
+            </a>
+            process which ensures that high quality creatives have the ability
+            to continue to participate in the platform. On the other hand, we
+            limit the participation from those creatives who do not consistently
+            receive high ratings.
+          </p>
+        </>
+      ),
     },
     {
       question: 'Can I start participating immediately upon signing up?',
@@ -123,10 +313,18 @@ const TypesQuestions = () => {
 
   return (
     <>
-      <QuestionsBlock title="Launching A Contest" items={contestItems} />
-      <QuestionsBlock title="Buying From Marketplace" items={buyingItems} />
-      <QuestionsBlock title="Managed Contests" items={menegedContests} />
-      <QuestionsBlock title="For Creatives" items={creativesItems} />
+      <div id="section-0">
+        <QuestionsBlock title="Launching A Contest" items={contestItems} />
+      </div>
+      <div id="section-1">
+        <QuestionsBlock title="Buying From Marketplace" items={buyingItems} />
+      </div>
+      <div id="section-2">
+        <QuestionsBlock title="Managed Contests" items={menegedContests} />
+      </div>
+      <div id="section-3">
+        <QuestionsBlock title="For Creatives" items={creativesItems} />
+      </div>
     </>
   );
 };

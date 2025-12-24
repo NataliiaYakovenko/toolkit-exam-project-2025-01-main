@@ -1,9 +1,10 @@
 .container
   box-sizing: border-box
+  max-width: 830px
+  margin: 0 auto
   padding-left: 10px 
   padding-top: 50px 
   color: #343434
-
 
   .title
     max-width: 830px
@@ -14,86 +15,63 @@
     font-family: "Product Sans", sans-serif
     line-height: 1.3 
 
-
-  .questionsWrapper
+  .questionItem
     position: relative
-    max-width: 770px
-    margin: 0 auto
-    padding: 24px 70px 24px 24px
+    margin-top: 20px
     border: 1px solid #f3f5fe
-    border-radius: 16px
+    border-radius: 14px
     color: #343434
+    overflow: hidden
+    transition: all 0.3s ease
 
-
-    &:hover
+    &:hover:not(.open)
       background-color: rgba(48, 125, 246, .1)
       border: 1px solid #307DF6
 
+    &.open
+      background-color: #307DF6
+      border: none
+
+      .question
+        color: #fff
+
+    .questionHeader
+      position: relative
+      padding: 24px 70px 24px 24px
+      cursor: pointer
+      display: flex
+      justify-content: space-between
+      align-items: center
+      line-height: 1.3
   
     .question
-      font-size: 20px
+      font-size: 18px
       font-weight: 700
       color: #19184a
-      position: relative
-      cursor: pointer
-      border-radius: 16px
+      transition: color 0.3s ease
+
+    .questionItem.open
+      .question
+        color: #fff
 
 
-    .openSign
-      width: 15px
-      height: 15px
-      display: block
-      background-repeat: no-repeat
-      position: absolute
-      right: 30px
-      margin: -12px 0 0 0
-      background-position: center center 
+.answerContainer
+  max-height: 0
+  opacity: 0
+  overflow: hidden
+  transition: max-height 0.5s ease, opacity 0.5s ease
+  will-change: max-height, opacity
 
-.containerOpen
-  position: relative
-  background-color: #307DF6
-  max-width: 770px
-  margin: 0 auto
-  padding: 24px 70px 24px 24px
-  border: none
-  border-radius: 16px
-  font-family: "Product Sans", sans-serif
+.answerContent
+  padding: 0 24px 30px 24px
+  color: rgb(255, 255, 255)
 
-
-
-  .questionOpen
+  .text
+    margin: 0
+    font-size: 16px
     color: #fff
-    font-size: 20px
-    font-weight: 700
-    position: relative
-    cursor: pointer
-    border-radius: 16px
-   
-  .closedSign
-    transform: rotate(0deg)
-    width: 15px
-    height: 15px
-    display: block
-    background-repeat: no-repeat
-    position: absolute
-    right: 30px
-    margin: -12px 0 0 0 
-
-  .answerWrapper
-    color: rgb(255, 255, 255)
-    display: block
-    padding: 0 24px 30px 24px
-
-
-    .text
-      margin: 0
-      font-size: 16px
-      color: #fff
-      padding-top: 20px
-      line-height: 1.5
-      font-weight: 400
-
-
-
-
+    padding-top: 20px
+    padding-right: 65px
+    line-height: 1.5
+    font-weight: 400
 
