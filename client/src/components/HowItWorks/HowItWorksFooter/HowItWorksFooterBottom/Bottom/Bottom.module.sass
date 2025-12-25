@@ -7,6 +7,8 @@
   color: #19184a
   line-height: 1.5
   font-weight: 400
+  margin-left: 50px
+  margin-right: 50px
 
   .wrapper
     border-top: 1px solid #ddd
@@ -19,3 +21,19 @@
     padding: 55px 0
     margin-right: auto
     margin-left: auto
+
+    @media (max-width: 990px)
+      flex-direction: column
+      align-items: center
+      padding: 40px 0
+      gap: 30px
+      
+      
+      > *:nth-child(1)  
+        order: 3
+        
+      > *:nth-child(2)  
+        order: 1
+        
+      > *:nth-child(3)  
+        order: 2
