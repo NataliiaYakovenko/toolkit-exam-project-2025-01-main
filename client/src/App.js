@@ -21,6 +21,7 @@ import Layout from './pages/Layout/Layout';
 import OnlyNotAuthorizedUserRoute from './components/Routes/OnlyNotAuthorizedUserRoute/OnlyNotAuthorizedUserRoute';
 import PrivateRoute from './components/Routes/PrivateRoute/PrivateRoute';
 import HowItWorksPage from './pages/HowItWorksPage/HowItWorksPage';
+import EventsPage from './pages/EventsPage/EventsPage';
 
 class App extends Component {
   render() {
@@ -83,6 +84,7 @@ class App extends Component {
             <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/howItWorks" element={<HowItWorksPage />} />
+          <Route path="/events" element={<EventsPage />} />
         </Routes>
         <ChatContainer />
       </Router>
