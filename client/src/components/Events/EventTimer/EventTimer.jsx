@@ -13,7 +13,8 @@ const EventTimer = ({ timeLeft, isActive }) => {
 
   return (
     <div className={styles.timer}>
-      {days}d:{hours.toString().padStart(2, '0')}h:
+      {days > 0 && <>{days}d:</>}
+      {hours.toString().padStart(2, '0')}h:
       {minutes.toString().padStart(2, '0')}m
     </div>
   );

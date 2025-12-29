@@ -29,6 +29,8 @@ const EventsList = ({
     return () => clearInterval(intervalId);
   }, [updateTimers]);
 
+  const maxTime = 30 * 24 * 60 * 60 * 1000;
+
   return (
     <div className={styles.container}>
       <div className={styles.titels}>
@@ -39,10 +41,21 @@ const EventsList = ({
       </div>
       <div className={styles.list}>
         {activeEvents.map((event) => {
+          const progress = Math.max(
+            0,
+            Math.min(100, 100 - (event.timeLeft / maxTime) * 100)
+          );
           return (
             <>
               <div className={styles.wrapper} key={event.id}>
-                <div className={styles.eventName}>{event.name}</div>
+                <div className={styles.eventName}>
+                  {' '}
+                  <div
+                    className={styles.progress}
+                    style={{ width: `${progress}%` }}
+                  />
+                  <span>{event.name}</span>
+                </div>
                 <div className={styles.rightPart}>
                   <EventTimer
                     className={styles.eventTimer}
