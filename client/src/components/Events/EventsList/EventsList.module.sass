@@ -1,0 +1,65 @@
+.container
+  display: flex
+  flex-direction: column
+  gap: 5px
+  width: 50%
+  height: 600px
+  padding: 20px
+  margin-top: 5px
+
+  .titels
+    display: flex
+    justify-content: space-between
+    color: white
+    font-size: 20px 
+    font-weight: bolder
+
+    .remaining
+      font-size: 15px
+      margin-right: 55px
+
+  .list
+    flex: 1                 
+    overflow-y: auto        
+    padding-right: 10px
+      
+
+    .wrapper
+      flex: 1
+      min-width: 0  
+      display: flex
+      align-items: center
+      justify-content: space-between
+      height: 50px
+      border: 2px solid #dfe6e9
+      border-radius: 8px
+      font-size: 20px
+      background-color: white
+      text-align: left
+      padding: 5px 
+
+      .eventName
+        word-break: break-word 
+        overflow-wrap: break-word
+        white-space: normal
+        padding-right: 10px
+
+      .rightPart
+        display: flex
+        gap: 10px
+       
+            
+        .eventTimer
+        button
+          background: none
+          border: none
+          padding: 0
+          cursor: pointer
+          
+          .trashIcon
+            width: 24px
+            height: 24px
+            
+            &:hover
+              transform: scale(1.1)
+              opacity: 0.8       

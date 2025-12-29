@@ -5,6 +5,7 @@ import cx from 'classnames';
 import { addEvent } from '../../../store/slices/eventSlice';
 import Schema from '../../../utils/validators/validationSchems';
 import styles from './EventsForm.module.sass';
+import EventsList from '../EventsList/EventsList';
 
 const EventsForm = ({ addEvent, error }) => {
   const initialState = {
@@ -98,6 +99,8 @@ const EventsForm = ({ addEvent, error }) => {
           );
         }}
       </Formik>
+
+      <EventsList/>
     </div>
   );
 };

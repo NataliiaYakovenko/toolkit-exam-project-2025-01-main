@@ -65,7 +65,8 @@ module.exports = {
   HOW_IT_WORKS_FOOTER_INSTAGRAM:'/howItWorks/footer/icon5.svg',
   HOW_IT_WORKS_FOOTER_LINKEDIN:'/howItWorks/footer/icon6.svg',
   HOW_IT_WORKS_FOOTER_YOUTUBE:'/howItWorks/footer/icon7.svg',
-  EVENTS_BACKGROUND:'/events/background.jpg',
+  EVENTS_TRASH:'/events/iconTrash.png',
+  
   BASE_URL: `http://${serverIP}:${serverPort}/`,
   ACCESS_TOKEN: 'accessToken',
   publicURL:
