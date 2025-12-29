@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from "./EventTimer.module.sass"
 
 const EventTimer = ({ eventDateTime, isActive }) => {
   const [timeLeft, setTimeLeft] = useState(eventDateTime - Date.now());
@@ -19,40 +20,27 @@ const EventTimer = ({ eventDateTime, isActive }) => {
   }, [eventDateTime, isActive]);
 
   const formatTime = (ms) => {
-    if (ms <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    if (ms <= 0) return { days: 0, hours: 0, minutes: 0 };
 
-    const seconds = Math.floor((ms / 1000) % 60);
-    const minutes = Math.floor((ms / (1000 * 60)) % 60);
-    const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+    const totalMinutes = Math.floor(ms / (1000 * 60));
+    const days = Math.floor(totalMinutes / (60 * 24));
+    const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
+    const minutes = totalMinutes % 60;
 
-    return { days, hours, minutes, seconds };
+    return { days, hours, minutes };
   };
 
-  const { days, hours, minutes, seconds } = formatTime(timeLeft);
-  const totalHours = days * 24 + hours;
+  const { days, hours, minutes } = formatTime(timeLeft);
 
-  if (!isActive)
-    return (
-      <div>
-        <div>00:00:00:00</div>
-        <div>Event completed</div>
-      </div>
-    );
+
+  if (!isActive || timeLeft <= 0) {
+    return <div>Event completed</div>;
+  }
 
   return (
-    <div>
-      <div>
-        {days > 0 ? `${days.toString().padStart(2, '0')}:` : ' '}
-        {totalHours.toString().padStart(2, '0')}:
-        {minutes.toString().padStart(2, '0')}:
-        {seconds.toString().padStart(2, '0')}
-      </div>
-      <div>
-        {days > 0
-          ? 'Days: Hours: Minutes: Seconds:'
-          : 'Hours: Minutes: Seconds:'}
-      </div>
+    <div className={styles.timer}>
+      {days}d:{hours.toString().padStart(2, '0')}h:
+      {minutes.toString().padStart(2, '0')}m
     </div>
   );
 };
