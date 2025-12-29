@@ -141,7 +141,9 @@ const eventSlice = createSlice({
 });
 
 export const selectActiveEvents = (state) =>
-  state.event.events.filter((event) => event.isActive);
+   [...state.event.events]
+    .filter((event) => event.isActive)
+    .sort((a, b) => a.eventDateTime - b.eventDateTime);
 
 export const selectInactiveEvents = (state) =>
   state.event.events.filter((event) => !event.isActive);

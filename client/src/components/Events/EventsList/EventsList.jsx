@@ -33,7 +33,9 @@ const EventsList = ({
     <div className={styles.container}>
       <div className={styles.titels}>
         <h3>Upcomming events</h3>
-        <h3 className={styles.remaining}>Remaining <br/> time</h3>
+        <h3 className={styles.remaining}>
+          Remaining <br /> time
+        </h3>
       </div>
       <div className={styles.list}>
         {activeEvents.map((event) => {
@@ -44,7 +46,7 @@ const EventsList = ({
                 <div className={styles.rightPart}>
                   <EventTimer
                     className={styles.eventTimer}
-                    eventDateTime={event.eventDateTime}
+                    timeLeft={event.timeLeft}
                     isActive={event.isActive}
                   />
 
