@@ -14,6 +14,7 @@ import styles from './EventsList.module.sass';
 import CONSTANTS from '../../../constants';
 
 const EventsList = ({
+  events,
   activeEvents,
   inactiveEvents,
   notificationsCount,
@@ -40,7 +41,7 @@ const EventsList = ({
         </h3>
       </div>
       <div className={styles.list}>
-        {activeEvents.map((event) => {
+        {events.map((event) => {
           const progress = Math.max(
             0,
             Math.min(100, 100 - (event.timeLeft / maxTime) * 100)
@@ -49,7 +50,6 @@ const EventsList = ({
             <>
               <div className={styles.wrapper} key={event.id}>
                 <div className={styles.eventName}>
-                  {' '}
                   <div
                     className={styles.progress}
                     style={{ width: `${progress}%` }}
@@ -81,9 +81,11 @@ const EventsList = ({
 };
 
 const mapStateToProps = (state) => ({
-  activeEvents: selectActiveEvents(state),
-  inactiveEvents: selectInactiveEvents(state),
-  notificationsCount: selectNotificationsCount(state),
+  events: state.event.events,
+  // allEvents: state.event.events,
+  // activeEvents: state.event.events.filter((event) => event.isActive),
+  // inactiveEvents: state.event.events.filter((event) => !event.isActive),
+  // notificationsCount: selectNotificationsCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

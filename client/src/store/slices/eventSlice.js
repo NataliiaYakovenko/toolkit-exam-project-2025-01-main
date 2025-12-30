@@ -74,7 +74,10 @@ const eventSlice = createSlice({
           }
         }
       });
-      state.notifications = notificationsCount;
+
+      if (notificationsCount > 0) {
+        state.notifications += notificationsCount;
+      }
     },
 
     removeEvent: (state, { payload }) => {
@@ -90,7 +93,7 @@ const eventSlice = createSlice({
       }
     },
 
-    clearNotofications: (state) => {
+    clearNotifications: (state) => {
       state.notifications = 0;
       state.events.forEach((event) => {
         if (event.isNotified) {
@@ -141,7 +144,7 @@ const eventSlice = createSlice({
 });
 
 export const selectActiveEvents = (state) =>
-   [...state.event.events]
+  [...state.event.events]
     .filter((event) => event.isActive)
     .sort((a, b) => a.eventDateTime - b.eventDateTime);
 
