@@ -108,6 +108,15 @@ class Header extends React.Component {
                   Logout
                 </span>
               </li>
+              <li>
+                <Link
+                  to="/events"
+                  style={{ textDecoration: 'none' }}
+                  onClick={this.closeMobileMenu}
+                >
+                  <span>My Events</span>
+                </Link>
+              </li>
             </ul>
           </div>
           <Link to="http://www.google.com" style={{ textDecoration: 'none' }}>

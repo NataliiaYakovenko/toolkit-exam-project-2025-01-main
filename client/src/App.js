@@ -82,9 +82,9 @@ class App extends Component {
               <Route path="/account" element={<UserProfile />} />
             </Route>
             <Route path="*" element={<NotFound />} />
+            <Route path="/events" element={<EventsPage />} />
           </Route>
           <Route path="/howItWorks" element={<HowItWorksPage />} />
-          <Route path="/events" element={<EventsPage />} />
         </Routes>
         <ChatContainer />
       </Router>
