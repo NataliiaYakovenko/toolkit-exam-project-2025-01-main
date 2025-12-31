@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './EventTimer.module.sass';
 
-const EventTimer = ({ timeLeft, isActive }) => {
+const EventTimer = ({ eventDateTime, isActive }) => {
+  const [timeLeft, setTimeLeft] = useState(eventDateTime - Date.now());
+
+  useEffect(() => {
+    if (!isActive) return;
+
+    const intervalId = setInterval(() => {
+      setTimeLeft(eventDateTime - Date.now());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [eventDateTime, isActive]);
+
   if (!isActive || timeLeft <= 0) {
-    return <div className={styles.completed}>Event <br/> completed</div>;
+    return (
+      <div className={styles.completed}>
+        Event <br /> completed
+      </div>
+    );
   }
 
   const totalMinutes = Math.floor(timeLeft / (1000 * 60));
