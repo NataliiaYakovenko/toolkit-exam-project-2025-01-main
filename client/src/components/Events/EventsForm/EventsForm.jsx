@@ -9,7 +9,7 @@ import EventsList from '../EventsList/EventsList';
 import EventsBadges from '../EventsBadges/EventBadges';
 
 
-const EventsForm = ({ addEvent, error, defaultNotification }) => {
+const EventsForm = ({ addEvent, defaultNotification }) => {
   const initialState = {
     eventName: '',
     eventDateTime: '',
@@ -114,7 +114,6 @@ const EventsForm = ({ addEvent, error, defaultNotification }) => {
 };
 
 const mapStateToProps = (state) => ({
-  error: state.event.error,
   defaultNotification: state.event.defaultNotification,
 });
 

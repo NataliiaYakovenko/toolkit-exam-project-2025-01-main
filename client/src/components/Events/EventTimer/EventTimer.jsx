@@ -3,7 +3,7 @@ import styles from './EventTimer.module.sass';
 
 const EventTimer = ({ timeLeft, isActive }) => {
   if (!isActive || timeLeft <= 0) {
-    return <div>Event completed</div>;
+    return <div className={styles.completed}>Event <br/> completed</div>;
   }
 
   const totalMinutes = Math.floor(timeLeft / (1000 * 60));

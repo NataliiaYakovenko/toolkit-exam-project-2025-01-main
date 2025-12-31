@@ -150,15 +150,7 @@ const eventSlice = createSlice({
   },
 });
 
-export const selectActiveEvents = (state) =>
-  [...state.event.events]
-    .filter((event) => event.isActive)
-    .sort((a, b) => a.eventDateTime - b.eventDateTime);
 
-export const selectInactiveEvents = (state) =>
-  state.event.events.filter((event) => !event.isActive);
-
-export const selectNotificationsCount = (state) => state.event.notifications;
 
 export const selectEventBadges = (state) => {
   const events = state.event.events;

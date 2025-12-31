@@ -1,27 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import {
-  updateTimers,
-  removeEvent,
-  markEventAsInactive,
-  loadEvents,
-  selectActiveEvents,
-  selectInactiveEvents,
-  selectNotificationsCount,
-} from '../../../store/slices/eventSlice';
+import { updateTimers, removeEvent } from '../../../store/slices/eventSlice';
 import EventTimer from '../EventTimer/EventTimer';
 import styles from './EventsList.module.sass';
 import CONSTANTS from '../../../constants';
 
-const EventsList = ({
-  events,
-  activeEvents,
-  inactiveEvents,
-  notificationsCount,
-  removeEvent,
-  updateTimers,
-  markEventAsInactive,
-}) => {
+const EventsList = ({ events, removeEvent, updateTimers }) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       updateTimers();
@@ -82,16 +66,11 @@ const EventsList = ({
 
 const mapStateToProps = (state) => ({
   events: state.event.events,
-  // allEvents: state.event.events,
-  // activeEvents: state.event.events.filter((event) => event.isActive),
-  // inactiveEvents: state.event.events.filter((event) => !event.isActive),
-  // notificationsCount: selectNotificationsCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   removeEvent: (id) => dispatch(removeEvent(id)),
   updateTimers: () => dispatch(updateTimers()),
-  markEventAsInactive: (id) => dispatch(markEventAsInactive(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventsList);
