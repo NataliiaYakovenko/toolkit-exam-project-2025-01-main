@@ -19,7 +19,10 @@ const initialState = {
   notifications: 0,
   loading: false,
   error: null,
+  defaultNotification: 30 * 60 * 1000,
 };
+
+
 
 const eventSlice = createSlice({
   initialState,
@@ -78,6 +81,10 @@ const eventSlice = createSlice({
       if (notificationsCount > 0) {
         state.notifications += notificationsCount;
       }
+    },
+
+    setDefaultNotification: (state, { payload }) => {
+      state.defaultNotification = payload * 60 * 1000;
     },
 
     removeEvent: (state, { payload }) => {
@@ -153,6 +160,29 @@ export const selectInactiveEvents = (state) =>
 
 export const selectNotificationsCount = (state) => state.event.notifications;
 
+export const selectEventBadges = (state) => {
+  const events = state.event.events;
+  const defaultNotification = state.event.defaultNotification
+
+
+  let expired = 0;
+  let lessDefault = 0;
+  let acting = 0;
+
+  events.forEach((event) => {
+    if (event.timeLeft < 0 || event.timeLeft === 0) {
+      expired++;
+    } else if (event.timeLeft > 0 && event.timeLeft < defaultNotification) {
+      lessDefault++;
+    } else {
+      acting++;
+    }
+  });
+  return { expired, lessDefault, acting };
+};
+
+
+
 const { reducer, actions } = eventSlice;
 
 export const {
@@ -163,6 +193,9 @@ export const {
   markEventAsInactive,
   loadEvents,
   clearError,
+  setDefaultNotification
 } = actions;
+
+
 
 export default reducer;

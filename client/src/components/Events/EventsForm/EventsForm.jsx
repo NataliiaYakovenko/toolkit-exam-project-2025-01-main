@@ -2,16 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
-import { addEvent } from '../../../store/slices/eventSlice';
+import { addEvent} from '../../../store/slices/eventSlice';
 import Schema from '../../../utils/validators/validationSchems';
 import styles from './EventsForm.module.sass';
 import EventsList from '../EventsList/EventsList';
+import EventsBadges from '../EventsBadges/EventBadges';
 
-const EventsForm = ({ addEvent, error }) => {
+
+const EventsForm = ({ addEvent, error, defaultNotification }) => {
   const initialState = {
     eventName: '',
     eventDateTime: '',
-    notificationTime: 30,
+    notificationTime: defaultNotification / (60 * 1000),
   };
 
   const submitHandler = (values, actions) => {
@@ -28,85 +30,92 @@ const EventsForm = ({ addEvent, error }) => {
 
   return (
     <div className={styles.container}>
-      <Formik
-        initialValues={initialState}
-        onSubmit={submitHandler}
-        validationSchema={Schema.EventSchema}
-      >
-        {(formikProps) => {
-          return (
-            <Form>
-              <div className={styles.wrapper}>
-                <div className={styles.box}>
-                  <label className={styles.titel}>Event name *</label>
-                  <Field
-                    className={cx(styles.eventInput, {
-                      [styles.inValidInput]:
-                        formikProps.errors.eventName &&
-                        formikProps.touched.eventName,
-                    })}
-                    type="text"
-                    name="eventName"
-                    id="eventName"
-                    placeholder="Add new event"
-                  />
-                  <ErrorMessage
-                    className={styles.error}
-                    name="eventName"
-                    component="p"
-                  />
+      <div className={styles.leftPart}>
+        <Formik
+          initialValues={initialState}
+          onSubmit={submitHandler}
+          validationSchema={Schema.EventSchema}
+        >
+          {(formikProps) => {
+            return (
+              <Form>
+                <div className={styles.wrapper}>
+                  <div className={styles.box}>
+                    <label className={styles.titel}>Event name *</label>
+                    <Field
+                      className={cx(styles.eventInput, {
+                        [styles.inValidInput]:
+                          formikProps.errors.eventName &&
+                          formikProps.touched.eventName,
+                      })}
+                      type="text"
+                      name="eventName"
+                      id="eventName"
+                      placeholder="Add new event"
+                    />
+                    <ErrorMessage
+                      className={styles.error}
+                      name="eventName"
+                      component="p"
+                    />
+                  </div>
+
+                  <div className={styles.box}>
+                    <label className={styles.titel}>
+                      Event date and time *
+                    </label>
+                    <Field
+                      className={styles.eventInput}
+                      type="datetime-local"
+                      name="eventDateTime"
+                      id="eventDateTime"
+                      min={getCurrentDateTime()}
+                    />
+                    <ErrorMessage
+                      className={styles.error}
+                      name="eventDateTime"
+                      component="p"
+                    />
+                  </div>
+
+                  <div className={styles.box}>
+                    <label className={styles.titel}>
+                      Notify me (minutes before) *
+                    </label>
+                    <Field
+                      className={styles.eventInput}
+                      type="number"
+                      name="notificationTime"
+                      id="notificationTime"
+                      min="1"
+                      max="1440"
+                      step="1"
+                    />
+                    <ErrorMessage
+                      className={styles.error}
+                      name="notificationTime"
+                      component="p"
+                    />
+                  </div>
+
+                  <button type="submit">Add event</button>
                 </div>
+              </Form>
+            );
+          }}
+        </Formik>
 
-                <div className={styles.box}>
-                  <label className={styles.titel}>Event date and time *</label>
-                  <Field
-                    className={styles.eventInput}
-                    type="datetime-local"
-                    name="eventDateTime"
-                    id="eventDateTime"
-                    min={getCurrentDateTime()}
-                  />
-                  <ErrorMessage
-                    className={styles.error}
-                    name="eventDateTime"
-                    component="p"
-                  />
-                </div>
+        <EventsBadges />
+      </div>
 
-                <div className={styles.box}>
-                  <label className={styles.titel}>
-                    Notify me (minutes before) *
-                  </label>
-                  <Field
-                    className={styles.eventInput}
-                    type="number"
-                    name="notificationTime"
-                    id="notificationTime"
-                    min="1"
-                    max="1440"
-                    step="1"
-                  />
-                  <ErrorMessage
-                    className={styles.error}
-                    name="notificationTime"
-                    component="p"
-                  />
-                </div>
-
-                <button type="submit">Add event</button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
-
-      <EventsList/>
+      <EventsList />
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
   error: state.event.error,
+  defaultNotification: state.event.defaultNotification,
 });
 
 const mapDispatchToProps = (dispatch) => ({
