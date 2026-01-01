@@ -2,12 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import cx from 'classnames';
-import { addEvent} from '../../../store/slices/eventSlice';
+import { addEvent } from '../../../store/slices/eventSlice';
 import Schema from '../../../utils/validators/validationSchems';
 import styles from './EventsForm.module.sass';
 import EventsList from '../EventsList/EventsList';
 import EventsBadges from '../EventsBadges/EventBadges';
-
 
 const EventsForm = ({ addEvent, defaultNotification }) => {
   const initialState = {
@@ -17,7 +16,11 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
   };
 
   const submitHandler = (values, actions) => {
-    addEvent(values.eventName, values.eventDateTime, values.notificationTime);
+    addEvent({
+      name: values.eventName,
+      eventDateTime: values.eventDateTime,
+      notificationOffset: values.notificationTime,
+    });
     actions.resetForm();
   };
 
@@ -41,7 +44,7 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
               <Form>
                 <div className={styles.wrapper}>
                   <div className={styles.box}>
-                    <label className={styles.titel}>Event name *</label>
+                    <label className={styles.title}>Event name *</label>
                     <Field
                       className={cx(styles.eventInput, {
                         [styles.inValidInput]:
@@ -61,7 +64,7 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
                   </div>
 
                   <div className={styles.box}>
-                    <label className={styles.titel}>
+                    <label className={styles.title}>
                       Event date and time *
                     </label>
                     <Field
@@ -79,7 +82,7 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
                   </div>
 
                   <div className={styles.box}>
-                    <label className={styles.titel}>
+                    <label className={styles.title}>
                       Notify me (minutes before) *
                     </label>
                     <Field
@@ -117,10 +120,4 @@ const mapStateToProps = (state) => ({
   defaultNotification: state.event.defaultNotification,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  addEvent: (name, eventDateTime, notificationTime) => {
-    return dispatch(addEvent(name, eventDateTime, notificationTime));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventsForm);
+export default connect(mapStateToProps, { addEvent })(EventsForm);

@@ -10,7 +10,7 @@ const EventsList = ({ events, removeEvent }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.titels}>
+      <div className={styles.title}>
         <h3>Upcomming events</h3>
         <h3 className={styles.remaining}>
           Remaining <br /> time
@@ -37,6 +37,7 @@ const EventsList = ({ events, removeEvent }) => {
                     className={styles.eventTimer}
                     eventDateTime={event.eventDateTime}
                     isActive={event.isActive}
+                    eventName={event.eventName}
                   />
 
                   <button onClick={() => removeEvent(event.id)}>
