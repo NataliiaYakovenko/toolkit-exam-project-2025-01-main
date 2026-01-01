@@ -23,33 +23,31 @@ const EventsList = ({ events, removeEvent }) => {
             Math.min(100, 100 - (event.timeLeft / maxTime) * 100)
           );
           return (
-            <>
-              <div className={styles.wrapper} key={event.id}>
-                <div className={styles.eventName}>
-                  <div
-                    className={styles.progress}
-                    style={{ width: `${progress}%` }}
-                  />
-                  <span>{event.name}</span>
-                </div>
-                <div className={styles.rightPart}>
-                  <EventTimer
-                    className={styles.eventTimer}
-                    eventDateTime={event.eventDateTime}
-                    isActive={event.isActive}
-                    eventName={event.eventName}
-                  />
-
-                  <button onClick={() => removeEvent(event.id)}>
-                    <img
-                      className={styles.trashIcon}
-                      src={CONSTANTS.EVENTS_TRASH}
-                      alt="Delete event"
-                    />
-                  </button>
-                </div>
+            <div className={styles.wrapper} key={event.id}>
+              <div className={styles.eventName}>
+                <div
+                  className={styles.progress}
+                  style={{ width: `${progress}%` }}
+                />
+                <span>{event.name}</span>
               </div>
-            </>
+              <div className={styles.rightPart}>
+                <EventTimer
+                  className={styles.eventTimer}
+                  eventDateTime={event.eventDateTime}
+                  isActive={event.isActive}
+                  eventName={event.eventName}
+                />
+
+                <button onClick={() => removeEvent(event.id)}>
+                  <img
+                    className={styles.trashIcon}
+                    src={CONSTANTS.EVENTS_TRASH}
+                    alt="Delete event"
+                  />
+                </button>
+              </div>
+            </div>
           );
         })}
       </div>

@@ -16,10 +16,11 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
   };
 
   const submitHandler = (values, actions) => {
+    const { eventName, eventDateTime, notificationTime } = values;
     addEvent({
-      name: values.eventName,
-      eventDateTime: values.eventDateTime,
-      notificationOffset: values.notificationTime,
+      name: eventName,
+      eventDateTime,
+      notificationOffset: notificationTime,
     });
     actions.resetForm();
   };
@@ -120,4 +121,8 @@ const mapStateToProps = (state) => ({
   defaultNotification: state.event.defaultNotification,
 });
 
-export default connect(mapStateToProps, { addEvent })(EventsForm);
+const mapDispatchToProps = {
+  addEvent,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventsForm);

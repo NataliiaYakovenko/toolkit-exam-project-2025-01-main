@@ -79,8 +79,8 @@ export const addEvent = createAsyncThunk(
 export const removeEvent = createAsyncThunk(
   `${EVENTS_SLICE_NAME}/removeEvent`,
   async (eventId, { getState }) => {
-    const state = getState();
-    const eventToRemove = state.event.events.find(
+    const {event} = getState();
+    const eventToRemove = event.events.find(
       (event) => event.id === eventId
     );
 
@@ -88,7 +88,7 @@ export const removeEvent = createAsyncThunk(
       throw new Error('Event not found');
     }
 
-    const updatedEvents = state.event.events.filter(
+    const updatedEvents = event.events.filter(
       (event) => event.id !== eventId
     );
     saveEventsToLocalStorage(updatedEvents);
@@ -200,8 +200,6 @@ const extraReducers = (builder) => {
     const eventIndex = state.events.findIndex(
       (event) => event.id === payload.eventId
     );
-
- 
     if (eventIndex !== -1) {
       if (state.events[eventIndex].isNotified && state.notifications > 0) {
         state.notifications--;
@@ -223,8 +221,7 @@ const eventSlice = createSlice({
 });
 
 export const selectEventBadges = (state) => {
-  const events = state.event.events;
-  const defaultNotification = state.event.defaultNotification;
+  const {events, defaultNotification} = state.event
 
   let expired = 0;
   let lessDefault = 0;

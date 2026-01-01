@@ -2,12 +2,24 @@
   display: flex
   gap: 10%
   width: 1400px
-  height: 650px
   background-color: transparent
   border-radius: 10px
   box-shadow: 0px 0px 30px rgb(138, 151, 148)
   padding: 20px
-
+  margin: 15px
+  background-color: #28d2d0
+  @media(max-width: 1450px)
+    width: 1000px
+  @media(max-width: 1030px)
+    width: 750px
+    flex-direction: column
+    align-items: center
+  @media(max-width: 792px)  
+    width: 500px
+  @media(max-width: 555px)
+    width: 400px
+  @media(max-width: 430px)
+    width: 350px        
 
   .wrapper
     display: flex
@@ -16,13 +28,20 @@
     justify-content: space-between
     gap: 40px
     margin-top: 25px
-    
+    margin-left: 20px
+    @media(max-width: 1030px)
+      margin-bottom: 20px
+    @media(max-width: 792px)   
+      align-items: center
+    @media(max-width: 555px) 
+      margin-left: 0
+      
     .box
       display: flex
       flex-direction: column
       gap: 5px
 
-      .titel
+      .title
         color: white
         font-size: 20px 
         font-weight: bolder 
@@ -36,6 +55,15 @@
         background-color: white
         text-align: left
         padding: 5px
+        cursor: pointer
+        @media(max-width: 1450px)
+          width: 400px
+        @media(max-width: 1030px)
+          width: 500px
+        @media(max-width: 792px) 
+          width: 400px
+        @media(max-width: 430px)
+          width: 350px    
       
         &:focus 
           outline: none
@@ -43,7 +71,7 @@
           box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2)
         
         &:hover 
-          border-color: #c88d69
+          border-color: #4e618d     
       
       .error
         font-size: 15px
@@ -60,14 +88,22 @@
     button
       width: 510px
       height: 70px 
-      border: 2px solid #671f04
+      border: 2px solid #4e618d
       border-radius: 8px
       font-size: 30px
       color: white
-      background-color: #671f04
+      background-color:#4e618d
       text-align: center
-      padding: 5px 
+      padding: 5px
+      @media(max-width: 1450px)
+        width: 410px
+      @media(max-width: 1030px)
+        width: 510px
+      @media(max-width: 792px) 
+          width: 410px
+      @media(max-width: 430px)
+        width: 360px           
 
       &:hover 
-        background-color: #d6724d
-        border-color: #d6724d
+        background-color: #9ca8b7
+        border-color: #9ca8b7

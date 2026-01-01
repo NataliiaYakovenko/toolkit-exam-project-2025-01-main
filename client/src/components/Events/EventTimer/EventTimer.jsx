@@ -18,7 +18,7 @@ const EventTimer = ({ eventDateTime, isActive, eventName }) => {
     return (
       <div className={styles.completed}>
         <span>{eventName}</span>
-        Event <br /> completed
+        Event <br /> ended
       </div>
     );
   }

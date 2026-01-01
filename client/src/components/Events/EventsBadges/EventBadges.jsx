@@ -6,22 +6,25 @@ import styles from './EventBadges.module.sass';
 const EventBadges = ({ expired, lessDefault, acting }) => {
   return (
     <div className={styles.container}>
-      <div className={styles.acting}>
-        <span>Acting</span>
-        {acting}
-      </div>
-      <div className={styles.lessDefault}>
-        <span>Less default</span>
-        {lessDefault}
-      </div>
-      <div className={styles.expired}>
-        <span>Expired</span>
-        {expired}
+      <h3 className={styles.title}>Current status of events</h3>
+      <div className={styles.wrapper}>
+        <div className={styles.acting}>
+          <span>Acting</span>
+          <div className={styles.amountActing}>{acting}</div>
+        </div>
+        <div className={styles.notified}>
+          <span>Notified</span>
+          <div className={styles.amountNotified}>{lessDefault}</div>
+        </div>
+        <div className={styles.expired}>
+          <span>Expired</span>
+          <div className={styles.amountExpired}>{expired}</div>
+        </div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps =(state)=>selectEventBadges(state)
+const mapStateToProps = (state) => selectEventBadges(state);
 
 export default connect(mapStateToProps)(EventBadges);
