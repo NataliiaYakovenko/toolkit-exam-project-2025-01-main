@@ -60,6 +60,7 @@ export const loadEvents = createAsyncThunk(
 export const addEvent = createAsyncThunk(
   `${EVENTS_SLICE_NAME}/addEvent`,
   async ({ name, eventDateTime, notificationOffset }) => {
+    const currentTime = Date.now();
     const eventTime = new Date(eventDateTime).getTime();
 
     return {
@@ -70,7 +71,7 @@ export const addEvent = createAsyncThunk(
       createdAt: new Date().toISOString(),
       isNotified: false,
       isActive: true,
-      timeLeft: 0,
+      timeLeft: eventTime - currentTime,
     };
   }
 );
@@ -79,19 +80,21 @@ export const removeEvent = createAsyncThunk(
   `${EVENTS_SLICE_NAME}/removeEvent`,
   async (eventId, { getState }) => {
     const state = getState();
-    const eventIndex = state.event.events.findIndex(
+    const eventToRemove = state.event.events.find(
       (event) => event.id === eventId
     );
 
-    if (eventIndex !== -1) {
-      const updatedEvents = state.event.events.filter(
-        (event) => event.id !== eventId
-      );
-      saveEventsToLocalStorage(updatedEvents);
-      return { eventId, event: state.event.events[eventIndex] };
+    if (!eventToRemove) {
+      throw new Error('Event not found');
     }
 
-    throw new Error('Event not found');
+    const updatedEvents = state.event.events.filter(
+      (event) => event.id !== eventId
+    );
+    saveEventsToLocalStorage(updatedEvents);
+
+    return { eventId, event: eventToRemove };
+
   }
 );
 
@@ -153,7 +156,7 @@ const reducers = {
   clearEventsList: (state) => {
     state.events = [];
     state.notifications = 0;
-    saveEventsToLocalStorage([]);
+    saveEventsToLocalStorage(state.events);
   },
 };
 
@@ -178,6 +181,7 @@ const extraReducers = (builder) => {
     state.error = null;
   });
   builder.addCase(addEvent.fulfilled, (state, { payload }) => {
+    state.isFeatching = false;
     state.events.push(payload);
     state.events.sort((a, b) => a.eventDateTime - b.eventDateTime);
     saveEventsToLocalStorage(state.events);
@@ -196,6 +200,8 @@ const extraReducers = (builder) => {
     const eventIndex = state.events.findIndex(
       (event) => event.id === payload.eventId
     );
+
+ 
     if (eventIndex !== -1) {
       if (state.events[eventIndex].isNotified && state.notifications > 0) {
         state.notifications--;
