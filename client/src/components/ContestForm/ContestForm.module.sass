@@ -35,6 +35,8 @@
   flex-direction: column
   justify-content: center
   align-items: flex-start
+  @media(max-width: 600px)
+    align-items: center
 
 .warning
   font-size: 18px
@@ -66,7 +68,6 @@
   @media(max-width: 700px)
     width: 100%
 
-
   &:focus
     border: 2px solid #28d2d0
 
@@ -90,16 +91,15 @@
   @media(max-width: 700px)
     width: 100%
 
-
   &:focus
     border: 2px solid #28d2d0
-
 
 .formContainer
   display: flex
   flex-direction: column
   justify-content: flex-start
   width: 100%
+  margin: 0 20px
   @media (max-width: 700px)
     justify-content: center
 
@@ -110,7 +110,8 @@
     width: 100%
     @media(max-width: 700px)
       width: auto
-
+    @media(max-width: 600px)
+      align-items: center
 
     .select
       width: 550px
@@ -130,8 +131,12 @@
       color: #555
       transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
       @media(max-width: 700px)
-        width: auto 
-
+        width: auto
+      @media(max-width: 600px)
+        width: 450px
+      @media(max-width: 480px)
+        width: 350px   
+       
       &:focus
         border: 2px solid #28d2d0
 
@@ -146,6 +151,11 @@
 .inputContainer
   margin: 15px 0 0 0
   width: 100%
+  @media(max-width: 600px)
+    width: 450px
+    margin: 0 auto
+  @media(max-width: 480px)
+    width: 350px   
 
   .inputHeader
     display: inline-block
