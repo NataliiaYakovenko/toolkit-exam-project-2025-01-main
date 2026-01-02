@@ -13,6 +13,7 @@ import FormTextArea from '../InputComponents/FormTextArea/FormTextArea';
 import TryAgain from '../TryAgain/TryAgain';
 import Schems from '../../utils/validators/validationSchems';
 import OptionalSelects from '../OptionalSelects/OptionalSelects';
+import ButtonGroup from '../ButtonGroup/ButtonGroup';
 
 const variableOptions = {
   [CONSTANTS.NAME_CONTEST]: {
@@ -145,34 +146,7 @@ class ContestForm extends React.Component {
                   }}
                 />
               </div>
-
-              <div className={styles.buttonGroupContainer}>
-                <h3 className={styles.buttonQuestion}>
-                  Do you want a matching domain (.com URL) with your name?
-                </h3>
-                <div className={styles.answersWrapper}>
-                  <fieldset className={styles.answerBox}>
-                    <legend className={styles.answerMark}>Recommended</legend>
-                    <div className={styles.textWrapper}>
-                      <strong>Yes</strong>
-                      <p>But minor variations are allowed</p>
-                    </div>
-                  </fieldset>
-                  <div className={styles.answerBox}>
-                    <div className={styles.textWrapper}>
-                      <strong>Yes</strong>
-                      <p>The Domain should exactly match the name</p>
-                    </div>
-                  </div>
-                  <div className={styles.answerBox}>
-                    <div className={styles.textWrapper}>
-                      <strong>No</strong>
-                      <p>I am only looking for a name, not a Domain</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
+              <ButtonGroup />
               <OptionalSelects {...this.props} />
               <FieldFileInput
                 name="file"
