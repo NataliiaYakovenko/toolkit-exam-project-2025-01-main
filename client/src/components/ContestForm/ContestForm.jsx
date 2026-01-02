@@ -146,7 +146,9 @@ class ContestForm extends React.Component {
                   }}
                 />
               </div>
-              <ButtonGroup />
+              {this.props.contestType === CONSTANTS.NAME_CONTEST && (
+                <ButtonGroup />
+              )}
               <OptionalSelects {...this.props} />
               <FieldFileInput
                 name="file"
