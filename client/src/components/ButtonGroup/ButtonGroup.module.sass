@@ -1,10 +1,9 @@
-
 .buttonGroupContainer
   display: flex
   flex-direction: column
   margin: 15px 0 0 0
   gap: 20px
-
+ 
   .buttonQuestion
     font-size: 19px
     color: #585859
@@ -12,7 +11,9 @@
 
   .answersWrapper  
     display: flex
-    gap: 15px 
+    gap: 15px
+    @media (max-width: 905px)
+      flex-direction: column 
   
     .answerBox
       width: 450px
@@ -31,6 +32,8 @@
       color: #555
       cursor: pointer
       position: relative
+      @media (max-width: 905px)
+        width: 550px
 
       &:focus
         border: 2px solid #28d2d0
@@ -50,7 +53,11 @@
 
       img
         width: 30px
-        height: 30px  
+        height: 30px
+        position: absolute
+        right: 5px
+        top: 5px
+        display: none  
 
       .textWrapper
         display: flex
@@ -65,4 +72,6 @@
     .answerBox:focus-within strong 
       color: #050505
       font-weight: 800
-     
+
+    .answerBox:focus-within img
+      display: block  
