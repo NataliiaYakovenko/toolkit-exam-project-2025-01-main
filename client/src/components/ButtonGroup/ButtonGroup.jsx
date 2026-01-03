@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styles from './ButtonGroup.module.sass';
 import CONSTANTS from '../../constants';
 
 const ButtonGroup = () => {
+  const firstButton = useRef(null);
+
+  useEffect(() => {
+    firstButton.current?.focus();
+  }, []);
+
   return (
     <div className={styles.buttonGroupContainer}>
       <h3 className={styles.buttonQuestion}>
         Do you want a matching domain (.com URL) with your name?
       </h3>
       <div className={styles.answersWrapper}>
-        <button className={styles.answerBox}>
+        <button ref={firstButton} className={styles.answerBox}>
           <legend className={styles.answerMark}>Recommended</legend>
           <div className={styles.textWrapper}>
             <img src={CONSTANTS.BUTTON_GROUP_MARK} alt="Mark" />
