@@ -9,15 +9,16 @@ const controller = require('../sockets/socketInit');
 const userQueries = require('../queries/userQueries');
 const bankQueries = require('../queries/bankQueries');
 const ratingQueries = require('../queries/ratingQueries');
+const { logError } = require('../logger/logger');
 
 module.exports.login = async (req, res, next) => {
   try {
-    const { email, password }=req.body;
-    if(!email || !password){
+    const { email, password } = req.body;
+    if (!email || !password) {
       return res.status(400).send('Email and password are required');
     }
     const foundUser = await userQueries.findUser({ email });
-    if(!foundUser){
+    if (!foundUser) {
       return res.status(401).send('Email or password are invalid');
     }
     await userQueries.passwordCompare(password, foundUser.password);
@@ -39,6 +40,7 @@ module.exports.login = async (req, res, next) => {
     await userQueries.updateUser({ accessToken }, foundUser.id);
     return res.status(200).send({ token: accessToken });
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -48,7 +50,7 @@ module.exports.registration = async (req, res, next) => {
     const newUser = await userQueries.userCreation(
       Object.assign(req.body, { password: req.hashPass }),
     );
-    if(!newUser){
+    if (!newUser) {
       return res.status(500).send('User registration failed');
     }
     const accessToken = jwt.sign(
@@ -69,6 +71,7 @@ module.exports.registration = async (req, res, next) => {
     await userQueries.updateUser({ accessToken }, newUser.id);
     return res.status(201).send({ token: accessToken });
   } catch (err) {
+    logError(err, err.code);
     if (err.name === 'SequelizeUniqueConstraintError') {
       next(new NotUniqueEmail());
     } else {
@@ -99,16 +102,16 @@ module.exports.changeMark = async (req, res, next) => {
   try {
     const { isFirst, offerId, mark, creatorId } = req.body;
     const userId = req.tokenData.userId;
-    if(!offerId || !mark || !creatorId){
+    if (!offerId || !mark || !creatorId) {
       return res.status(400).send('Missing required fields');
     }
-    if(userId === creatorId){
+    if (userId === creatorId) {
       return res.status(403).send('Users cannot rate their own offers');
     }
-    if(typeof mark !== 'number'){
+    if (typeof mark !== 'number') {
       return res.status(400).send('Mark must be a number');
     }
-    if(mark <= 0){
+    if (mark <= 0) {
       return res.status(400).send('Mark cannot be negative number');
     }
     transaction = await bd.sequelize.transaction({
@@ -137,6 +140,7 @@ module.exports.changeMark = async (req, res, next) => {
     controller.getNotificationController().emitChangeMark(creatorId);
     return res.status(200).send({ userId: creatorId, rating: avg });
   } catch (err) {
+    logError(err, err.code);
     transaction.rollback();
     next(err);
   }
@@ -145,8 +149,8 @@ module.exports.changeMark = async (req, res, next) => {
 module.exports.payment = async (req, res, next) => {
   let transaction;
   try {
-    const  { number, cvc, expiry, price, contests } = req.body;
-    if(!number || !cvc || !expiry || !price || !contests){
+    const { number, cvc, expiry, price, contests } = req.body;
+    if (!number || !cvc || !expiry || !price || !contests) {
       return res.status(400).send('Missing required fields');
     }
     transaction = await bd.sequelize.transaction();
@@ -193,6 +197,7 @@ module.exports.payment = async (req, res, next) => {
     transaction.commit();
     return res.status(200).send();
   } catch (err) {
+    logError(err, err.code);
     transaction.rollback();
     next(err);
   }
@@ -207,7 +212,7 @@ module.exports.updateUser = async (req, res, next) => {
       req.body,
       req.tokenData.userId,
     );
-    if(!updatedUser){
+    if (!updatedUser) {
       return res.status(404).send('User not found');
     }
     return res.status(200).send({
@@ -221,6 +226,7 @@ module.exports.updateUser = async (req, res, next) => {
       id: updatedUser.id,
     });
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -229,8 +235,8 @@ module.exports.cashout = async (req, res, next) => {
   let transaction;
   try {
     const { number, expiry, cvc, sum } = req.body;
-    const { userId }=req.tokenData;
-    if(!number || !expiry || !cvc || !sum){
+    const { userId } = req.tokenData;
+    if (!number || !expiry || !cvc || !sum) {
       return res.status(400).send('Missing required fields');
     }
     transaction = await bd.sequelize.transaction();
@@ -266,6 +272,7 @@ module.exports.cashout = async (req, res, next) => {
     transaction.commit();
     return res.status(200).send({ balance: updatedUser.balance });
   } catch (err) {
+    logError(err, err.code);
     transaction.rollback();
     next(err);
   }
@@ -280,6 +287,7 @@ module.exports.getUserByPk = async (req, res, next) => {
     }
     return res.status(200).send(foundUser);
   } catch (error) {
+    logError(error, error.code);
     next(error);
   }
 };

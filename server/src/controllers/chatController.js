@@ -4,30 +4,34 @@ const Catalog = require('../models/mongoModels/Catalog');
 const db = require('../models');
 const userQueries = require('../queries/userQueries');
 const controller = require('../sockets/socketInit');
-
+const { logError } = require('../logger/logger');
 
 module.exports.addMessage = async (req, res, next) => {
   try {
     const { recipient, messageBody } = req.body;
-    const { userId, firstName, lastName, displayName, avatar,  email } = req.tokenData;
+    const { userId, firstName, lastName, displayName, avatar, email } =
+      req.tokenData;
 
     const participants = [userId, recipient];
     participants.sort(
-      (participant1, participant2) => participant1 - participant2);
-    if(!recipient || !messageBody){
+      (participant1, participant2) => participant1 - participant2,
+    );
+    if (!recipient || !messageBody) {
       return res.status(400).send('Bad request');
     }
-    if(recipient === userId){
+    if (recipient === userId) {
       return res.status(400).send('Cannot send message to yourself');
     }
-    const newConversation = await Conversation.findOneAndUpdate({ participants },
+    const newConversation = await Conversation.findOneAndUpdate(
+      { participants },
       { participants, blackList: [false, false], favoriteList: [false, false] },
       {
         upsert: true,
         new: true,
         setDefaultsOnInsert: true,
         useFindAndModify: false,
-      });
+      },
+    );
     const message = new Message({
       sender: userId,
       body: messageBody,
@@ -36,7 +40,8 @@ module.exports.addMessage = async (req, res, next) => {
     await message.save();
     message._doc.participants = participants;
     const interlocutorId = participants.filter(
-      (participant) => participant !== userId)[ 0 ];
+      (participant) => participant !== userId,
+    )[0];
     const preview = {
       _id: newConversation._id,
       sender: userId,
@@ -71,6 +76,7 @@ module.exports.addMessage = async (req, res, next) => {
       preview: Object.assign(preview, { interlocutor: req.body.interlocutor }),
     });
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -80,11 +86,11 @@ module.exports.getChat = async (req, res, next) => {
     const { interlocutorId } = req.query;
     const { userId } = req.tokenData;
 
-    if(!interlocutorId){
+    if (!interlocutorId) {
       return res.status(400).send('Interlocutor is not indicated');
     }
 
-    if(interlocutorId === userId){
+    if (interlocutorId === userId) {
       return res.status(400).send('Cannot get chat with yourself');
     }
 
@@ -113,8 +119,8 @@ module.exports.getChat = async (req, res, next) => {
       messages,
       interlocutor,
     });
-
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -130,12 +136,11 @@ async function getUserInfo(userId) {
   };
 }
 
-
 module.exports.getPreview = async (req, res, next) => {
   try {
     const { userId } = req.tokenData;
 
-    if(!userId){
+    if (!userId) {
       return res.status(401).send('User authentication required');
     }
     const conversations = await Message.aggregate([
@@ -173,9 +178,10 @@ module.exports.getPreview = async (req, res, next) => {
       },
     ]);
     const interlocutors = [];
-    conversations.forEach(conversation => {
-      interlocutors.push(conversation.participants.find(
-        (participant) => participant !== userId));
+    conversations.forEach((conversation) => {
+      interlocutors.push(
+        conversation.participants.find((participant) => participant !== userId),
+      );
     });
     const senders = await db.Users.findAll({
       where: {
@@ -184,7 +190,7 @@ module.exports.getPreview = async (req, res, next) => {
       attributes: ['id', 'firstName', 'lastName', 'displayName', 'avatar'],
     });
     conversations.forEach((conversation) => {
-      senders.forEach(sender => {
+      senders.forEach((sender) => {
         if (conversation.participants.includes(sender.dataValues.id)) {
           conversation.interlocutor = {
             id: sender.dataValues.id,
@@ -198,6 +204,7 @@ module.exports.getPreview = async (req, res, next) => {
     });
     return res.status(200).send(conversations);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -207,25 +214,28 @@ module.exports.blackList = async (req, res, next) => {
     const { participants, blackListFlag } = req.body;
     const { userId } = req.tokenData;
 
-    if(!participants || !Array.isArray(participants)){
+    if (!participants || !Array.isArray(participants)) {
       return res.status(400).send('Participants are required');
     }
-    if(participants.length !== 2){
+    if (participants.length !== 2) {
       return res.status(400).send('Participants must be 2');
     }
-    if(typeof blackListFlag !== 'boolean'){
+    if (typeof blackListFlag !== 'boolean') {
       return res.status(400).send('BlackListFlag boolean is required');
     }
-    const predicate = 'blackList.' +
-    participants.indexOf(userId);
+    const predicate = 'blackList.' + participants.indexOf(userId);
     const chat = await Conversation.findOneAndUpdate(
       { participants },
-      { $set: { [ predicate ]: blackListFlag } }, { new: true });
+      { $set: { [predicate]: blackListFlag } },
+      { new: true },
+    );
     const interlocutorId = participants.filter(
-      (participant) => participant !== userId)[ 0 ];
+      (participant) => participant !== userId,
+    )[0];
     controller.getChatController().emitChangeBlockStatus(interlocutorId, chat);
     return res.status(200).send(chat);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -235,22 +245,24 @@ module.exports.favoriteChat = async (req, res, next) => {
     const { participants, favoriteFlag } = req.body;
     const { userId } = req.tokenData;
 
-    if(!participants || !Array.isArray(participants)){
+    if (!participants || !Array.isArray(participants)) {
       return res.status(400).send('Participants are required');
     }
-    if(participants.length !== 2){
+    if (participants.length !== 2) {
       return res.status(400).send('Participants must be 2');
     }
-    if(typeof favoriteFlag !== 'boolean'){
+    if (typeof favoriteFlag !== 'boolean') {
       return res.status(400).send('FavoriteFlag boolean is required');
     }
-    const predicate = 'favoriteList.' +
-    participants.indexOf(userId);
+    const predicate = 'favoriteList.' + participants.indexOf(userId);
     const chat = await Conversation.findOneAndUpdate(
       { participants },
-      { $set: { [ predicate ]: favoriteFlag } }, { new: true });
+      { $set: { [predicate]: favoriteFlag } },
+      { new: true },
+    );
     return res.status(200).send(chat);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -260,10 +272,10 @@ module.exports.createCatalog = async (req, res, next) => {
     const { catalogName, chatId } = req.body;
     const { userId } = req.tokenData;
 
-    if(!catalogName){
+    if (!catalogName) {
       return res.status(400).send('Catalog name is required');
     }
-    if(!chatId){
+    if (!chatId) {
       return res.status(400).send('Chat ID is required');
     }
     const catalog = new Catalog({
@@ -274,6 +286,7 @@ module.exports.createCatalog = async (req, res, next) => {
     await catalog.save();
     return res.status(201).send(catalog);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -283,18 +296,23 @@ module.exports.updateNameCatalog = async (req, res, next) => {
     const { catalogId, catalogName } = req.body;
     const { userId } = req.tokenData;
 
-    if(!catalogId){
+    if (!catalogId) {
       return res.status(400).send('Catalog ID is required');
     }
-    if(!catalogName){
+    if (!catalogName) {
       return res.status(400).send('Catalog name is required');
     }
-    const catalog = await Catalog.findOneAndUpdate({
-      _id: catalogId,
-      userId,
-    }, { catalogName }, { new: true });
+    const catalog = await Catalog.findOneAndUpdate(
+      {
+        _id: catalogId,
+        userId,
+      },
+      { catalogName },
+      { new: true },
+    );
     return res.status(200).send(catalog);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -304,18 +322,23 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
     const { catalogId, chatId } = req.body;
     const { userId } = req.tokenData;
 
-    if(!catalogId){
+    if (!catalogId) {
       return res.status(400).send('Catalog ID is required');
     }
-    if(!chatId){
+    if (!chatId) {
       return res.status(400).send('Chat ID is required');
     }
-    const catalog = await Catalog.findOneAndUpdate({
-      _id: catalogId,
-      userId,
-    }, { $addToSet: { chats: chatId } }, { new: true });
+    const catalog = await Catalog.findOneAndUpdate(
+      {
+        _id: catalogId,
+        userId,
+      },
+      { $addToSet: { chats: chatId } },
+      { new: true },
+    );
     return res.status(200).send(catalog);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -325,18 +348,23 @@ module.exports.removeChatFromCatalog = async (req, res, next) => {
     const { catalogId, chatId } = req.body;
     const { userId } = req.tokenData;
 
-    if(!catalogId){
+    if (!catalogId) {
       return res.status(400).send('Catalog ID is required');
     }
-    if(!chatId){
+    if (!chatId) {
       return res.status(400).send('Chat ID is required');
     }
-    const catalog = await Catalog.findOneAndUpdate({
-      _id: catalogId,
-      userId,
-    }, { $pull: { chats: chatId } }, { new: true });
+    const catalog = await Catalog.findOneAndUpdate(
+      {
+        _id: catalogId,
+        userId,
+      },
+      { $pull: { chats: chatId } },
+      { new: true },
+    );
     return res.status(200).send(catalog);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -346,13 +374,13 @@ module.exports.deleteCatalog = async (req, res, next) => {
     const { catalogId } = req.body;
     const { userId } = req.tokenData;
 
-    if(!catalogId){
+    if (!catalogId) {
       return res.status(400).send('Catalog ID is required');
     }
-    await Catalog.remove(
-      { _id: catalogId, userId });
+    await Catalog.remove({ _id: catalogId, userId });
     return res.status(200).end();
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -371,11 +399,12 @@ module.exports.getCatalogs = async (req, res, next) => {
         },
       },
     ]);
-    if(!catalogs || catalogs.length === 0){
+    if (!catalogs || catalogs.length === 0) {
       return res.status(200).send([]);
     }
     return res.status(200).send(catalogs);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };

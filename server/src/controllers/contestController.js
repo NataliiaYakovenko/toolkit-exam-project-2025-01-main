@@ -5,6 +5,7 @@ const userQueries = require('../queries/userQueries');
 const controller = require('../sockets/socketInit');
 const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../constants');
+const { logError } = require('../logger/logger');
 
 module.exports.dataForContest = async (req, res, next) => {
   const response = {};
@@ -37,6 +38,7 @@ module.exports.dataForContest = async (req, res, next) => {
     });
     return res.status(200).send(response);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -101,6 +103,7 @@ module.exports.getContestById = async (req, res, next) => {
     });
     return res.status(200).send(contestInfo);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -119,6 +122,7 @@ module.exports.downloadFile = async (req, res, next) => {
     }
     return res.status(200).download(file);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -146,6 +150,7 @@ module.exports.updateContest = async (req, res, next) => {
     }
     return res.status(200).send(updatedContest);
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -187,6 +192,7 @@ module.exports.setNewOffer = async (req, res, next) => {
     const User = Object.assign({}, req.tokenData, { id: req.tokenData.userId });
     return res.status(200).send(Object.assign({}, result, { User }));
   } catch (err) {
+    logError(err, err.code);
     next(err);
   }
 };
@@ -302,6 +308,7 @@ module.exports.setOfferStatus = async (req, res, next) => {
       return res.status(400).send('Invalid command');
     }
   }catch(err){
+    logError(err, err.code);
     if (transaction) {
       await transaction.rollback();
     }
@@ -345,6 +352,7 @@ module.exports.getCustomersContests = async (req, res, next) => {
     }
     return res.status(200).send({ contests, haveMore });
   }catch(err){
+    logError(err, err.code);
     next(err);
   }
 };
@@ -389,6 +397,7 @@ module.exports.getContests = async(req, res, next) => {
     }
     return res.status(200).send({ contests, haveMore });
   }catch(err){
+    logError(err, err.code);
     next(err);
   }
 };
