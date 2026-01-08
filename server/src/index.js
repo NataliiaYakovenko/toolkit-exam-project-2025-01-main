@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 // ============================
 require('dotenv').config();
+require('./cron/logTransform.cron');
 const express = require('express');
 const cors = require('cors');
 require('./dbMongo/mongoose');
