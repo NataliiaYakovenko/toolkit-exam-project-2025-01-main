@@ -1,6 +1,7 @@
 const db = require('../models');
 const CONSTANTS = require('../constants');
 const { logError } = require('../logger/logger');
+const { sendOfferDecision } = require('../utils/mailService');
 
 module.exports.getOffers = async (req, res, next) => {
   try {
@@ -102,12 +103,19 @@ module.exports.moderateOffer = async (req, res, next) => {
       return res.status(400).send('Offer already moderated');
     }
 
-    await foundOffer.update(
-      { status },
-      { transaction },
-    );
+    await foundOffer.update({ status }, { transaction });
 
     await transaction.commit();
+
+    try {
+      await sendOfferDecision({
+        to: foundOffer.User.email,
+        status,
+        contestTitle: foundOffer.Contest.title,
+      });
+    } catch (emailError) {
+      console.error('Failed to send email:', emailError);
+    }
 
     return res.status(200).send({
       message: `Offer ${status} successfully`,
