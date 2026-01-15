@@ -1,14 +1,7 @@
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASSWORD,
-  },
-});
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 
 module.exports.sendOfferDecision = async ({ to, status, contestTitle }) => {
   const subject =
@@ -21,10 +14,13 @@ module.exports.sendOfferDecision = async ({ to, status, contestTitle }) => {
       ? `Your offer for contest ${contestTitle} was approved`
       : `Your offer for contest ${contestTitle} was rejected`;
 
-  await transporter.sendMail({
-    from: `"Administrator" <${process.env.MAIL_USER}>`,
+
+  await sgMail.send({
     to,
+    from: process.env.MAIL_USER,
     subject,
-    text,
+    html: `
+      <p>${text}</p> `,
   });
 };
+
