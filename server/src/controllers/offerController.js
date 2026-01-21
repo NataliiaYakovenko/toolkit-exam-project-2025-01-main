@@ -4,20 +4,21 @@ const { logError } = require('../logger/logger');
 const { sendOfferDecision } = require('../utils/mailService');
 
 module.exports.getOffers = async (req, res, next) => {
+
   try {
     const { pagination, offersFilter, includeUser } = req;
     const { limit, offset, page } = pagination;
 
     const include = [
       {
-        model: db.Contest,
+        model: db.Contests,
         attributes: ['id', 'contestType', 'title', 'prize', 'status'],
       },
     ];
 
     if (includeUser) {
       include.push({
-        model: db.User,
+        model: db.Users,
         attributes: [
           'id',
           'firstName',
@@ -29,11 +30,11 @@ module.exports.getOffers = async (req, res, next) => {
       });
     }
 
-    const countOffers = await db.Offer.count({
+    const countOffers = await db.Offers.count({
       where: offersFilter,
     });
 
-    const foundOffers = await db.Offer.findAll({
+    const foundOffers = await db.Offers.findAll({
       where: offersFilter,
       limit,
       offset,
@@ -47,9 +48,9 @@ module.exports.getOffers = async (req, res, next) => {
       page,
       totalPages: Math.ceil(countOffers / limit),
     });
-  } catch (error) {
-    logError(error, error.code);
-    next(error);
+  } catch (err) {
+    logError(err, err.code);
+    next(err);
   }
 };
 
@@ -79,14 +80,14 @@ module.exports.moderateOffer = async (req, res, next) => {
 
     transaction = await db.sequelize.transaction();
 
-    const foundOffer = await db.Offer.findByPk(offerId, {
+    const foundOffer = await db.Offers.findByPk(offerId, {
       include: [
         {
-          model: db.User,
+          model: db.Users,
           attributes: ['id', 'email', 'firstName', 'displayName'],
         },
         {
-          model: db.Contest,
+          model: db.Contests,
           attributes: ['id', 'title', 'contestType'],
         },
       ],
@@ -121,9 +122,9 @@ module.exports.moderateOffer = async (req, res, next) => {
       message: `Offer ${status} successfully`,
       offer: { id: foundOffer.id, status: foundOffer.status },
     });
-  } catch (error) {
+  } catch (err) {
     if (transaction) await transaction.rollback();
-    logError(error, error.code);
-    next(error);
+    logError(err, err.code);
+    next(err);
   }
 };
