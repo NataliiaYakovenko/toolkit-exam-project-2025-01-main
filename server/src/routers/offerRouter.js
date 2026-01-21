@@ -7,11 +7,13 @@ const {
   offerIsPending,
 } = require('../middlewares/offerMiddle');
 const { onlyForModerator } = require('../middlewares/moderationMiddle');
+const checkToken = require('../middlewares/checkToken');
 
 const router = express.Router();
 
 router.get(
   '/offers',
+  checkToken.checkToken,
   pagination,
   filterOffersByRole,
   tabuCreativeInfoForModerator,
@@ -20,6 +22,7 @@ router.get(
 
 router.patch(
   '/offers/:offerId/moderate',
+  checkToken.checkToken,
   onlyForModerator,
   offerIsPending,
   offerController.moderateOffer,
