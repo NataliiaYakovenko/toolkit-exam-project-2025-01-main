@@ -1,14 +1,18 @@
-const { Offer } = require('../models');
+const db = require('../models');
 const RightsError = require('../errors/RightsError');
 const ServerError = require('../errors/ServerError');
 const CONSTANTS = require('../constants');
 
 module.exports.filterOffersByRole = (req, res, next) => {
   req.offersFilter = {};
-  if (req.tokenData.role === CONSTANTS.CUSTOMER) {
+  const { role, userId } = req.tokenData;
+
+  if (role === CONSTANTS.MODERATOR) {
+    req.offersFilter.status = 'pending';
+  } else if (role === CONSTANTS.CUSTOMER) {
     req.offersFilter.status = 'approved';
-  } else if (req.tokenData.role === CONSTANTS.CREATOR) {
-    req.offersFilter.userId = req.tokenData.userId;
+  } else if (role === CONSTANTS.CREATOR) {
+    req.offersFilter.userId = userId;
   }
   next();
 };
@@ -31,12 +35,13 @@ module.exports.pagination = (req, res, next) => {
 };
 
 module.exports.offerIsPending = async (req, res, next) => {
+
   try {
     const { offerId } = req.params;
     if (!offerId) {
       return next(new RightsError('Offer ID is required'));
     }
-    const offer = await Offer.findByPk(offerId);
+    const offer = await db.Offers.findByPk(offerId);
     if (!offer) {
       return next(new RightsError(`Offer with ID ${offerId} not found`));
     }
