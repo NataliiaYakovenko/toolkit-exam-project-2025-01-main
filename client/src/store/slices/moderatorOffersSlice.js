@@ -64,3 +64,5 @@ export const moderatorOffersSlice = createSlice({
   reducers: {},
   extraReducers,
 });
+
+export default moderatorOffersSlice.reducer;
