@@ -54,6 +54,17 @@ module.exports.getContestById = async (req, res, next) => {
     if (isNaN(Number(contestid))) {
       return res.status(400).send('Contest ID must be a number');
     }
+
+    let offerWhereCondition = {};
+    if (role === CONSTANTS.CREATOR) {
+      offerWhereCondition = { userId };
+    } else if (role === CONSTANTS.CUSTOMER) {
+      offerWhereCondition = {
+        status: CONSTANTS.OFFER_STATUS_APPROVED };
+    } else if (role === CONSTANTS.MODERATOR) {
+      return res.status(403).send('Access denied');
+    }
+
     let contestInfo = await db.Contests.findOne({
       where: { id: contestid },
       order: [[db.Offers, 'id', 'asc']],
@@ -68,10 +79,7 @@ module.exports.getContestById = async (req, res, next) => {
         {
           model: db.Offers,
           required: false,
-          where:
-            role === CONSTANTS.CREATOR
-              ? { userId }
-              : {},
+          where: offerWhereCondition,
           attributes: { exclude: ['userId', 'contestId'] },
           include: [
             {
@@ -91,9 +99,11 @@ module.exports.getContestById = async (req, res, next) => {
         },
       ],
     });
+
     if (!contestInfo) {
       return res.status(404).send('Contest not found');
     }
+
     contestInfo = contestInfo.get({ plain: true });
     contestInfo.Offers.forEach((offer) => {
       if (offer.Rating) {
@@ -101,6 +111,7 @@ module.exports.getContestById = async (req, res, next) => {
       }
       delete offer.Rating;
     });
+
     return res.status(200).send(contestInfo);
   } catch (err) {
     logError(err, err.code);
