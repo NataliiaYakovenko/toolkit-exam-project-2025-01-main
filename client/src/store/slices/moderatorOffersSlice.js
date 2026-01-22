@@ -17,7 +17,7 @@ export const getModeratorOffers = decorateAsyncThunk({
   thunk: async ({ page = 1 }) => {
     const { data } = await restController.getOffers({
       page,
-      limit: 10,
+      limit: 5,
     });
     return data;
   },
