@@ -82,7 +82,6 @@ module.exports.getContestById = async (req, res, next) => {
           model: db.Offers,
           required: false,
           where: offerWhereCondition,
-          // attributes: { exclude: ['userId', 'contestId'] },
           attributes: role === CONSTANTS.CREATOR
             ? ['id', 'fileName', 'text', 'status', 'createdAt', 'updatedAt', 'userId', 'originalFileName']
             : ['id', 'fileName', 'text', 'status', 'createdAt', 'updatedAt', 'originalFileName'],
@@ -301,13 +300,10 @@ module.exports.setOfferStatus = async (req, res, next) => {
       const offer = await rejectOffer(offerId, creatorId, contestId);
       return res.status(200).send(offer);
     } else if (command === 'approve') {
-      logError({}, 111);
       if (!contestId) {
         return res.status(400).send('Contest ID is required for resolve');
       }
-      logError({}, 222);
       transaction = await db.sequelize.transaction();
-      logError({}, 333);
       const winningOffer = await resolveOffer(
         contestId,
         creatorId,
@@ -316,7 +312,6 @@ module.exports.setOfferStatus = async (req, res, next) => {
         priority,
         transaction,
       );
-      logError({}, 444);
       await transaction.commit();
       return res.status(200).send(winningOffer);
     } else {

@@ -105,14 +105,7 @@ module.exports.moderateOffer = async (req, res, next) => {
     }
 
     await foundOffer.update({ status }, { transaction });
-    // await foundOffer.update(
-    //   {
-    //     status: db.sequelize.literal(
-    //       `'${status}'::"enum_Offers_status"`,
-    //     ),
-    //   },
-    //   { transaction },
-    // );
+
     await transaction.commit();
 
     try {
