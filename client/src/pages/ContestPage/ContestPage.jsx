@@ -70,7 +70,8 @@ class ContestPage extends React.Component {
       role === CONSTANTS.CUSTOMER &&
       contestCreatorId === userId &&
       contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE &&
-      offerStatus === 'approved'
+      (offerStatus === CONSTANTS.OFFER_STATUS_APPROVED ||
+        offerStatus === CONSTANTS.OFFER_STATUS_WON || offerStatus === 'approved')
     );
   };
 
@@ -137,7 +138,7 @@ class ContestPage extends React.Component {
     } = contestByIdStore;
     return (
       <div>
-        {/* <Chat/> */}
+
         {isShowOnFull && (
           <LightBox
             mainSrc={`${CONSTANTS.publicURL}${imagePath}`}
