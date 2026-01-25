@@ -107,6 +107,19 @@ class Header extends React.Component {
                   <span>My Events</span>
                 </Link>
               </li>
+
+              {this.props.data?.role === CONSTANTS.MODERATOR && (
+                <li>
+                  <Link
+                    to="/moderator/offers"
+                    style={{ textDecoration: 'none' }}
+                    onClick={this.closeMobileMenu}
+                  >
+                    <span>Offers</span>
+                  </Link>
+                </li>
+              )}
+
               <li>
                 <span
                   onClick={() => {
