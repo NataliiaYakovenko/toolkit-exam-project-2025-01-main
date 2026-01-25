@@ -1,0 +1,92 @@
+
+.offerContainer
+  display: flex
+  align-items: center
+  justify-content: space-between
+  background: #f2f4f6
+  padding: 10px 20px
+  margin: 15px 20px 0 20px
+  border-radius: 20px
+  width: 900px
+  height: 150px
+
+
+  .mainInfoContainer
+    display: flex
+    align-items: center
+    flex: 1
+
+
+
+    .contestInfo
+      display: flex
+      flex-direction: column
+      justify-content: center
+      min-width: 180px
+      gap: 10px
+      color: #556da5
+
+      .contestField
+        display: flex
+        flex-direction: column
+
+        .label
+          font-weight: 600
+          font-size: 20px
+          color: #556da5
+          text-decoration: underline
+
+        .value
+          font-size: 20px
+          color: #556da5
+
+
+    .responseContainer
+      display: flex
+      align-items: center
+      justify-content: center
+      flex: 1
+      height: 100%
+
+      .responseLogo
+        height: 120px
+        border-radius: 10px
+        object-fit: cover
+
+      .responseText
+        font-size: 20px
+        font-weight: 600
+        color: #556da5
+        text-align: center
+
+
+  .btnsContainer
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    align-items: flex-end
+    margin-left: auto
+
+    .btn
+      width: 150px
+      height: 55px
+      padding: 10px
+      border-radius: 8px
+      cursor: pointer
+      color: white
+      font-size: 20px
+      border: none
+     
+
+    .approve
+      background-color: #8aca6b
+      margin-bottom: 18px
+
+      &:hover
+        background-color: #5fb137
+
+    .reject
+      background-color: #cd5c5c
+
+      &:hover
+        background-color: #a83232

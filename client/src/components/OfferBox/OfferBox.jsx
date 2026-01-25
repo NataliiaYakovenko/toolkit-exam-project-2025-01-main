@@ -44,7 +44,7 @@ const OfferBox = (props) => {
         {
           label: 'Yes',
           onClick: () =>
-            props.setOfferStatus(props.data.User.id, props.data.id, 'resolve'),
+            props.setOfferStatus(props.data.User.id, props.data.id, 'approve'),
         },
         {
           label: 'No',

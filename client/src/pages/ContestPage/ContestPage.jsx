@@ -65,10 +65,12 @@ class ContestPage extends React.Component {
     const contestCreatorId = this.props.contestByIdStore.contestData.User.id;
     const userId = this.props.userStore.data.id;
     const contestStatus = this.props.contestByIdStore.contestData.status;
+    const { role } = this.props.userStore.data;
     return (
+      role === CONSTANTS.CUSTOMER &&
       contestCreatorId === userId &&
       contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE &&
-      offerStatus === CONSTANTS.OFFER_STATUS_PENDING
+      offerStatus === 'approved'
     );
   };
 
@@ -226,4 +228,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeShowImage: (data) => dispatch(changeShowImage(data)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ContestPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ContestPage));

@@ -12,7 +12,7 @@ module.exports.getOffers = async (req, res, next) => {
     const include = [
       {
         model: db.Contests,
-        attributes: ['id', 'contestType', 'title', 'prize', 'status'],
+        attributes: ['id', 'contestType', 'title', 'prize', 'status', 'industry'],
       },
     ];
 
@@ -88,7 +88,7 @@ module.exports.moderateOffer = async (req, res, next) => {
         },
         {
           model: db.Contests,
-          attributes: ['id', 'title', 'contestType'],
+          attributes: ['id', 'title', 'contestType', 'industry'],
         },
       ],
       transaction,
@@ -105,7 +105,14 @@ module.exports.moderateOffer = async (req, res, next) => {
     }
 
     await foundOffer.update({ status }, { transaction });
-
+    // await foundOffer.update(
+    //   {
+    //     status: db.sequelize.literal(
+    //       `'${status}'::"enum_Offers_status"`,
+    //     ),
+    //   },
+    //   { transaction },
+    // );
     await transaction.commit();
 
     try {
