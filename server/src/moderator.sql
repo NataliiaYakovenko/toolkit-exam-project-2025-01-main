@@ -1,18 +1,3 @@
-UPDATE "Users"
-SET role = 'creator'
-WHERE email = 'creator@gmail.com'
-
-
-UPDATE "Users"
-SET role = 'moderator'
-WHERE email = 'creator@gmail.com'
-
-
-SELECT email,
-    role
-FROM "Users";
-
-DELETE FROM "Users" WHERE email = 'moderator@gmail.com';
 
 INSERT INTO "Users" (
         "firstName",
