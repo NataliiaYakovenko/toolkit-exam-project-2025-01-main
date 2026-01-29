@@ -1,11 +1,24 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Conversations', {
+    return queryInterface.createTable('Catalogs', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
+        onDelete: 'RESTRICT',
+      },
+      catalogName: {
+        type: Sequelize.STRING(64),
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -20,6 +33,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Conversations');
+    return queryInterface.dropTable('Catalogs');
   },
 };
