@@ -22,5 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
+  Conversation.associate = function (models) {
+    Conversation.belongsToMany(models.Users, { through: models.ConversationsUsers, foreignKey: 'conversationId', otherKey: 'userId' });
+    Conversation.hasMany(models.Messages, { foreignKey: 'conversationId', sourceKey: 'id' });
+    Conversation.belongsToMany(models.Catalogs, { through: models.CatalogsConversations, foreignKey: 'conversationId', otherKey: 'catalogId' });
+    Conversation.hasMany(models.ConversationsUsers, { foreignKey: 'conversationId', sourceKey: 'id' });
+    Conversation.hasMany(models.CatalogsConversations, { foreignKey: 'conversationId', sourceKey: 'id' });
+  };
+
   return Conversation;
 };
