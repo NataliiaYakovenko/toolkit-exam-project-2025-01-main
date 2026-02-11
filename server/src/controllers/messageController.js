@@ -4,7 +4,7 @@ const { logError } = require('../logger/logger');
 module.exports.createMessage = async (req, res, next) => {
   try {
     const { conversationId, body } = req.body;
-    const sender = req.user.id;
+    const sender = req.tokenData.userId;
     const createdMessage = await db.Messages.create({
       conversationId,
       body,
@@ -20,15 +20,32 @@ module.exports.createMessage = async (req, res, next) => {
 module.exports.getAllMessages = async (req, res, next) => {
   try {
     const { conversationId } = req.params;
+    const { userId } = req.tokenData;
+
+    const participant = await db.ConversationsUsers.findOne({
+      where: {
+        conversationId,
+        userId,
+      },
+    });
+
+    if (!participant) {
+      return res.status(403).send('Access denied');
+    }
+
     const messages = await db.Messages.findAll({
       where: { conversationId },
+      order: [['createdAt', 'ASC']],
     });
+
     return res.status(200).send({ data: messages });
   } catch (err) {
     logError(err, err.code);
     next(err);
   }
 };
+
+
 module.exports.getMessageById = async (req, res, next) => {
   try {
     const { id } = req.params;

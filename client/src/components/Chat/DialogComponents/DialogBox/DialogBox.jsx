@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './DialogBox.module.sass';
 import CONSTANTS from '../../../../constants';
 
-const DialogBox = props => {
+const DialogBox = (props) => {
   const {
     chatPreview,
     userId,
@@ -15,30 +15,39 @@ const DialogBox = props => {
     chatMode,
     interlocutor,
   } = props;
-  const {
-    favoriteList,
-    participants,
-    blackList,
-    _id,
-    text,
-    createAt,
-  } = chatPreview;
+
+  const actualInterlocutor = interlocutor || chatPreview?.interlocutor;
+
+  if (!actualInterlocutor) {
+    console.error('DialogBox: interlocutor is missing', {
+      interlocutor,
+      chatPreview,
+    });
+    return null;
+  }
+
+  const { favoriteList, participants, blackList, _id, text, createAt } =
+    chatPreview;
   const isFavorite = favoriteList[participants.indexOf(userId)];
   const isBlocked = blackList[participants.indexOf(userId)];
   return (
     <div
       className={styles.previewChatBox}
-      onClick={() =>
-        goToExpandedDialog({
-          interlocutor,
-          conversationData: {
-            participants,
-            _id,
-            blackList,
-            favoriteList,
-          },
-        })
-      }
+      onClick={() => {
+        if (actualInterlocutor && actualInterlocutor.id) {
+          goToExpandedDialog({
+            interlocutor: actualInterlocutor,
+            conversationData: {
+              participants,
+              _id,
+              blackList,
+              favoriteList,
+            },
+          });
+        } else {
+          console.error('Cannot open dialog: interlocutor is missing');
+        }
+      }}
     >
       <img
         src={
@@ -46,7 +55,7 @@ const DialogBox = props => {
             ? CONSTANTS.ANONYM_IMAGE_PATH
             : `${CONSTANTS.publicURL}${interlocutor.avatar}`
         }
-        alt='user'
+        alt="user"
       />
       <div className={styles.infoContainer}>
         <div className={styles.interlocutorInfo}>
@@ -58,7 +67,7 @@ const DialogBox = props => {
         <div className={styles.buttonsContainer}>
           <span className={styles.time}>{getTimeStr(createAt)}</span>
           <i
-            onClick={event =>
+            onClick={(event) =>
               changeFavorite(
                 {
                   participants,
@@ -73,7 +82,7 @@ const DialogBox = props => {
             })}
           />
           <i
-            onClick={event =>
+            onClick={(event) =>
               changeBlackList(
                 {
                   participants,
@@ -88,7 +97,7 @@ const DialogBox = props => {
             })}
           />
           <i
-            onClick={event => catalogOperation(event, _id)}
+            onClick={(event) => catalogOperation(event, _id)}
             className={classNames({
               'far fa-plus-square':
                 chatMode !== CONSTANTS.CATALOG_PREVIEW_CHAT_MODE,

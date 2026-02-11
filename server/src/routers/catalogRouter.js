@@ -3,11 +3,11 @@ const catalogController = require('../controllers/catalogController');
 const checkToken = require('../middlewares/checkToken');
 const router = express.Router();
 
-router.post('/', checkToken.checkToken, catalogController.createCatalog);
-router.get('/', checkToken.checkToken, catalogController.getAllCatalogs);
-router.get('/:id', checkToken.checkToken, catalogController.getCatalogById);
+router.post('/createCatalog', checkToken.checkToken, catalogController.createCatalog);
+router.get('/getAllCatalogs', checkToken.checkToken, catalogController.getAllCatalogs);
+router.get('/getCatalogById/:id', checkToken.checkToken, catalogController.getCatalogById);
 router.delete(
-  '/:id',
+  '/deleteCatalogById/:id',
   checkToken.checkToken,
   catalogController.deleteCatalogById,
 );

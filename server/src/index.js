@@ -11,12 +11,23 @@ const controller = require('./sockets/socketInit');
 const handlerError = require('./middlewares/handlerError/handler');
 const multerHandler = require('./middlewares/handlerError/multerHandler');
 const { FILES_PATH } = require('./constants');
+const { logError } = require('./logger/logger');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use((req, res, next) => {
+  logError(111, `${req.method} ${req.originalUrl}`, {
+    timestamp: new Date().toISOString(),
+    ip: req.ip,
+    userAgent: req.get('User-Agent'),
+  });
+  next();
+});
+
 app.use('/public', express.static(path.join(FILES_PATH)));
 app.use(router);
 app.use(multerHandler);
@@ -24,5 +35,6 @@ app.use(handlerError);
 
 const server = http.createServer(app);
 server.listen(PORT, () =>
-  console.log(`Example app listening on port ${PORT}!`));
+  console.log(`Example app listening on port ${PORT}!`),
+);
 controller.createConnection(server);

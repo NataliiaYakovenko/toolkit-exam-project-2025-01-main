@@ -4,7 +4,7 @@ const { logError } = require('../logger/logger');
 module.exports.createCatalog = async (req, res, next) => {
   try {
     const { catalogName } = req.body;
-    const userId = req.user.id;
+    const { userId } = req.tokenData;
     const createdCatalog = await db.Catalogs.create({
       catalogName,
       userId,
@@ -18,7 +18,7 @@ module.exports.createCatalog = async (req, res, next) => {
 
 module.exports.getAllCatalogs = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const { userId } = req.tokenData;
     const catalogs = await db.Catalogs.findAll({
       where: { userId },
     });
@@ -31,11 +31,13 @@ module.exports.getAllCatalogs = async (req, res, next) => {
 module.exports.getCatalogById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id;
+    const { userId } = req.tokenData;
 
-    const catalog = await db.Catalogs.findByPk({
-      id,
-      userId,
+    const catalog = await db.Catalogs.findOne({
+      where: {
+        id,
+        userId,
+      },
     });
     if (!catalog) {
       return res.status(404).send('Catalog is not found');
@@ -50,11 +52,13 @@ module.exports.getCatalogById = async (req, res, next) => {
 module.exports.deleteCatalogById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id;
+    const { userId } = req.tokenData;
 
-    const catalog = await db.Catalogs.findByPk({
-      id,
-      userId,
+    const catalog = await db.Catalogs.findOne({
+      where: {
+        id,
+        userId,
+      },
     });
     if (!catalog) {
       return res.status(404).send('Catalog is not found');

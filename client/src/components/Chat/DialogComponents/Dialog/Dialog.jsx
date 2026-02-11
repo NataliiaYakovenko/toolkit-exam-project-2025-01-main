@@ -11,8 +11,13 @@ import styles from './Dialog.module.sass';
 import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
 class Dialog extends React.Component {
-  componentDidMount() {
-    this.props.getDialog({ interlocutorId: this.props.interlocutor.id });
+
+    componentDidMount() {
+    if (this.props.interlocutor && this.props.interlocutor.id) {
+      this.props.getDialog({ interlocutorId: this.props.interlocutor.id });
+    } else {
+      console.error('Dialog: interlocutor is null or missing id', this.props.interlocutor);
+    }
     this.scrollToBottom();
   }
 
@@ -22,9 +27,14 @@ class Dialog extends React.Component {
     this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  componentWillReceiveProps(nextProps, nextContext) {
-    if (nextProps.interlocutor.id !== this.props.interlocutor.id)
+
+    componentWillReceiveProps(nextProps, nextContext) {
+    if (nextProps.interlocutor && 
+        nextProps.interlocutor.id && 
+        this.props.interlocutor && 
+        this.props.interlocutor.id !== nextProps.interlocutor.id) {
       this.props.getDialog({ interlocutorId: nextProps.interlocutor.id });
+    }
   }
 
   componentWillUnmount() {
@@ -80,7 +90,12 @@ class Dialog extends React.Component {
   };
 
   render() {
-    const { chatData, userId } = this.props;
+    const { chatData, userId, interlocutor } = this.props;
+
+    if (!interlocutor || !interlocutor.id) {
+      return <div className={styles.error}>Loading chat...</div>;
+    }
+
     return (
       <>
         <ChatHeader userId={userId} />
