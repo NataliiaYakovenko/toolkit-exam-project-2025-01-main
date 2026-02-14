@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use((req, res, next) => {
-  logError(111, `${req.method} ${req.originalUrl}`, {
+  logError(`${req.method} ${req.originalUrl}`, {
     timestamp: new Date().toISOString(),
     ip: req.ip,
     userAgent: req.get('User-Agent'),
