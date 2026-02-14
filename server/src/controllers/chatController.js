@@ -11,27 +11,39 @@ module.exports.addMessage = async (req, res, next) => {
     if (!recipient || !messageBody) {
       return res.status(400).send('Bad request');
     }
-
     if (recipient === userId) {
       return res.status(400).send('Cannot send message to yourself');
     }
-
     let conversation = await db.Conversations.findOne({
       include: [
         {
-          model: db.Users,
-          where: { id: [userId, recipient] },
-          attributes: [],
-          through: { attributes: [] },
+          model: db.ConversationsUsers,
+          as: 'conversationUsers',
           required: true,
+          where: {
+            userId: {
+              [db.Sequelize.Op.in]: [userId, recipient],
+            },
+          },
         },
       ],
-      group: ['Conversations.id'],
-      having: db.sequelize.literal('COUNT(DISTINCT "Users"."id") = 2'),
     });
 
+    if (conversation) {
+      const totalUsersInChat = await db.ConversationsUsers.count({
+        where: { conversationId: conversation.id },
+      });
+
+      if (totalUsersInChat !== 2) {
+        conversation = null;
+      }
+    }
+    const now = new Date();
     if (!conversation) {
-      conversation = await db.Conversations.create();
+      conversation = await db.Conversations.create({
+        createdAt: now,
+        updatedAt: now,
+      });
 
       await db.ConversationsUsers.bulkCreate([
         {
@@ -53,6 +65,8 @@ module.exports.addMessage = async (req, res, next) => {
       conversationId: conversation.id,
       sender: userId,
       body: messageBody,
+      createdAt: now,
+      updatedAt: now,
     });
 
     const fullMessage = await db.Messages.findByPk(message.id, {
@@ -108,7 +122,6 @@ module.exports.addMessage = async (req, res, next) => {
 
 module.exports.getChat = async (req, res, next) => {
   try {
-    // logError(222, 'getChat');
     const { interlocutorId } = req.query;
     const { userId } = req.tokenData;
 
@@ -121,46 +134,48 @@ module.exports.getChat = async (req, res, next) => {
     }
 
     const conversation = await db.Conversations.findOne({
-
       include: [
         {
           model: db.ConversationsUsers,
+          as: 'conversationUsers',
           where: {
-            userId: [userId, interlocutorId],
+            userId: {
+              [db.Sequelize.Op.in]: [userId, interlocutorId],
+            },
           },
           required: true,
         },
       ],
-
-      group: ['Conversations.id'],
-      having: db.sequelize.literal(
-        'COUNT(DISTINCT "ConversationsUsers"."userId") = 2',
-      ),
     });
 
-    if (!conversation) {
+    if (conversation && conversation.conversationUsers.length === 2) {
+      const messages = await db.Messages.findAll({
+        where: { conversationId: conversation.id },
+        order: [['createdAt', 'ASC']],
+        include: [
+          {
+            model: db.Users,
+            attributes: [
+              'id',
+              'firstName',
+              'lastName',
+              'displayName',
+              'avatar',
+            ],
+          },
+        ],
+      });
+
       const interlocutor = await getUserInfo(interlocutorId);
+
       return res.status(200).send({
-        messages: [],
+        messages,
         interlocutor,
       });
     }
-
-    const messages = await db.Messages.findAll({
-      where: { conversationId: conversation.id },
-      order: [['createdAt', 'ASC']],
-      include: [
-        {
-          model: db.Users,
-          attributes: ['id', 'firstName', 'lastName', 'displayName', 'avatar'],
-        },
-      ],
-    });
-
     const interlocutor = await getUserInfo(interlocutorId);
-
     return res.status(200).send({
-      messages,
+      messages: [],
       interlocutor,
     });
   } catch (err) {
@@ -179,7 +194,6 @@ async function getUserInfo(userId) {
     avatar: user.avatar,
   };
 }
-
 module.exports.getPreview = async (req, res, next) => {
   try {
     const { userId } = req.tokenData;
@@ -272,109 +286,51 @@ module.exports.getPreview = async (req, res, next) => {
   }
 };
 
-module.exports.blackList = async (req, res, next) => {
-  try {
-    const { participants, blackListFlag } = req.body;
-    const { userId } = req.tokenData;
-
-    if (
-      !participants ||
-      !Array.isArray(participants) ||
-      participants.length !== 2
-    ) {
-      return res
-        .status(400)
-        .send('Participants array with 2 users is required');
-    }
-
-    if (typeof blackListFlag !== 'boolean') {
-      return res.status(400).send('BlackListFlag boolean is required');
-    }
-
-    const conversation = await db.Conversations.findOne({
-      include: [
-        {
-          model: db.Users,
-          where: { id: participants },
-          attributes: [],
-          through: { attributes: [] },
-          required: true,
-        },
-      ],
-      group: ['Conversations.id'],
-      having: db.sequelize.literal('COUNT(DISTINCT "Users"."id") = 2'),
-    });
-
-    if (!conversation) {
-      return res.status(404).send('Conversation not found');
-    }
-
-    await db.ConversationsUsers.update(
-      { blackList: blackListFlag },
-      {
-        where: {
-          conversationId: conversation.id,
-          userId,
-        },
-      },
-    );
-
-    const updatedConversation = await db.Conversations.findByPk(
-      conversation.id,
-      {
-        include: [
-          {
-            model: db.Users,
-            attributes: ['id'],
-            through: { attributes: ['blackList', 'favoriteList'] },
-          },
-        ],
-      },
-    );
-
-    const interlocutorId = participants.find((id) => id !== userId);
-    controller
-      .getChatController()
-      .emitChangeBlockStatus(interlocutorId, updatedConversation);
-
-    return res.status(200).send(updatedConversation);
-  } catch (err) {
-    logError(err, err.code);
-    next(err);
-  }
-};
 
 module.exports.favoriteChat = async (req, res, next) => {
   try {
     const { participants, favoriteFlag } = req.body;
     const { userId } = req.tokenData;
 
-    if (
-      !participants ||
-      !Array.isArray(participants) ||
-      participants.length !== 2
-    ) {
-      return res
-        .status(400)
-        .send('Participants array with 2 users is required');
+    if (!participants || !Array.isArray(participants) || participants.length !== 2) {
+      return res.status(400).send('Participants array with 2 users is required');
     }
-
     if (typeof favoriteFlag !== 'boolean') {
       return res.status(400).send('FavoriteFlag boolean is required');
     }
-    const conversation = await db.Conversations.findOne({
-      include: [
-        {
-          model: db.Users,
-          where: { id: participants },
-          attributes: [],
-          through: { attributes: [] },
-          required: true,
-        },
-      ],
-      group: ['Conversations.id'],
-      having: db.sequelize.literal('COUNT(DISTINCT "Users"."id") = 2'),
+
+    const otherUserId = participants.find(id => id !== userId);
+    if (!otherUserId) {
+      return res.status(400).send('Invalid participants');
+    }
+
+
+    let conversation = null;
+    const userConversations = await db.ConversationsUsers.findAll({
+      where: { userId },
+      attributes: ['conversationId'],
     });
+
+    if (userConversations.length > 0) {
+      const conversationIds = userConversations.map(c => c.conversationId);
+      const shared = await db.ConversationsUsers.findAll({
+        where: {
+          conversationId: { [db.Sequelize.Op.in]: conversationIds },
+          userId: otherUserId,
+        },
+        attributes: ['conversationId'],
+      });
+
+      for (const item of shared) {
+        const totalUsers = await db.ConversationsUsers.count({
+          where: { conversationId: item.conversationId },
+        });
+        if (totalUsers === 2) {
+          conversation = await db.Conversations.findByPk(item.conversationId);
+          break;
+        }
+      }
+    }
 
     if (!conversation) {
       return res.status(404).send('Conversation not found');
@@ -382,28 +338,131 @@ module.exports.favoriteChat = async (req, res, next) => {
 
     await db.ConversationsUsers.update(
       { favoriteList: favoriteFlag },
-      {
-        where: {
-          conversationId: conversation.id,
-          userId,
+      { where: { conversationId: conversation.id, userId } },
+    );
+
+
+    const updatedConversation = await db.Conversations.findByPk(conversation.id, {
+      include: [
+        {
+          model: db.ConversationsUsers,
+          as: 'conversationUsers',
+          include: [{ model: db.Users, attributes: ['id'] }],
+          attributes: ['blackList', 'favoriteList', 'userId'],
         },
-      },
+      ],
+    });
+
+    const favoriteList = participants.map(id => {
+      const convUser = updatedConversation.conversationUsers.find(cu => cu.userId === id);
+      return convUser ? convUser.favoriteList : false;
+    });
+
+    const blackList = participants.map(id => {
+      const convUser = updatedConversation.conversationUsers.find(cu => cu.userId === id);
+      return convUser ? convUser.blackList : false;
+    });
+
+    const result = {
+      id: updatedConversation.id,
+      participants,
+      favoriteList,
+      blackList,
+    };
+
+    return res.status(200).send(result);
+  } catch (err) {
+    logError(err, err.code);
+    next(err);
+  }
+};
+
+
+module.exports.blackList = async (req, res, next) => {
+  try {
+    const { participants, blackListFlag } = req.body;
+    const { userId } = req.tokenData;
+
+    if (!participants || !Array.isArray(participants) || participants.length !== 2) {
+      return res.status(400).send('Participants array with 2 users is required');
+    }
+    if (typeof blackListFlag !== 'boolean') {
+      return res.status(400).send('BlackListFlag boolean is required');
+    }
+
+    const otherUserId = participants.find(id => id !== userId);
+    if (!otherUserId) {
+      return res.status(400).send('Invalid participants');
+    }
+
+    let conversation = null;
+    const userConversations = await db.ConversationsUsers.findAll({
+      where: { userId },
+      attributes: ['conversationId'],
+    });
+
+    if (userConversations.length > 0) {
+      const conversationIds = userConversations.map(c => c.conversationId);
+      const shared = await db.ConversationsUsers.findAll({
+        where: {
+          conversationId: { [db.Sequelize.Op.in]: conversationIds },
+          userId: otherUserId,
+        },
+        attributes: ['conversationId'],
+      });
+
+      for (const item of shared) {
+        const totalUsers = await db.ConversationsUsers.count({
+          where: { conversationId: item.conversationId },
+        });
+        if (totalUsers === 2) {
+          conversation = await db.Conversations.findByPk(item.conversationId);
+          break;
+        }
+      }
+    }
+
+    if (!conversation) {
+      return res.status(404).send('Conversation not found');
+    }
+
+    await db.ConversationsUsers.update(
+      { blackList: blackListFlag },
+      { where: { conversationId: conversation.id, userId } },
     );
 
-    const updatedConversation = await db.Conversations.findByPk(
-      conversation.id,
-      {
-        include: [
-          {
-            model: db.Users,
-            attributes: ['id'],
-            through: { attributes: ['blackList', 'favoriteList'] },
-          },
-        ],
-      },
-    );
+    const updatedConversation = await db.Conversations.findByPk(conversation.id, {
+      include: [
+        {
+          model: db.ConversationsUsers,
+          as: 'conversationUsers',
+          include: [{ model: db.Users, attributes: ['id'] }],
+          attributes: ['blackList', 'favoriteList', 'userId'],
+        },
+      ],
+    });
 
-    return res.status(200).send(updatedConversation);
+    const favoriteList = participants.map(id => {
+      const convUser = updatedConversation.conversationUsers.find(cu => cu.userId === id);
+      return convUser ? convUser.favoriteList : false;
+    });
+
+    const blackList = participants.map(id => {
+      const convUser = updatedConversation.conversationUsers.find(cu => cu.userId === id);
+      return convUser ? convUser.blackList : false;
+    });
+
+    const result = {
+      id: updatedConversation.id,
+      participants,
+      favoriteList,
+      blackList,
+    };
+
+    const interlocutorId = otherUserId;
+    controller.getChatController().emitChangeBlockStatus(interlocutorId, result);
+
+    return res.status(200).send(result);
   } catch (err) {
     logError(err, err.code);
     next(err);
@@ -620,5 +679,3 @@ module.exports.getCatalogs = async (req, res, next) => {
     next(err);
   }
 };
-
-
