@@ -41,6 +41,4 @@ router.get(
   catalogController.getAllCatalogs,
 );
 
-router.get('/test', chatController.getTest);
-
 module.exports = router;
