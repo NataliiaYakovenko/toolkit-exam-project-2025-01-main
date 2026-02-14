@@ -652,7 +652,7 @@ module.exports.getCatalogs = async (req, res, next) => {
   try {
     const { userId } = req.tokenData;
 
-    const catalogs = await db.Catalogs.findAll({
+    let catalogs = await db.Catalogs.findAll({
       where: { userId },
       include: [
         {
@@ -672,6 +672,9 @@ module.exports.getCatalogs = async (req, res, next) => {
         },
       ],
     });
+    if (!catalogs || !Array.isArray(catalogs)) {
+      catalogs = [];
+    }
 
     return res.status(200).send(catalogs);
   } catch (err) {

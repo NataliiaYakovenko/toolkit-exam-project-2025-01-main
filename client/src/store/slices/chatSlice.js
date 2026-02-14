@@ -175,7 +175,7 @@ const getCatalogListExtraReducers = createExtraReducers({
   thunk: getCatalogList,
   fulfilledReducer: (state, { payload }) => {
     state.isFetching = false;
-    state.catalogList = [...payload];
+    state.catalogList = Array.isArray(payload) ? payload : [];
   },
   rejectedReducer,
 });
