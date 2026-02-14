@@ -19,16 +19,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   );
 
-  CatalogConversation.associate = function (models) {
-    CatalogConversation.belongsTo(models.Conversations, {
-      foreignKey: 'conversationId',
-      targetKey: 'id',
-    });
-    CatalogConversation.belongsTo(models.Catalogs, {
-      foreignKey: 'catalogId',
-      targetKey: 'id',
-    });
-  };
-
   return CatalogConversation;
 };

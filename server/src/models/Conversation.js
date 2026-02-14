@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       through: models.ConversationsUsers,
       foreignKey: 'conversationId',
       otherKey: 'userId',
+      as: 'users',
     });
 
     Conversation.hasMany(models.Messages, {
@@ -35,9 +36,15 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Conversation.belongsToMany(models.Catalogs, {
-      through: models.CatalogsConversations,
+      through: 'Catalogs_Conversations',
       foreignKey: 'conversationId',
       otherKey: 'catalogId',
+    });
+
+    Conversation.hasMany(models.ConversationsUsers, {
+      foreignKey: 'conversationId',
+      sourceKey: 'id',
+      as: 'conversationUsers',
     });
   };
 
