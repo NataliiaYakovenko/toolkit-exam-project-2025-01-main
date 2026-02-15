@@ -19,9 +19,9 @@ const AddToCatalog = (props) => {
     const { catalogList } = props;
     const valueArray = [];
     catalogList.forEach((catalog) => {
-      valueArray.push(catalog._id);
+       valueArray.push(catalog.id);
     });
-    return valueArray;
+      return valueArray;
   };
 
   const click = (values) => {

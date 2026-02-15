@@ -65,7 +65,7 @@ module.exports.updateNameCatalog = async (req, res, next) => {
 
 module.exports.deleteCatalog = async (req, res, next) => {
   try {
-    const { catalogId } = req.body;
+    const { catalogId } = req.params;
     const { userId } = req.tokenData;
 
     if (!catalogId) {

@@ -16,10 +16,11 @@ router.put(
 );
 
 router.delete(
-  '/deleteCatalog',
+  '/deleteCatalog/:catalogId',
   checkToken.checkToken,
   catalogController.deleteCatalog,
 );
+
 router.get(
   '/getCatalogs',
   checkToken.checkToken,
