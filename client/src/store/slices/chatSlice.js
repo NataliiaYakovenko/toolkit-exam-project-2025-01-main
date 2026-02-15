@@ -174,9 +174,14 @@ export const getCatalogList = decorateAsyncThunk({
 const getCatalogListExtraReducers = createExtraReducers({
   thunk: getCatalogList,
   fulfilledReducer: (state, { payload }) => {
-    state.isFetching = false;
-    state.catalogList = Array.isArray(payload) ? payload : [];
-  },
+  const catalogs = (Array.isArray(payload) ? payload : []).map(catalog => ({
+    ...catalog,
+    _id: catalog.id,                   
+    chats: catalog.Conversations || [],  
+  }));
+  state.catalogList = catalogs;
+  state.isFetching = false;
+},
   rejectedReducer,
 });
 
