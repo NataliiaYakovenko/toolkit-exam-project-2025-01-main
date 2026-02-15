@@ -21,8 +21,28 @@ module.exports.createCatalog = async (req, res, next) => {
         conversationId: chatId,
       });
     }
+    const catalogWithChats = await db.Catalogs.findByPk(catalog.id, {
+      include: [
+        {
+          model: db.Conversations,
+          include: [
+            {
+              model: db.Users,
+              as: 'users',
+              attributes: [
+                'id',
+                'firstName',
+                'lastName',
+                'displayName',
+                'avatar',
+              ],
+            },
+          ],
+        },
+      ],
+    });
 
-    return res.status(201).send(catalog);
+    return res.status(201).send(catalogWithChats);
   } catch (err) {
     logError(err, err.code);
     next(err);

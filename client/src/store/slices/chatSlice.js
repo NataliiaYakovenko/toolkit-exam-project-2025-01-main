@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { isEqual, remove } from 'lodash';
+import { remove } from 'lodash';
 import * as restController from '../../api/rest/restController';
 import CONSTANTS from '../../constants';
 import {
@@ -228,7 +228,7 @@ const createCatalogExtraReducers = createExtraReducers({
     state.catalogList = [...state.catalogList, payload];
     state.isShowCatalogCreation = false;
   },
-  rejectedReducer: (state, { payload }) => {
+    rejectedReducer: (state, { payload }) => {
     state.isShowCatalogCreation = false;
     state.error = payload;
   },
