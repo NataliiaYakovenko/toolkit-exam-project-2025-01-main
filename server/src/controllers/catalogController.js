@@ -104,6 +104,7 @@ module.exports.getCatalogs = async (req, res, next) => {
           include: [
             {
               model: db.Users,
+              as: 'users',
               attributes: [
                 'id',
                 'firstName',
