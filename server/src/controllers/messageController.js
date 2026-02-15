@@ -1,75 +1,118 @@
 const db = require('../models');
+const controller = require('../sockets/socketInit');
 const { logError } = require('../logger/logger');
 
-module.exports.createMessage = async (req, res, next) => {
+module.exports.addMessage = async (req, res, next) => {
   try {
-    const { conversationId, body } = req.body;
-    const sender = req.tokenData.userId;
-    const createdMessage = await db.Messages.create({
-      conversationId,
-      body,
-      sender,
+    const { recipient, messageBody } = req.body;
+    const { userId, firstName, lastName, displayName, avatar } = req.tokenData;
+
+    if (!recipient || !messageBody) {
+      return res.status(400).send('Bad request');
+    }
+    if (recipient === userId) {
+      return res.status(400).send('Cannot send message to yourself');
+    }
+    let conversation = await db.Conversations.findOne({
+      include: [
+        {
+          model: db.ConversationsUsers,
+          as: 'conversationUsers',
+          required: true,
+          where: {
+            userId: {
+              [db.Sequelize.Op.in]: [userId, recipient],
+            },
+          },
+        },
+      ],
     });
-    return res.status(201).send({ data: createdMessage });
-  } catch (err) {
-    logError(err, err.code);
-    next(err);
-  }
-};
 
-module.exports.getAllMessages = async (req, res, next) => {
-  try {
-    const { conversationId } = req.params;
-    const { userId } = req.tokenData;
+    if (conversation) {
+      const totalUsersInChat = await db.ConversationsUsers.count({
+        where: { conversationId: conversation.id },
+      });
 
-    const participant = await db.ConversationsUsers.findOne({
-      where: {
-        conversationId,
-        userId,
+      if (totalUsersInChat !== 2) {
+        conversation = null;
+      }
+    }
+    const now = new Date();
+    if (!conversation) {
+      conversation = await db.Conversations.create({
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      await db.ConversationsUsers.bulkCreate([
+        {
+          conversationId: conversation.id,
+          userId,
+          blackList: false,
+          favoriteList: false,
+        },
+        {
+          conversationId: conversation.id,
+          userId: recipient,
+          blackList: false,
+          favoriteList: false,
+        },
+      ]);
+    }
+
+    const message = await db.Messages.create({
+      conversationId: conversation.id,
+      sender: userId,
+      body: messageBody,
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    const fullMessage = await db.Messages.findByPk(message.id, {
+      include: [
+        {
+          model: db.Users,
+          attributes: ['id', 'firstName', 'lastName', 'displayName', 'avatar'],
+        },
+      ],
+    });
+
+    const participants = [userId, recipient];
+    const preview = {
+      id: conversation.id,
+      sender: userId,
+      text: messageBody,
+      createAt: message.createdAt,
+      participants,
+      blackList: [false, false],
+      favoriteList: [false, false],
+      interlocutor: {
+        id: recipient,
+        firstName: req.body.interlocutor?.firstName || '',
+        lastName: req.body.interlocutor?.lastName || '',
+        displayName: req.body.interlocutor?.displayName || '',
+        avatar: req.body.interlocutor?.avatar || '',
+      },
+    };
+
+    controller.getChatController().emitNewMessage(recipient, {
+      message: fullMessage,
+      preview: {
+        ...preview,
+        interlocutor: {
+          id: userId,
+          firstName,
+          lastName,
+          displayName,
+          avatar,
+        },
       },
     });
 
-    if (!participant) {
-      return res.status(403).send('Access denied');
-    }
-
-    const messages = await db.Messages.findAll({
-      where: { conversationId },
-      order: [['createdAt', 'ASC']],
+    return res.status(200).send({
+      message: fullMessage,
+      preview,
     });
-
-    return res.status(200).send({ data: messages });
-  } catch (err) {
-    logError(err, err.code);
-    next(err);
-  }
-};
-
-
-module.exports.getMessageById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const message = await db.Messages.findByPk(id);
-    if (!message) {
-      return res.status(404).send('Message is not found');
-    }
-    return res.status(200).send({ data: message });
-  } catch (err) {
-    logError(err, err.code);
-    next(err);
-  }
-};
-
-module.exports.deleteMessageById = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    const message = await db.Messages.findByPk(id);
-    if (!message) {
-      return res.status(404).send('Message is not found');
-    }
-    await message.destroy();
-    return res.status(204).send();
   } catch (err) {
     logError(err, err.code);
     next(err);

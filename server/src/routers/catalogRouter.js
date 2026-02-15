@@ -3,13 +3,28 @@ const catalogController = require('../controllers/catalogController');
 const checkToken = require('../middlewares/checkToken');
 const router = express.Router();
 
-router.post('/createCatalog', checkToken.checkToken, catalogController.createCatalog);
-router.get('/getAllCatalogs', checkToken.checkToken, catalogController.getAllCatalogs);
-router.get('/getCatalogById/:id', checkToken.checkToken, catalogController.getCatalogById);
-router.delete(
-  '/deleteCatalogById/:id',
+router.post(
+  '/createCatalog',
   checkToken.checkToken,
-  catalogController.deleteCatalogById,
+  catalogController.createCatalog,
 );
+
+router.put(
+  '/updateNameCatalog',
+  checkToken.checkToken,
+  catalogController.updateNameCatalog,
+);
+
+router.delete(
+  '/deleteCatalog',
+  checkToken.checkToken,
+  catalogController.deleteCatalog,
+);
+router.get(
+  '/getCatalogs',
+  checkToken.checkToken,
+  catalogController.getCatalogs,
+);
+
 
 module.exports = router;
