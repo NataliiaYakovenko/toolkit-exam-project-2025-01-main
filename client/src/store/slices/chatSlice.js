@@ -297,17 +297,30 @@ export const changeCatalogName = decorateAsyncThunk({
 const changeCatalogNameExtraReducers = createExtraReducers({
   thunk: changeCatalogName,
   fulfilledReducer: (state, { payload }) => {
-    const { catalogList } = state;
-    for (let i = 0; i < catalogList.length; i++) {
-      if (catalogList[i]._id === payload._id) {
-        catalogList[i].catalogName = payload.catalogName;
-        break;
-      }
-    }
-    state.catalogList = [...catalogList];
-    state.currentCatalog = payload;
-    state.isRenameCatalog = false;
-  },
+  const { catalogList, currentCatalog } = state;
+
+  const updatedPayload = {
+    ...payload,
+    _id: payload.id,                    
+    chats: payload.chats || [],          
+  };
+
+  const newCatalogList = catalogList.map(catalog =>
+    catalog._id === updatedPayload._id
+      ? { ...catalog, catalogName: updatedPayload.catalogName } 
+      : catalog
+  );
+  state.catalogList = newCatalogList;
+
+  if (currentCatalog && currentCatalog._id === updatedPayload._id) {
+    state.currentCatalog = {
+      ...currentCatalog,
+      catalogName: updatedPayload.catalogName, 
+    };
+  }
+
+  state.isRenameCatalog = false;
+},
   rejectedReducer: (state) => {
     state.isRenameCatalog = false;
   },
