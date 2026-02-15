@@ -87,7 +87,7 @@ const sendMessageExtraReducers = createExtraReducers({
     const { messagesPreview } = state;
     let isNew = true;
     messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, payload.message.participants)) {
+      if (preview.participants.includes(payload.message.sender)) {
         preview.text = payload.message.body;
         preview.sender = payload.message.sender;
         preview.createAt = payload.message.createdAt;
@@ -125,10 +125,10 @@ const changeChatFavoriteExtraReducers = createExtraReducers({
   thunk: changeChatFavorite,
   fulfilledReducer: (state, { payload }) => {
     const { messagesPreview } = state;
-    messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, payload.participants))
-        preview.favoriteList = payload.favoriteList;
-    });
+    const preview = messagesPreview.find((p) => p.id === payload.id);
+    if (preview) {
+      preview.favoriteList = payload.favoriteList;
+    }
     state.chatData = payload;
     state.messagesPreview = messagesPreview;
   },
@@ -150,10 +150,10 @@ const changeChatBlockExtraReducers = createExtraReducers({
   thunk: changeChatBlock,
   fulfilledReducer: (state, { payload }) => {
     const { messagesPreview } = state;
-    messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, payload.participants))
-        preview.blackList = payload.blackList;
-    });
+    const preview = messagesPreview.find((p) => p.id === payload.id);
+    if (preview) {
+      preview.blackList = payload.blackList;
+    }
     state.chatData = payload;
     state.messagesPreview = messagesPreview;
   },
@@ -312,10 +312,10 @@ const changeCatalogNameExtraReducers = createExtraReducers({
 const reducers = {
   changeBlockStatusInStore: (state, { payload }) => {
     const { messagesPreview } = state;
-    messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, payload.participants))
-        preview.blackList = payload.blackList;
-    });
+    const preview = messagesPreview.find((p) => p.id === payload.id);
+    if (preview) {
+      preview.blackList = payload.blackList;
+    }
     state.chatData = payload;
     state.messagesPreview = messagesPreview;
   },
@@ -325,7 +325,7 @@ const reducers = {
     const { messagesPreview } = state;
     let isNew = true;
     messagesPreview.forEach((preview) => {
-      if (isEqual(preview.participants, message.participants)) {
+      if (preview.participants.includes(message.sender)) {
         preview.text = message.body;
         preview.sender = message.sender;
         preview.createAt = message.createdAt;
