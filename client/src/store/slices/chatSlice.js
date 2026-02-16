@@ -270,16 +270,22 @@ export const removeChatFromCatalog = decorateAsyncThunk({
 const removeChatFromCatalogExtraReducers = createExtraReducers({
   thunk: removeChatFromCatalog,
   fulfilledReducer: (state, { payload }) => {
-    const { catalogList } = state;
-    for (let i = 0; i < catalogList.length; i++) {
-      if (catalogList[i]._id === payload._id) {
-        catalogList[i].chats = payload.chats;
-        break;
-      }
+  const { catalogList } = state;
+  const updatedCatalog = {
+    ...payload,
+    _id: payload.id,               
+    chats: payload.Conversations || [], 
+  };
+
+  for (let i = 0; i < catalogList.length; i++) {
+    if (catalogList[i]._id === updatedCatalog._id) {
+      catalogList[i].chats = updatedCatalog.chats;
+      break;
     }
-    state.currentCatalog = payload;
-    state.catalogList = [...catalogList];
-  },
+  }
+  state.currentCatalog = updatedCatalog;
+  state.catalogList = [...catalogList];
+},
   rejectedReducer: (state, { payload }) => {
     state.error = payload;
   },

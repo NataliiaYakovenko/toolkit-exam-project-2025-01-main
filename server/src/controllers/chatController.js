@@ -399,7 +399,7 @@ module.exports.addNewChatToCatalog = async (req, res, next) => {
 
 module.exports.removeChatFromCatalog = async (req, res, next) => {
   try {
-    const { catalogId, chatId } = req.body;
+    const { catalogId, chatId } = req.params;
     const { userId } = req.tokenData;
 
     if (!catalogId) {

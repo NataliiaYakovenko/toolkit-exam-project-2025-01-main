@@ -29,8 +29,8 @@ export const addChatToCatalog = (data) =>
 export const createCatalog = (data) => http.post('createCatalog', data);
 export const deleteCatalog = ({ catalogId }) => 
   http.delete(`deleteCatalog/${catalogId}`); 
-export const removeChatFromCatalog = (data) =>
-  http.delete('removeChatFromCatalog', data);
+export const removeChatFromCatalog = ({ catalogId, chatId }) =>
+  http.delete(`removeChatFromCatalog/${catalogId}/${chatId}`);
 export const changeCatalogName = (data) => http.put('updateNameCatalog', data);
 export const getCustomersContests = (data) =>
   http.get('getCustomersContests', {

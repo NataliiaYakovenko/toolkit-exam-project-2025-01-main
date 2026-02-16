@@ -14,11 +14,11 @@ router.post(
   checkToken.checkToken,
   chatController.addNewChatToCatalog,
 );
+
 router.delete(
-  '/removeChatFromCatalog',
+  '/removeChatFromCatalog/:catalogId/:chatId',
   checkToken.checkToken,
   chatController.removeChatFromCatalog,
 );
-
 
 module.exports = router;
