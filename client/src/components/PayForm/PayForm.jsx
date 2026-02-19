@@ -1,12 +1,14 @@
+
 import React from 'react';
 import Cards from 'react-credit-cards-2';
 import { Form, Formik } from 'formik';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { connect } from 'react-redux';
 import styles from './PayForm.module.sass';
-import { changeFocusOnCard } from '../../store/slices/paymentSlice';
+import { changeFocusOnCard, clearPaymentStore } from '../../store/slices/paymentSlice';
 import PayInput from '../InputComponents/PayInput/PayInput';
 import Schems from '../../utils/validators/validationSchems';
+import Error from '../Error/Error';
 
 const PayForm = (props) => {
   const changeFocusOnCard = (name) => {
@@ -17,9 +19,22 @@ const PayForm = (props) => {
     props.sendRequest(values);
   };
 
-  const { focusOnElement, isPayForOrder } = props;
+  const { focusOnElement, isPayForOrder, paymentError, clearPaymentError } = props;
+
   return (
     <div className={styles.payFormContainer}>
+      {paymentError && (
+        <Error
+          data={
+            paymentError.data && typeof paymentError.data === 'string' && paymentError.data.trim().startsWith('<')
+              ? 'The server is unavailable. Please try again later.'
+              : paymentError.data?.message || paymentError.data || 'Payment error.'
+          }
+          status={paymentError.status}
+          clearError={clearPaymentError}
+        />
+      )}
+
       <span className={styles.headerInfo}>Payment Information</span>
       <Formik
         initialValues={{
@@ -116,8 +131,6 @@ const PayForm = (props) => {
                   <div className={styles.smallInput}>
                     <span>* Security Code</span>
                     <PayInput
-                      // isInputMask
-                      // mask="999"
                       name="cvc"
                       classes={{
                         container: styles.inputContainer,
@@ -126,7 +139,7 @@ const PayForm = (props) => {
                         error: styles.error,
                       }}
                       type="password"
-                      inputMode="numeric" 
+                      inputMode="numeric"
                       label="cvc"
                       changeFocus={changeFocusOnCard}
                     />
@@ -139,7 +152,7 @@ const PayForm = (props) => {
       </Formik>
       {isPayForOrder && (
         <div className={styles.totalSum}>
-          <span>Total: $100.00</span>
+          <span>Total: $100.00 USD</span>
         </div>
       )}
       <div className={styles.buttonsContainer}>
@@ -156,8 +169,13 @@ const PayForm = (props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  changeFocusOnCard: (data) => dispatch(changeFocusOnCard(data)),
+const mapStateToProps = (state) => ({
+  paymentError: state.payment?.error, 
 });
 
-export default connect(null, mapDispatchToProps)(PayForm);
+const mapDispatchToProps = (dispatch) => ({
+  changeFocusOnCard: (data) => dispatch(changeFocusOnCard(data)),
+  clearPaymentStore: () => dispatch(clearPaymentStore()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PayForm);

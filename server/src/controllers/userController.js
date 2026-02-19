@@ -149,8 +149,8 @@ module.exports.changeMark = async (req, res, next) => {
 module.exports.payment = async (req, res, next) => {
   let transaction;
   try {
-    const { number, cvc, expiry, price, contests } = req.body;
-    if (!number || !cvc || !expiry || !price || !contests) {
+    const { number, cvc, expiry, price, contests, name } = req.body;
+    if (!number || !cvc || !expiry || !price || !contests || !name) {
       return res.status(400).send('Missing required fields');
     }
     transaction = await bd.sequelize.transaction();
@@ -161,6 +161,7 @@ module.exports.payment = async (req, res, next) => {
                WHEN "cardNumber"='${number.replace(/ /g, '')}'
                  AND "cvc"='${cvc}' 
                  AND "expiry"='${expiry}'
+                 AND LOWER("name") = LOWER('${name}')
                THEN "balance"-${price}
                WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' 
                  AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}' 
@@ -234,9 +235,9 @@ module.exports.updateUser = async (req, res, next) => {
 module.exports.cashout = async (req, res, next) => {
   let transaction;
   try {
-    const { number, expiry, cvc, sum } = req.body;
+    const { number, expiry, cvc, sum, name } = req.body;
     const { userId } = req.tokenData;
-    if (!number || !expiry || !cvc || !sum) {
+    if (!number || !expiry || !cvc || !sum || !name) {
       return res.status(400).send('Missing required fields');
     }
     transaction = await bd.sequelize.transaction();
@@ -252,6 +253,7 @@ module.exports.cashout = async (req, res, next) => {
                 WHEN "cardNumber"='${number.replace(/ /g, '')}'
                   AND "expiry"='${expiry}'
                   AND "cvc"='${cvc}'
+                  AND LOWER("name") = LOWER('${name}')
                 THEN "balance"+${sum}
                 WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}'
                   AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'

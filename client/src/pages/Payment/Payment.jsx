@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
@@ -16,7 +16,7 @@ const Payment = (props) => {
     Object.keys(contests).forEach((key) =>
       contestArray.push({ ...contests[key] })
     );
-    const { number, expiry, cvc } = values;
+    const { number, expiry, cvc, name } = values;
     const data = new FormData();
     for (let i = 0; i < contestArray.length; i++) {
       data.append('files', contestArray[i].file);
@@ -25,6 +25,7 @@ const Payment = (props) => {
     data.append('number', number);
     data.append('expiry', expiry);
     data.append('cvc', cvc);
+    data.append('name', name);
     data.append('contests', JSON.stringify(contestArray));
     data.append('price', '100');
     props.pay({
@@ -42,16 +43,22 @@ const Payment = (props) => {
   const { contests } = props.contestCreationStore;
   const { error } = props.payment;
   const { clearPaymentStore } = props;
-  if (isEmpty(contests)) {
-    navigate('/startContest', { replace: true });
-  }
+  useEffect(() => {
+    if (isEmpty(contests)) {
+      navigate('/startContest', { replace: true });
+    }
+  }, [contests, navigate]);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.paymentContainer}>
         <span className={styles.headerLabel}>Checkout</span>
         {error && (
           <Error
-            data={error.data}
+            data={
+              error.data?.message ||
+              error.data ||
+              'Payment error'
+            }
             status={error.status}
             clearError={clearPaymentStore}
           />
