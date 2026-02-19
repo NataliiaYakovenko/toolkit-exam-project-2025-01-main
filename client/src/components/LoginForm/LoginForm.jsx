@@ -33,7 +33,13 @@ class LoginForm extends React.Component {
       <div className={styles.loginForm}>
         {error && (
           <Error
-            data={error.data}
+            data={
+              error.data &&
+              typeof error.data === 'string' &&
+              error.data.trim().startsWith('<')
+                ? 'Server unavailable, try again later!'
+                : error.data?.message || error.data || 'Authorization error!'
+            }
             status={error.status}
             clearError={authClear}
           />
@@ -83,7 +89,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   loginRequest: ({ data, navigate }) =>
-    dispatch(checkAuth({ data, navigate, authMode: CONSTANTS.AUTH_MODE.LOGIN })),
+    dispatch(
+      checkAuth({ data, navigate, authMode: CONSTANTS.AUTH_MODE.LOGIN })
+    ),
   authClear: () => dispatch(clearAuth()),
 });
 
