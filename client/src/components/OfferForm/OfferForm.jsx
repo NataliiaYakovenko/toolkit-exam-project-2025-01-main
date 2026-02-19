@@ -12,9 +12,25 @@ import FormInput from '../FormInput/FormInput';
 import Schems from '../../utils/validators/validationSchems';
 import Error from '../Error/Error';
 
-const OfferForm = props => {
+const OfferForm = (props) => {
+  const {
+    contestType,
+    contestId,
+    customerId,
+    addOfferError,
+    clearOfferError,
+    offers,
+    userId,
+    role,
+  } = props;
+
+  
+  if (role === CONSTANTS.CREATOR && offers?.some((offer) => offer.User?.id === userId)) {
+    return null;
+  }
+
   const renderOfferInput = () => {
-    if (props.contestType === CONSTANTS.LOGO_CONTEST) {
+    if (contestType === CONSTANTS.LOGO_CONTEST) {
       return (
         <ImageUpload
           name='offerData'
@@ -44,7 +60,6 @@ const OfferForm = props => {
   const setOffer = (values, { resetForm }) => {
     props.clearOfferError();
     const data = new FormData();
-    const { contestId, contestType, customerId } = props;
     data.append('contestId', contestId);
     data.append('contestType', contestType);
     data.append('offerData', values.offerData);
@@ -53,11 +68,11 @@ const OfferForm = props => {
     resetForm();
   };
 
-  const { addOfferError, clearOfferError } = props;
   const validationSchema =
-    props.contestType === CONSTANTS.LOGO_CONTEST
+    contestType === CONSTANTS.LOGO_CONTEST
       ? Schems.LogoOfferSchema
       : Schems.TextOfferSchema;
+
   return (
     <div className={styles.offerContainer}>
       {addOfferError && (
@@ -76,25 +91,24 @@ const OfferForm = props => {
       >
         <Form className={styles.form}>
           {renderOfferInput()}
-         
-            <button type='submit' className={styles.btnOffer}>
-              Send Offer
-            </button>
-        
+          <button type='submit' className={styles.btnOffer}>
+            Send Offer
+          </button>
         </Form>
       </Formik>
     </div>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  setNewOffer: data => dispatch(addOffer(data)),
+const mapDispatchToProps = (dispatch) => ({
+  setNewOffer: (data) => dispatch(addOffer(data)),
   clearOfferError: () => dispatch(clearAddOfferError()),
 });
 
-const mapStateToProps = state => {
-  const { addOfferError } = state.contestByIdStore;
-  return { addOfferError };
+const mapStateToProps = (state) => {
+  const { addOfferError, offers } = state.contestByIdStore;
+  const { id: userId, role } = state.userStore.data;
+  return { addOfferError, offers, userId, role };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OfferForm);
