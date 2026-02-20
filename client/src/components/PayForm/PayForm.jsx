@@ -5,10 +5,10 @@ import { Form, Formik } from 'formik';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { connect } from 'react-redux';
 import styles from './PayForm.module.sass';
-import { changeFocusOnCard, clearPaymentStore } from '../../store/slices/paymentSlice';
+import { changeFocusOnCard } from '../../store/slices/paymentSlice';
 import PayInput from '../InputComponents/PayInput/PayInput';
 import Schems from '../../utils/validators/validationSchems';
-import Error from '../Error/Error';
+
 
 const PayForm = (props) => {
   const changeFocusOnCard = (name) => {
@@ -19,22 +19,10 @@ const PayForm = (props) => {
     props.sendRequest(values);
   };
 
-  const { focusOnElement, isPayForOrder, paymentError, clearPaymentError } = props;
+  const { focusOnElement, isPayForOrder } = props;
 
   return (
     <div className={styles.payFormContainer}>
-      {paymentError && (
-        <Error
-          data={
-            paymentError.data && typeof paymentError.data === 'string' && paymentError.data.trim().startsWith('<')
-              ? 'The server is unavailable. Please try again later.'
-              : paymentError.data?.message || paymentError.data || 'Payment error.'
-          }
-          status={paymentError.status}
-          clearError={clearPaymentError}
-        />
-      )}
-
       <span className={styles.headerInfo}>Payment Information</span>
       <Formik
         initialValues={{
@@ -175,7 +163,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   changeFocusOnCard: (data) => dispatch(changeFocusOnCard(data)),
-  clearPaymentStore: () => dispatch(clearPaymentStore()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PayForm);
