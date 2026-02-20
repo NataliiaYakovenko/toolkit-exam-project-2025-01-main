@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Rating from 'react-rating';
 import isEqual from 'lodash/isEqual';
@@ -17,6 +17,9 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import './confirmStyle.css';
 
 const OfferBox = (props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hideButtons, setHideButtons] = useState(false);
+
   const findConversationInfo = () => {
     const { messagesPreview, id } = props;
     const participants = [id, props.data.User.id];
@@ -43,8 +46,20 @@ const OfferBox = (props) => {
       buttons: [
         {
           label: 'Yes',
-          onClick: () =>
-            props.setOfferStatus(props.data.User.id, props.data.id, 'approve'),
+          onClick: async () => {
+            setIsSubmitting(true);
+            try {
+              await props.setOfferStatus(
+                props.data.User.id,
+                props.data.id,
+                'approve'
+              );
+              setHideButtons(true);
+            } catch (error) {
+            } finally {
+              setIsSubmitting(false);
+            }
+          },
         },
         {
           label: 'No',
@@ -60,8 +75,20 @@ const OfferBox = (props) => {
       buttons: [
         {
           label: 'Yes',
-          onClick: () =>
-            props.setOfferStatus(props.data.User.id, props.data.id, 'reject'),
+          onClick: async () => {
+            setIsSubmitting(true);
+            try {
+              await props.setOfferStatus(
+                props.data.User.id,
+                props.data.id,
+                'reject'
+              );
+              setHideButtons(true);
+            } catch (error) {
+            } finally {
+              setIsSubmitting(false);
+            }
+          },
         },
         {
           label: 'No',
@@ -200,12 +227,22 @@ const OfferBox = (props) => {
           <i onClick={goChat} className="fas fa-comments" />
         )}
       </div>
-      {props.needButtons(data.status) && (
+      {props.needButtons(data.status) && !hideButtons && (
         <div className={styles.btnsContainer}>
-          <div onClick={resolveOffer} className={styles.resolveBtn}>
+          <div
+            onClick={!isSubmitting ? resolveOffer : undefined}
+            className={classNames(styles.resolveBtn, {
+              [styles.disabled]: isSubmitting,
+            })}
+          >
             Resolve
           </div>
-          <div onClick={rejectOffer} className={styles.rejectBtn}>
+          <div
+            onClick={!isSubmitting ? rejectOffer : undefined}
+            className={classNames(styles.rejectBtn, {
+              [styles.disabled]: isSubmitting,
+            })}
+          >
             Reject
           </div>
         </div>
