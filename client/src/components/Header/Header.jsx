@@ -304,7 +304,7 @@ class Header extends React.Component {
                     <ul>
                       <li>
                         <a
-                          href="http://www.google.com"
+                          href="http://localhost:3000/howItWorks"
                           onClick={this.closeMobileMenu}
                         >
                           HOW IT WORKS
