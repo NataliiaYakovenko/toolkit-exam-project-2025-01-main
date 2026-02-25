@@ -13,12 +13,12 @@ echo ""
 
 # Run Sequalize's migrations.
 echo "-----> Running application migrations"
-docker exec -it toolkit-exam-project-2025-01-main-server-dev-1 npx sequelize db:migrate
+docker compose exec server-dev npx sequelize db:migrate
 echo ""
 
 # Run Sequalize's seeds.
 echo "-----> Running application seeds"
-docker exec -it toolkit-exam-project-2025-01-main-server-dev-1 npx sequelize db:seed:all
+docker compose exec server-dev npx sequelize db:seed:all
 echo "<----- Seeds created"
 
 ended_at=$(date +"%s")
