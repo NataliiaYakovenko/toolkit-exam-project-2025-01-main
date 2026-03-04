@@ -4,21 +4,24 @@
 ## Run application in DEV mode ##
 #################################
 
-
 started_at=$(date +"%s")
 
 echo "-----> Provisioning containers"
-docker compose --file docker-compose-dev.yaml up
+docker compose --file docker-compose-dev.yaml up -d
 echo ""
 
-# Run Sequalize's migrations.
+# Wait for containers to be ready (optional but recommended)
+echo "-----> Waiting for containers to be ready..."
+sleep 5
+
+# Run Sequelize's migrations.
 echo "-----> Running application migrations"
-docker compose exec server-dev npx sequelize db:migrate
+docker compose exec -T server-dev npx sequelize db:migrate
 echo ""
 
-# Run Sequalize's seeds.
+# Run Sequelize's seeds.
 echo "-----> Running application seeds"
-docker compose exec server-dev npx sequelize db:seed:all
+docker compose exec -T server-dev npx sequelize db:seed:all
 echo "<----- Seeds created"
 
 ended_at=$(date +"%s")
