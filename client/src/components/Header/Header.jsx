@@ -98,16 +98,17 @@ class Header extends React.Component {
                   <span>Affiliate Dashboard</span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/events"
-                  style={{ textDecoration: 'none' }}
-                  onClick={this.closeMobileMenu}
-                >
-                  <span>My Events</span>
-                </Link>
-              </li>
-
+              {this.props.data?.role === CONSTANTS.CUSTOMER && (
+                <li>
+                  <Link
+                    to="/events"
+                    style={{ textDecoration: 'none' }}
+                    onClick={this.closeMobileMenu}
+                  >
+                    <span>My Events</span>
+                  </Link>
+                </li>
+              )}
               {this.props.data?.role === CONSTANTS.MODERATOR && (
                 <li>
                   <Link
