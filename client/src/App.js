@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
+import { loadEvents, updateTimers } from './store/slices/eventSlice';
 import Router from './router';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
@@ -26,6 +29,29 @@ import ModeratorPage from './pages/ModeratorPage/ModeratorPage';
 import OnlyForModerator from './components/Routes/OnlyForModerator/OnlyForModerator';
 
 class App extends Component {
+  componentDidMount() {
+    const { loadEvents, updateTimers } = this.props;
+
+    loadEvents();
+
+    this.intervalId = setInterval(() => {
+      updateTimers();
+
+      this.props.events.forEach((event) => {
+        if (event.isNotified && event.isActive) {
+          toast.info(`Reminder about your event: ${event.name}`, {
+            toastId: event.id, 
+          });
+        }
+      });
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+
   render() {
     return (
       <Router history={browserHistory}>
@@ -97,4 +123,13 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  events: state.event.events,
+});
+
+const mapDispatchToProps = {
+  loadEvents,
+  updateTimers,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

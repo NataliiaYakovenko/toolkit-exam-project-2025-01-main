@@ -1,22 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadEvents, updateTimers } from '../../../store/slices/eventSlice';
+import { loadEvents} from '../../../store/slices/eventSlice';
 import styles from './EventsMain.module.sass';
 import EventsForm from '../EventsForm/EventsForm';
 
 const EventsMain = () => {
   const dispatch = useDispatch();
-  const { isFeatching, error } = useSelector((stste) => stste.event);
+  const { isFeatching, error } = useSelector((state) => state.event);
 
   useEffect(() => {
-    dispatch(loadEvents());
-
-    const intervalId = setInterval(() => {
-      dispatch(updateTimers());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
+    dispatch(loadEvents())
   }, [dispatch]);
+
 
   if (isFeatching) {
     return (
