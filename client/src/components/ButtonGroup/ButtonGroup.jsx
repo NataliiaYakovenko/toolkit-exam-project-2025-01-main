@@ -6,10 +6,6 @@ const ButtonGroup = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const firstButton = useRef(null);
 
-  useEffect(() => {
-    firstButton.current?.focus();
-  }, []);
-
   return (
     <div className={styles.buttonGroupContainer}>
       <h3 className={styles.buttonQuestion}>
