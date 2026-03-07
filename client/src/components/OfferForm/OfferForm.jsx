@@ -19,15 +19,8 @@ const OfferForm = (props) => {
     customerId,
     addOfferError,
     clearOfferError,
-    offers,
-    userId,
-    role,
   } = props;
 
-  
-  if (role === CONSTANTS.CREATOR && offers?.some((offer) => offer.User?.id === userId)) {
-    return null;
-  }
 
   const renderOfferInput = () => {
     if (contestType === CONSTANTS.LOGO_CONTEST) {
