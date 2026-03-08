@@ -220,12 +220,19 @@ const validationSchema = {
       .max(100, 'The event name is too long')
       .trim()
       .required('The event name is required'),
-
     eventDateTime: yup
-      .date()
-      .min(new Date(), 'The event date must be in the future')
-      .required('The event date is required'),
-
+      .string()
+      .required('The event date is required')
+      .test(
+        'is-future',
+        'The event date must be in the future',
+        function (value) {
+          if (!value) return false;
+          const selectedDate = new Date(value);
+          const currentDate = new Date();
+          return selectedDate >= currentDate;
+        }
+      ),
     notificationTime: yup
       .number()
       .min(1, 'The notification time must be at least 1 minute')
