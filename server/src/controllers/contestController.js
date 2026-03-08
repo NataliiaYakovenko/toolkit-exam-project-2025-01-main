@@ -219,7 +219,6 @@ const rejectOffer = async (offerId, creatorId, contestId) => {
   return rejectedOffer;
 };
 
-
 const resolveOffer = async (
   contestId,
   creatorId,
@@ -284,7 +283,6 @@ const resolveOffer = async (
   return updatedOffers[0].dataValues;
 };
 
-
 module.exports.setOfferStatus = async (req, res, next) => {
   let transaction;
   try {
@@ -343,23 +341,34 @@ module.exports.getCustomersContests = async (req, res, next) => {
       limit: limit ? Number(limit) : undefined,
       offset: offset ? Number(offset) : 0,
       order: [['id', 'DESC']],
-      include: [
-        {
-          model: db.Offers,
-          required: false,
-          attributes: ['id'],
-        },
-      ],
+      attributes: {
+        include: [
+          [
+            db.Sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM "Offers" AS "offers"
+              WHERE "offers"."contestId" = "Contests"."id"
+              AND "offers"."status" IN (
+                '${CONSTANTS.OFFER_STATUS_APPROVED}', 
+                '${CONSTANTS.OFFER_STATUS_WON}'
+              )
+            )`),
+            'entriesCount'
+          ]
+        ]
+      },
     });
-    contests.forEach(
-      (contest) => (contest.dataValues.count = contest.dataValues.Offers.length),
-    );
-
+    const formattedContests = contests.map(contest => {
+      const contestData = contest.get({ plain: true });
+      contestData.count = contestData.entriesCount || 0;
+      delete contestData.entriesCount;
+      return contestData;
+    });
     let haveMore = false;
     if (limit) {
       haveMore = contests.length === Number(limit);
     }
-    return res.status(200).send({ contests, haveMore });
+    return res.status(200).send({ contests: formattedContests, haveMore });
   } catch (err) {
     logError(err, err.code);
     next(err);
@@ -380,6 +389,7 @@ module.exports.getContests = async (req, res, next) => {
       offset,
       ownEntries,
     } = req.query;
+    
     if (limit && (isNaN(Number(limit)) || Number(limit) <= 0)) {
       return res.status(400).send('Limit must be a positive number');
     }
@@ -389,29 +399,47 @@ module.exports.getContests = async (req, res, next) => {
       industry,
       awardSort,
     );
+    let entriesCountSubQuery;
+    if (ownEntries === 'true') {
+      entriesCountSubQuery = `(
+        SELECT COUNT(*)
+        FROM "Offers" AS "offers"
+        WHERE "offers"."contestId" = "Contests"."id"
+        AND "offers"."userId" = ${req.tokenData.userId}
+      )`;
+    } else {
+      entriesCountSubQuery = `(
+        SELECT COUNT(*)
+        FROM "Offers" AS "offers"
+        WHERE "offers"."contestId" = "Contests"."id"
+        AND "offers"."status" IN (
+          '${CONSTANTS.OFFER_STATUS_APPROVED}', 
+          '${CONSTANTS.OFFER_STATUS_WON}'
+        )
+      )`;
+    }
     const contests = await db.Contests.findAll({
       where: predicates.where,
       order: predicates.order,
       limit: limit ? Number(limit) : 10,
       offset: offset ? Number(offset) : 0,
-      include: [
-        {
-          model: db.Offers,
-          required: false,
-          where: ownEntries ? { userId: req.tokenData.userId } : {},
-          attributes: ['id'],
-        },
-      ],
+      attributes: {
+        include: [
+          [db.Sequelize.literal(entriesCountSubQuery), 'entriesCount']
+        ]
+      },
     });
-    contests.forEach(
-      (contest) => (contest.dataValues.count = contest.dataValues.Offers.length),
-    );
-
+    const formattedContests = contests.map(contest => {
+      const contestData = contest.get({ plain: true });
+      contestData.count = contestData.entriesCount || 0;
+      delete contestData.entriesCount;
+      return contestData;
+    });
     let haveMore = false;
     if (limit) {
       haveMore = contests.length === Number(limit);
     }
-    return res.status(200).send({ contests, haveMore });
+    return res.status(200).send({ contests: formattedContests, haveMore });
   } catch (err) {
     logError(err, err.code);
     next(err);
