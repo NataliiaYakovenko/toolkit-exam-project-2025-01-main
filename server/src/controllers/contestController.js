@@ -17,7 +17,7 @@ module.exports.dataForContest = async (req, res, next) => {
       return res.status(400).send('At least one characteristic is required');
     }
     const types = [characteristic1, characteristic2, 'industry'].filter(
-      Boolean,
+      Boolean
     );
 
     const characteristics = await db.Selects.findAll({
@@ -49,7 +49,8 @@ module.exports.getContestById = async (req, res, next) => {
     const { role, userId } = req.tokenData;
 
     if (!contestid) return res.status(400).send('Contest ID is required');
-    if (isNaN(Number(contestid))) return res.status(400).send('Contest ID must be a number');
+    if (isNaN(Number(contestid)))
+      return res.status(400).send('Contest ID must be a number');
 
     let offerWhereCondition = {};
     if (role === CONSTANTS.CREATOR) {
@@ -65,9 +66,10 @@ module.exports.getContestById = async (req, res, next) => {
       return res.status(403).send('Access denied');
     }
 
-    const ratingsInclude = role === CONSTANTS.CREATOR
-      ? { model: db.Ratings, required: false }
-      : { model: db.Ratings, required: false, where: { userId } };
+    const ratingsInclude =
+      role === CONSTANTS.CREATOR
+        ? { model: db.Ratings, required: false }
+        : { model: db.Ratings, required: false, where: { userId } };
 
     let contestInfo = await db.Contests.findOne({
       where: { id: contestid },
@@ -76,20 +78,42 @@ module.exports.getContestById = async (req, res, next) => {
         {
           model: db.Users,
           required: true,
-          attributes: { exclude: ['password', 'role', 'balance', 'accessToken'] },
+          attributes: {
+            exclude: ['password', 'role', 'balance', 'accessToken'],
+          },
         },
         {
           model: db.Offers,
           required: false,
           where: offerWhereCondition,
-          attributes: role === CONSTANTS.CREATOR
-            ? ['id', 'fileName', 'text', 'status', 'createdAt', 'updatedAt', 'userId', 'originalFileName']
-            : ['id', 'fileName', 'text', 'status', 'createdAt', 'updatedAt', 'originalFileName'],
+          attributes:
+            role === CONSTANTS.CREATOR
+              ? [
+                  'id',
+                  'fileName',
+                  'text',
+                  'status',
+                  'createdAt',
+                  'updatedAt',
+                  'userId',
+                  'originalFileName',
+                ]
+              : [
+                  'id',
+                  'fileName',
+                  'text',
+                  'status',
+                  'createdAt',
+                  'updatedAt',
+                  'originalFileName',
+                ],
           include: [
             {
               model: db.Users,
               required: true,
-              attributes: { exclude: ['password', 'role', 'balance', 'accessToken'] },
+              attributes: {
+                exclude: ['password', 'role', 'balance', 'accessToken'],
+              },
             },
             ratingsInclude,
           ],
@@ -112,7 +136,6 @@ module.exports.getContestById = async (req, res, next) => {
     next(err);
   }
 };
-
 
 module.exports.downloadFile = async (req, res, next) => {
   try {
@@ -203,10 +226,10 @@ const rejectOffer = async (offerId, creatorId, contestId) => {
   const rejectedOffer = await contestQueries.updateOffer(
     {
       status: db.sequelize.literal(
-        `'${CONSTANTS.OFFER_STATUS_REJECTED}'::"enum_Offers_status"`,
+        `'${CONSTANTS.OFFER_STATUS_REJECTED}'::"enum_Offers_status"`
       ),
     },
-    { id: offerId },
+    { id: offerId }
   );
 
   controller
@@ -214,7 +237,7 @@ const rejectOffer = async (offerId, creatorId, contestId) => {
     .emitChangeOfferStatus(
       creatorId,
       'Someone of yours offers was rejected',
-      contestId,
+      contestId
     );
   return rejectedOffer;
 };
@@ -225,9 +248,8 @@ const resolveOffer = async (
   orderId,
   offerId,
   priority,
-  transaction,
+  transaction
 ) => {
-
   const finishedContest = await contestQueries.updateContestStatus(
     {
       status: db.sequelize.literal(
@@ -238,17 +260,17 @@ const resolveOffer = async (
           AND "priority"=${priority + 1}
           THEN '${CONSTANTS.CONTEST_STATUS_ACTIVE}'
           ELSE '${CONSTANTS.CONTEST_STATUS_PENDING}'
-        END`,
+        END`
       ),
     },
     { orderId },
-    transaction,
+    transaction
   );
 
   await userQueries.updateUser(
     { balance: db.sequelize.literal('balance + ' + finishedContest.prize) },
     creatorId,
-    transaction,
+    transaction
   );
   const updatedOffers = await contestQueries.updateOfferStatus(
     {
@@ -256,15 +278,14 @@ const resolveOffer = async (
         `CASE
           WHEN "id"=${offerId} THEN '${CONSTANTS.OFFER_STATUS_WON}'::"enum_Offers_status"
           ELSE '${CONSTANTS.OFFER_STATUS_REJECTED}'::"enum_Offers_status"
-        END`,
+        END`
       ),
     },
     {
       contestId,
     },
-    transaction,
+    transaction
   );
-
 
   const arrayRoomsId = [];
   updatedOffers.forEach((offer) => {
@@ -280,7 +301,11 @@ const resolveOffer = async (
     .getNotificationController()
     .emitChangeOfferStatus(creatorId, 'Someone of your offers WIN', contestId);
 
-  return updatedOffers[0].dataValues;
+  const winningOffer = updatedOffers.find((offer) => offer.id === offerId);
+  if (!winningOffer) {
+    throw new Error('Winning offer not found');
+  }
+  return winningOffer.dataValues;
 };
 
 module.exports.setOfferStatus = async (req, res, next) => {
@@ -308,7 +333,7 @@ module.exports.setOfferStatus = async (req, res, next) => {
         orderId,
         offerId,
         priority,
-        transaction,
+        transaction
       );
       await transaction.commit();
       return res.status(200).send(winningOffer);
@@ -353,12 +378,12 @@ module.exports.getCustomersContests = async (req, res, next) => {
                 '${CONSTANTS.OFFER_STATUS_WON}'
               )
             )`),
-            'entriesCount'
-          ]
-        ]
+            'entriesCount',
+          ],
+        ],
       },
     });
-    const formattedContests = contests.map(contest => {
+    const formattedContests = contests.map((contest) => {
       const contestData = contest.get({ plain: true });
       contestData.count = contestData.entriesCount || 0;
       delete contestData.entriesCount;
@@ -389,7 +414,7 @@ module.exports.getContests = async (req, res, next) => {
       offset,
       ownEntries,
     } = req.query;
-    
+
     if (limit && (isNaN(Number(limit)) || Number(limit) <= 0)) {
       return res.status(400).send('Limit must be a positive number');
     }
@@ -397,7 +422,7 @@ module.exports.getContests = async (req, res, next) => {
       typeIndex,
       contestId,
       industry,
-      awardSort,
+      awardSort
     );
     let entriesCountSubQuery;
     if (ownEntries === 'true') {
@@ -424,12 +449,10 @@ module.exports.getContests = async (req, res, next) => {
       limit: limit ? Number(limit) : 10,
       offset: offset ? Number(offset) : 0,
       attributes: {
-        include: [
-          [db.Sequelize.literal(entriesCountSubQuery), 'entriesCount']
-        ]
+        include: [[db.Sequelize.literal(entriesCountSubQuery), 'entriesCount']],
       },
     });
-    const formattedContests = contests.map(contest => {
+    const formattedContests = contests.map((contest) => {
       const contestData = contest.get({ plain: true });
       contestData.count = contestData.entriesCount || 0;
       delete contestData.entriesCount;
