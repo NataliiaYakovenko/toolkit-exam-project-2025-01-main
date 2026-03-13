@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { remove } from 'lodash';
+import { isEqual, remove } from 'lodash';
 import * as restController from '../../api/rest/restController';
 import CONSTANTS from '../../constants';
 import {
@@ -87,7 +87,12 @@ const sendMessageExtraReducers = createExtraReducers({
     const { messagesPreview } = state;
     let isNew = true;
     messagesPreview.forEach((preview) => {
-      if (preview.participants.includes(payload.message.sender)) {
+      if (
+        isEqual(
+          preview.participants.sort(),
+          payload.preview.participants.sort()
+        )
+      ) {
         preview.text = payload.message.body;
         preview.sender = payload.message.sender;
         preview.createAt = payload.message.createdAt;
@@ -174,14 +179,14 @@ export const getCatalogList = decorateAsyncThunk({
 const getCatalogListExtraReducers = createExtraReducers({
   thunk: getCatalogList,
   fulfilledReducer: (state, { payload }) => {
-  const catalogs = (Array.isArray(payload) ? payload : []).map(catalog => ({
-    ...catalog,
-    _id: catalog.id,                   
-    chats: catalog.Conversations || [],  
-  }));
-  state.catalogList = catalogs;
-  state.isFetching = false;
-},
+    const catalogs = (Array.isArray(payload) ? payload : []).map((catalog) => ({
+      ...catalog,
+      _id: catalog.id,
+      chats: catalog.Conversations || [],
+    }));
+    state.catalogList = catalogs;
+    state.isFetching = false;
+  },
   rejectedReducer,
 });
 
@@ -228,7 +233,7 @@ const createCatalogExtraReducers = createExtraReducers({
     state.catalogList = [...state.catalogList, payload];
     state.isShowCatalogCreation = false;
   },
-    rejectedReducer: (state, { payload }) => {
+  rejectedReducer: (state, { payload }) => {
     state.isShowCatalogCreation = false;
     state.error = payload;
   },
@@ -249,7 +254,7 @@ const deleteCatalogExtraReducers = createExtraReducers({
     const { catalogList } = state;
     const newCatalogList = remove(
       catalogList,
-          (catalog) => payload.catalogId !== catalog.id
+      (catalog) => payload.catalogId !== catalog.id
     );
     state.catalogList = [...newCatalogList];
   },
@@ -270,22 +275,22 @@ export const removeChatFromCatalog = decorateAsyncThunk({
 const removeChatFromCatalogExtraReducers = createExtraReducers({
   thunk: removeChatFromCatalog,
   fulfilledReducer: (state, { payload }) => {
-  const { catalogList } = state;
-  const updatedCatalog = {
-    ...payload,
-    _id: payload.id,               
-    chats: payload.Conversations || [], 
-  };
+    const { catalogList } = state;
+    const updatedCatalog = {
+      ...payload,
+      _id: payload.id,
+      chats: payload.Conversations || [],
+    };
 
-  for (let i = 0; i < catalogList.length; i++) {
-    if (catalogList[i]._id === updatedCatalog._id) {
-      catalogList[i].chats = updatedCatalog.chats;
-      break;
+    for (let i = 0; i < catalogList.length; i++) {
+      if (catalogList[i]._id === updatedCatalog._id) {
+        catalogList[i].chats = updatedCatalog.chats;
+        break;
+      }
     }
-  }
-  state.currentCatalog = updatedCatalog;
-  state.catalogList = [...catalogList];
-},
+    state.currentCatalog = updatedCatalog;
+    state.catalogList = [...catalogList];
+  },
   rejectedReducer: (state, { payload }) => {
     state.error = payload;
   },
@@ -303,30 +308,30 @@ export const changeCatalogName = decorateAsyncThunk({
 const changeCatalogNameExtraReducers = createExtraReducers({
   thunk: changeCatalogName,
   fulfilledReducer: (state, { payload }) => {
-  const { catalogList, currentCatalog } = state;
+    const { catalogList, currentCatalog } = state;
 
-  const updatedPayload = {
-    ...payload,
-    _id: payload.id,                    
-    chats: payload.chats || [],          
-  };
-
-  const newCatalogList = catalogList.map(catalog =>
-    catalog._id === updatedPayload._id
-      ? { ...catalog, catalogName: updatedPayload.catalogName } 
-      : catalog
-  );
-  state.catalogList = newCatalogList;
-
-  if (currentCatalog && currentCatalog._id === updatedPayload._id) {
-    state.currentCatalog = {
-      ...currentCatalog,
-      catalogName: updatedPayload.catalogName, 
+    const updatedPayload = {
+      ...payload,
+      _id: payload.id,
+      chats: payload.chats || [],
     };
-  }
 
-  state.isRenameCatalog = false;
-},
+    const newCatalogList = catalogList.map((catalog) =>
+      catalog._id === updatedPayload._id
+        ? { ...catalog, catalogName: updatedPayload.catalogName }
+        : catalog
+    );
+    state.catalogList = newCatalogList;
+
+    if (currentCatalog && currentCatalog._id === updatedPayload._id) {
+      state.currentCatalog = {
+        ...currentCatalog,
+        catalogName: updatedPayload.catalogName,
+      };
+    }
+
+    state.isRenameCatalog = false;
+  },
   rejectedReducer: (state) => {
     state.isRenameCatalog = false;
   },
@@ -349,10 +354,15 @@ const reducers = {
     const { messagesPreview } = state;
     let isNew = true;
     messagesPreview.forEach((preview) => {
-      if (preview.participants.includes(message.sender)) {
-        preview.text = message.body;
-        preview.sender = message.sender;
-        preview.createAt = message.createdAt;
+      if (
+        isEqual(
+          preview.participants.sort(),
+          payload.preview.participants.sort()
+        )
+      ) {
+        preview.text = payload.message.body;
+        preview.sender = payload.message.sender;
+        preview.createAt = payload.message.createdAt;
         isNew = false;
       }
     });

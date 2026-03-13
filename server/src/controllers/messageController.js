@@ -13,30 +13,32 @@ module.exports.addMessage = async (req, res, next) => {
     if (recipient === userId) {
       return res.status(400).send('Cannot send message to yourself');
     }
-    let conversation = await db.Conversations.findOne({
-      include: [
-        {
-          model: db.ConversationsUsers,
-          as: 'conversationUsers',
-          required: true,
-          where: {
-            userId: {
-              [db.Sequelize.Op.in]: [userId, recipient],
-            },
-          },
-        },
-      ],
+
+    const userConvIds = await db.ConversationsUsers.findAll({
+      where: { userId },
+      attributes: ['conversationId'],
+    }).then((rows) => rows.map((r) => r.conversationId));
+
+    const recipientConv = await db.ConversationsUsers.findOne({
+      where: {
+        userId: recipient,
+        conversationId: { [db.Sequelize.Op.in]: userConvIds },
+      },
     });
 
-    if (conversation) {
-      const totalUsersInChat = await db.ConversationsUsers.count({
-        where: { conversationId: conversation.id },
-      });
+    let conversation = null;
 
-      if (totalUsersInChat !== 2) {
-        conversation = null;
+    if (recipientConv) {
+      const totalUsersInChat = await db.ConversationsUsers.count({
+        where: { conversationId: recipientConv.conversationId },
+      });
+      if (totalUsersInChat === 2) {
+        conversation = await db.Conversations.findByPk(
+          recipientConv.conversationId
+        );
       }
     }
+    
     const now = new Date();
     if (!conversation) {
       conversation = await db.Conversations.create({
