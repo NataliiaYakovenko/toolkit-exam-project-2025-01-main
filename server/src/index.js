@@ -34,7 +34,5 @@ app.use(multerHandler);
 app.use(handlerError);
 
 const server = http.createServer(app);
-server.listen(PORT, () =>
-  console.log(`Example app listening on port ${PORT}!`),
-);
+server.listen(PORT, () => {});
 controller.createConnection(server);

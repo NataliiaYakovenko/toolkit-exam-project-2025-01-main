@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Error.module.sass';
 
 const Error = (props) => {
-  console.log('Error props:', props);
   const getMessage = () => {
     const { status, data } = props;
 

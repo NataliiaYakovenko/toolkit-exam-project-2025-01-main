@@ -6,7 +6,6 @@ const ImageUpload = (props) => {
   const [{ value, ...restField },meta, helpers] = useField(props.name);
   const { uploadContainer, inputContainer, imgStyle } = props.classes;
   const onChange = (e) => {
-    console.log(e.target.files[0]);
 
     const node = window.document.getElementById('imagePreview');
     let file;
