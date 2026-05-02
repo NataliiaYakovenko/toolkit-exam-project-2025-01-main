@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import { useField } from 'formik';
 
 const ImageUpload = (props) => {
-  const [{ value, ...restField },meta, helpers] = useField(props.name);
+  const [{ value, ...restField }, meta, helpers] = useField(props.name);
   const { uploadContainer, inputContainer, imgStyle } = props.classes;
-  const onChange = (e) => {
+  const { currentImage } = props;
+  const imgRef = useRef(null);
 
+  useEffect(() => {
+    if (currentImage && imgRef.current && !value) {
+      imgRef.current.src = currentImage;
+    }
+  }, [currentImage, value]);
+
+  const onChange = (e) => {
     const node = window.document.getElementById('imagePreview');
     let file;
     if (!e.target.files[0]) {
       file = [];
-    }else{
-       file = e.target.files[0];
+    } else {
+      file = e.target.files[0];
     }
 
     const imageType = /image.*/;
@@ -42,6 +50,7 @@ const ImageUpload = (props) => {
       </div>
       <img
         id="imagePreview"
+        ref={imgRef}
         className={classNames({ [imgStyle]: !!value })}
         alt="user"
       />
