@@ -53,6 +53,13 @@ const ImageUpload = (props) => {
         ref={imgRef}
         className={classNames({ [imgStyle]: !!value })}
         alt="user"
+        style={{
+          width: '140px',
+          height: '140px',
+          margin: '0 auto',
+          borderRadius: '50%',
+          objectFit: 'cover',
+        }}
       />
     </div>
   );
