@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import {
   getCatalogList,
@@ -7,59 +7,59 @@ import {
 import CatalogList from '../CatalogList/CatalogList';
 import DialogList from '../../DialogComponents/DialogList/DialogList';
 
-class CatalogListContainer extends React.Component {
-  componentDidMount() {
-    this.props.getCatalogList();
-  }
+const CatalogListContainer = ({
+  chatStore,
+  userStore,
+  removeChatFromCatalog,
+  getCatalogList,
+}) => {
+  useEffect(() => {
+    getCatalogList();
+  }, [getCatalogList]);
 
-  removeChatFromCatalog = (event, chatId) => {
-    const { _id } = this.props.chatStore.currentCatalog;
-    this.props.removeChatFromCatalog({ chatId, catalogId: _id });
-    event.stopPropagation();
-  };
+  const handleRemoveChat = useCallback(
+    (event, chatId) => {
+      const { _id } = chatStore.currentCatalog;
+      removeChatFromCatalog({ chatId, catalogId: _id });
+      event.stopPropagation();
+    },
+    [chatStore.currentCatalog, removeChatFromCatalog]
+  );
 
-  getDialogsPreview = () => {
-    const { messagesPreview, currentCatalog } = this.props.chatStore;
+  const getDialogsPreview = useCallback(() => {
+    const { messagesPreview, currentCatalog } = chatStore;
     const { chats } = currentCatalog;
-    const dialogsInCatalog = [];
-    for (let i = 0; i < messagesPreview.length; i++) {
-      for (let j = 0; j < chats.length; j++) {
-        if (chats[j].id === messagesPreview[i].id) {
-          dialogsInCatalog.push(messagesPreview[i]);
-        }
-      }
-    }
-    return dialogsInCatalog;
-  };
-
-  render() {
-    const { catalogList, isShowChatsInCatalog } = this.props.chatStore;
-    const { id } = this.props.userStore.data;
-    return (
-      <>
-        {isShowChatsInCatalog ? (
-          <DialogList
-            userId={id}
-            preview={this.getDialogsPreview()}
-            removeChat={this.removeChatFromCatalog}
-          />
-        ) : (
-          <CatalogList catalogList={catalogList} />
-        )}
-      </>
+    return messagesPreview.filter((preview) =>
+      chats.some((chat) => chat.id === preview.id)
     );
-  }
-}
+  }, [chatStore]);
 
-const mapStateToProps = (state) => {
-  const { chatStore, userStore } = state;
-  return { chatStore, userStore };
+  const { isShowChatsInCatalog } = chatStore;
+  const { id } = userStore.data;
+
+  return (
+    <>
+      {isShowChatsInCatalog ? (
+        <DialogList
+          userId={id}
+          preview={getDialogsPreview()}
+          removeChat={handleRemoveChat}
+        />
+      ) : (
+        <CatalogList catalogList={chatStore.catalogList} />
+      )}
+    </>
+  );
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  getCatalogList: (data) => dispatch(getCatalogList(data)),
-  removeChatFromCatalog: (data) => dispatch(removeChatFromCatalog(data)),
+const mapStateToProps = (state) => ({
+  chatStore: state.chatStore,
+  userStore: state.userStore,
 });
+
+const mapDispatchToProps = {
+  getCatalogList,
+  removeChatFromCatalog,
+};
 
 export default connect(
   mapStateToProps,
