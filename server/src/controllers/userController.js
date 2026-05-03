@@ -154,52 +154,86 @@ module.exports.payment = async (req, res, next) => {
       return res.status(400).send('Missing required fields');
     }
     transaction = await bd.sequelize.transaction();
+    const userCardNumber = number.replace(/ /g, '');
+    const userCard = await bd.Banks.findOne({
+      where: {
+        cardNumber: userCardNumber,
+        cvc,
+        expiry,
+        name: {
+          [bd.Sequelize.Op.iLike]: name,
+        },
+      },
+      transaction,
+    });
+    if (!userCard) {
+      await transaction.rollback();
+      return res.status(400).send('Invalid card details');
+    }
+    if (userCard.balance < price) {
+      await transaction.rollback();
+      return res.status(400).send('Insufficient funds');
+    }
     await bankQueries.updateBankBalance(
       {
         balance: bd.sequelize.literal(`
-             CASE
-               WHEN "cardNumber"='${number.replace(/ /g, '')}'
-                 AND "cvc"='${cvc}' 
-                 AND "expiry"='${expiry}'
-                 AND LOWER("name") = LOWER('${name}')
-               THEN "balance"-${price}
-               WHEN "cardNumber"='${CONSTANTS.SQUADHELP_BANK_NUMBER}' 
-                 AND "cvc"='${CONSTANTS.SQUADHELP_BANK_CVC}' 
-                 AND "expiry"='${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
-               THEN "balance"+${price} 
-             END`),
+          CASE
+            WHEN "cardNumber" = '${userCardNumber}'
+              AND "cvc" = '${cvc}' 
+              AND "expiry" = '${expiry}'
+              AND LOWER("name") = LOWER('${name}')
+            THEN "balance" - ${price}
+            WHEN "cardNumber" = '${CONSTANTS.SQUADHELP_BANK_NUMBER}' 
+              AND "cvc" = '${CONSTANTS.SQUADHELP_BANK_CVC}' 
+              AND "expiry" = '${CONSTANTS.SQUADHELP_BANK_EXPIRY}'
+            THEN "balance" + ${price}
+            ELSE "balance"
+          END
+        `),
       },
       {
         cardNumber: {
           [bd.Sequelize.Op.in]: [
             CONSTANTS.SQUADHELP_BANK_NUMBER,
-            number.replace(/ /g, ''),
+            userCardNumber,
           ],
         },
       },
       transaction,
     );
     const orderId = uuid();
-    contests.forEach((contest, index) => {
+    const contestsToCreate = contests.map((contest, index) => {
       const prize =
         index === contests.length - 1
           ? Math.ceil(price / contests.length)
           : Math.floor(price / contests.length);
-      contest = Object.assign(contest, {
+      return {
+        ...contest,
         status: index === 0 ? 'active' : 'pending',
         userId: req.tokenData.userId,
         priority: index + 1,
         orderId,
         createdAt: moment().format('YYYY-MM-DD HH:mm'),
         prize,
-      });
+      };
     });
-    await bd.Contests.bulkCreate(req.body.contests, transaction);
-    transaction.commit();
-    return res.status(200).send();
+    await bd.Contests.bulkCreate(contestsToCreate, { transaction });
+    await transaction.commit();
+    return res.status(200).send({ message: 'Payment successful', orderId });
   } catch (err) {
-    logError(err, err.code);
-    transaction.rollback();
+    logError(err.message || err, err.code);
+    if (transaction) {
+      await transaction.rollback();
+    }
+    if (err.name === 'BankDeclineError' || (err.message && err.message.includes('Bank decline'))) {
+      return res.status(400).send('Transaction failed: ' + err.message);
+    }
+    if (err.message && err.message.includes('balance')) {
+      return res.status(400).send('Transaction failed: Balance update error');
+    }
+    if (err.name === 'SequelizeValidationError') {
+      return res.status(400).send('Validation error: ' + err.message);
+    }
     next(err);
   }
 };
