@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import className from 'classnames';
@@ -10,44 +10,49 @@ import ChatHeader from '../../ChatComponents/ChatHeader/ChatHeader';
 import styles from './Dialog.module.sass';
 import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
-class Dialog extends React.Component {
+const Dialog = ({
+  interlocutor,
+  getDialog,
+  clearMessageList,
+  messages,
+  userId,
+  chatData,
+}) => {
+  const messagesEnd = useRef(null);
 
-    componentDidMount() {
-    if (this.props.interlocutor && this.props.interlocutor.id) {
-      this.props.getDialog({ interlocutorId: this.props.interlocutor.id });
+  const scrollToBottom = useCallback(() => {
+    messagesEnd.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    if (interlocutor && interlocutor.id) {
+      getDialog({ interlocutorId: interlocutor.id });
     } else {
-      console.error('Dialog: interlocutor is null or missing id', this.props.interlocutor);
+      console.error('Dialog: interlocutor is null or missing id', interlocutor);
     }
-    this.scrollToBottom();
-  }
+    scrollToBottom();
+  }, [interlocutor, getDialog, scrollToBottom]);
 
-  messagesEnd = React.createRef();
-
-  scrollToBottom = () => {
-    this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
-  };
-
-
-    componentWillReceiveProps(nextProps) {
-    if (nextProps.interlocutor && 
-        nextProps.interlocutor.id && 
-        this.props.interlocutor && 
-        this.props.interlocutor.id !== nextProps.interlocutor.id) {
-      this.props.getDialog({ interlocutorId: nextProps.interlocutor.id });
+  useEffect(() => {
+    if (interlocutor?.id && interlocutor.id !== interlocutor?.id) {
+      getDialog({ interlocutorId: interlocutor.id });
     }
-  }
+  }, [interlocutor, getDialog]);
 
-  componentWillUnmount() {
-    this.props.clearMessageList();
-  }
+  useEffect(() => {
+    return () => {
+      clearMessageList();
+    };
+  }, [clearMessageList]);
 
-  componentDidUpdate() {
-    if (this.messagesEnd.current) this.scrollToBottom();
-  }
+  useEffect(() => {
+    if (messagesEnd.current) {
+      scrollToBottom();
+    }
+  });
 
-  renderMainDialog = () => {
+  const renderMainDialog = useCallback(() => {
     const messagesArray = [];
-    const { messages, userId } = this.props;
     let currentTime = moment();
     messages.forEach((message, i) => {
       if (!currentTime.isSame(message.createdAt, 'date')) {
@@ -69,15 +74,14 @@ class Dialog extends React.Component {
           <span className={styles.messageTime}>
             {moment(message.createdAt).format('HH:mm')}
           </span>
-          <div ref={this.messagesEnd} />
+          <div ref={messagesEnd} />
         </div>
       );
     });
     return <div className={styles.messageList}>{messagesArray}</div>;
-  };
+  }, [messages, userId, messagesEnd]);
 
-  blockMessage = () => {
-    const { userId, chatData } = this.props;
+  const blockMessage = useCallback(() => {
     const { blackList, participants } = chatData;
     const userIndex = participants.indexOf(userId);
     let message;
@@ -87,35 +91,31 @@ class Dialog extends React.Component {
       message = 'He block you';
     }
     return <span className={styles.messageBlock}>{message}</span>;
-  };
+  }, [chatData, userId]);
 
-  render() {
-    const { chatData, userId, interlocutor } = this.props;
-
-    if (!interlocutor || !interlocutor.id) {
-      return <div className={styles.error}>Loading chat...</div>;
-    }
-
-    return (
-      <>
-        <ChatHeader userId={userId} />
-        {this.renderMainDialog()}
-        <div ref={this.messagesEnd} />
-        {chatData && chatData.blackList.includes(true) ? (
-          this.blockMessage()
-        ) : (
-          <ChatInput />
-        )}
-      </>
-    );
+  if (!interlocutor || !interlocutor.id) {
+    return <div className={styles.error}>Loading chat...</div>;
   }
-}
+
+  return (
+    <>
+      <ChatHeader userId={userId} />
+      {renderMainDialog()}
+      <div ref={messagesEnd} />
+      {chatData && chatData.blackList.includes(true) ? (
+        blockMessage()
+      ) : (
+        <ChatInput />
+      )}
+    </>
+  );
+};
 
 const mapStateToProps = (state) => state.chatStore;
 
-const mapDispatchToProps = (dispatch) => ({
-  getDialog: (data) => dispatch(getDialogMessages(data)),
-  clearMessageList: () => dispatch(clearMessageList()),
-});
+const mapDispatchToProps = {
+  getDialog: getDialogMessages,
+  clearMessageList,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dialog);
