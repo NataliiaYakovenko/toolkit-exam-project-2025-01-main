@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './Header.module.sass';
@@ -7,56 +7,47 @@ import { clearUserStore } from '../../store/slices/userSlice';
 import { getUser } from '../../store/slices/userSlice';
 import withRouter from '../../hocs/withRouter';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isMobileMenuOpen: false,
-    };
-  }
+const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  componentDidMount() {
-    if (!this.props.data) {
-      this.props.getUser();
+  useEffect(() => {
+    if (!data) {
+      getUser();
     }
-  }
+  }, [data, getUser]);
 
-  logOut = () => {
+  const logOut = useCallback(() => {
     localStorage.clear();
-    this.props.clearUserStore();
-    this.props.navigate('/login', { replace: true });
-  };
+    clearUserStore();
+    navigate('/login', { replace: true });
+  }, [clearUserStore, navigate]);
 
-  startContests = () => {
-    this.props.navigate('/startContest');
-  };
+  const startContests = useCallback(() => {
+    navigate('/startContest');
+  }, [navigate]);
 
-  toggleMobileMenu = () => {
-    this.setState((prevState) => ({
-      isMobileMenuOpen: !prevState.isMobileMenuOpen,
-    }));
-  };
+  const toggleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(prev => !prev);
+  }, []);
 
-  closeMobileMenu = () => {
-    this.setState({
-      isMobileMenuOpen: false,
-    });
-  };
+  const closeMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
-  renderLoginButtons = () => {
-    if (this.props.data) {
+  const renderLoginButtons = useCallback(() => {
+    if (data) {
       return (
         <>
           <div className={styles.userInfo}>
             <img
               src={
-                this.props.data.avatar === 'anon.png'
+                data.avatar === 'anon.png'
                   ? CONSTANTS.ANONYM_IMAGE_PATH
-                  : `${CONSTANTS.publicURL}${this.props.data.avatar}`
+                  : `${CONSTANTS.publicURL}${data.avatar}`
               }
               alt="user"
             />
-            <span>{`Hi, ${this.props.data.displayName}`}</span>
+            <span>{`Hi, ${data.displayName}`}</span>
             <img
               src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
               alt="menu"
@@ -66,7 +57,7 @@ class Header extends React.Component {
                 <Link
                   to="/dashboard"
                   style={{ textDecoration: 'none' }}
-                  onClick={this.closeMobileMenu}
+                  onClick={closeMobileMenu}
                 >
                   <span>View Dashboard</span>
                 </Link>
@@ -75,7 +66,7 @@ class Header extends React.Component {
                 <Link
                   to="/account"
                   style={{ textDecoration: 'none' }}
-                  onClick={this.closeMobileMenu}
+                  onClick={closeMobileMenu}
                 >
                   <span>My Account</span>
                 </Link>
@@ -84,7 +75,7 @@ class Header extends React.Component {
                 <Link
                   to="http://www.google.com"
                   style={{ textDecoration: 'none' }}
-                  onClick={this.closeMobileMenu}
+                  onClick={closeMobileMenu}
                 >
                   <span>Messages</span>
                 </Link>
@@ -93,39 +84,38 @@ class Header extends React.Component {
                 <Link
                   to="http://www.google.com"
                   style={{ textDecoration: 'none' }}
-                  onClick={this.closeMobileMenu}
+                  onClick={closeMobileMenu}
                 >
                   <span>Affiliate Dashboard</span>
                 </Link>
               </li>
-              {this.props.data?.role === CONSTANTS.CUSTOMER && (
+              {data?.role === CONSTANTS.CUSTOMER && (
                 <li>
                   <Link
                     to="/events"
                     style={{ textDecoration: 'none' }}
-                    onClick={this.closeMobileMenu}
+                    onClick={closeMobileMenu}
                   >
                     <span>My Events</span>
                   </Link>
                 </li>
               )}
-              {this.props.data?.role === CONSTANTS.MODERATOR && (
+              {data?.role === CONSTANTS.MODERATOR && (
                 <li>
                   <Link
                     to="/moderator/offers"
                     style={{ textDecoration: 'none' }}
-                    onClick={this.closeMobileMenu}
+                    onClick={closeMobileMenu}
                   >
                     <span>Offers</span>
                   </Link>
                 </li>
               )}
-
               <li>
                 <span
                   onClick={() => {
-                    this.logOut();
-                    this.toggleMobileMenu();
+                    logOut();
+                    closeMobileMenu();
                   }}
                 >
                   Logout
@@ -148,379 +138,377 @@ class Header extends React.Component {
         <Link
           to="/login"
           style={{ textDecoration: 'none' }}
-          onClick={this.closeMobileMenu}
+          onClick={closeMobileMenu}
         >
           <span className={styles.btn}>LOGIN</span>
         </Link>
         <Link
           to="/registration"
           style={{ textDecoration: 'none' }}
-          onClick={this.closeMobileMenu}
+          onClick={closeMobileMenu}
         >
           <span className={styles.btn}>SIGN UP</span>
         </Link>
       </>
     );
-  };
+  }, [data, closeMobileMenu, logOut]);
 
-  render() {
-    if (this.props.isFetching) {
-      return null;
-    }
-    return (
-      <div className={styles.headerContainer}>
-        <div className={styles.fixedHeader}>
-          <span className={styles.info}>
-            Squadhelp recognized as one of the Most Innovative Companies by Inc
-            Magazine.
-          </span>
-          <a href="http://www.google.com">Read Announcement</a>
-        </div>
-        <div className={styles.loginSignnUpHeaders}>
-          <a href="http://www.google.com">
-            <div className={styles.numberContainer}>
-              <img
-                src={`${CONSTANTS.STATIC_IMAGES_PATH}phone.png`}
-                alt="phone"
-              />
-              <span>(877)&nbsp;355-3585</span>
-            </div>
-          </a>
-          <div className={styles.userButtonsContainer}>
-            {this.renderLoginButtons()}
-          </div>
-        </div>
-        <div className={styles.navContainer}>
-          <a href="/">
+  if (isFetching) {
+    return null;
+  }
+
+  return (
+    <div className={styles.headerContainer}>
+      <div className={styles.fixedHeader}>
+        <span className={styles.info}>
+          Squadhelp recognized as one of the Most Innovative Companies by Inc
+          Magazine.
+        </span>
+        <a href="http://www.google.com">Read Announcement</a>
+      </div>
+      <div className={styles.loginSignnUpHeaders}>
+        <a href="http://www.google.com">
+          <div className={styles.numberContainer}>
             <img
-              src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`}
-              className={styles.logo}
-              alt="blue_logo"
+              src={`${CONSTANTS.STATIC_IMAGES_PATH}phone.png`}
+              alt="phone"
             />
-          </a>
-          <div
-            className={`${styles.burgerMenu} ${
-              this.state.isMobileMenuOpen ? styles.active : ''
-            }`}
-            onClick={this.toggleMobileMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span>(877)&nbsp;355-3585</span>
           </div>
+        </a>
+        <div className={styles.userButtonsContainer}>
+          {renderLoginButtons()}
+        </div>
+      </div>
+      <div className={styles.navContainer}>
+        <a href="/">
+          <img
+            src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`}
+            className={styles.logo}
+            alt="blue_logo"
+          />
+        </a>
+        <div
+          className={`${styles.burgerMenu} ${
+            isMobileMenuOpen ? styles.active : ''
+          }`}
+          onClick={toggleMobileMenu}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
+        <div
+          className={`${styles.mobileMenuOverlay} ${
+            isMobileMenuOpen ? styles.mobileMenuOpen : ''
+          }`}
+          onClick={closeMobileMenu}
+        >
           <div
-            className={`${styles.mobileMenuOverlay} ${
-              this.state.isMobileMenuOpen ? styles.mobileMenuOpen : ''
+            className={`${styles.leftNav} ${
+              isMobileMenuOpen ? styles.mobileMenuOpen : ''
             }`}
-            onClick={this.closeMobileMenu}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div
-              className={`${styles.leftNav} ${
-                this.state.isMobileMenuOpen ? styles.mobileMenuOpen : ''
-              }`}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className={styles.nav}>
-                <ul>
-                  <li>
-                    <span>NAME IDEAS</span>
-                    <img
-                      src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
-                      alt="menu"
-                    />
-                    <ul>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          BEAUTY
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          CONSULTING
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          E-COMMERCE
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          FASHION & CLOTHING
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          FINANCE
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          REAL ESTATE
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          TECH
-                        </a>
-                      </li>
-                      <li className={styles.last}>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          MORE CATEGORIES
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span>CONTESTS</span>
-                    <img
-                      src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
-                      alt="menu"
-                    />
-                    <ul>
-                      <li>
-                        <a
-                          href="http://localhost:3000/howItWorks"
-                          onClick={this.closeMobileMenu}
-                        >
-                          HOW IT WORKS
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          PRICING
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          AGENCY SERVICE
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          ACTIVE CONTESTS
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          WINNERS
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          LEADERBOARD
-                        </a>
-                      </li>
-                      <li className={styles.last}>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          BECOME A CREATIVE
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span>OUR WORK</span>
-                    <img
-                      src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
-                      alt="menu"
-                    />
-                    <ul>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          NAMES
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          TAGLINES
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          LOGOS
-                        </a>
-                      </li>
-                      <li className={styles.last}>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          TESTIMONIALS
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span>NAMES FOR SALE</span>
-                    <img
-                      src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
-                      alt="menu"
-                    />
-                    <ul>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          POPULAR NAMES
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          SHORT NAMES
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          INTRIGUING NAMES
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          NAMES BY CATEGORY
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          VISUAL NAME SEARCH
-                        </a>
-                      </li>
-                      <li className={styles.last}>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          SELL YOUR DOMAINS
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <span>BLOG</span>
-                    <img
-                      src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
-                      alt="menu"
-                    />
-                    <ul>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          ULTIMATE NAMING GUIDE
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          POETIC DEVICES IN BUSINESS NAMING
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          CROWDED BAR THEORY
-                        </a>
-                      </li>
-                      <li className={styles.last}>
-                        <a
-                          href="http://www.google.com"
-                          onClick={this.closeMobileMenu}
-                        >
-                          ALL ARTICLES
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              {this.props.data &&
-                this.props.data.role === CONSTANTS.CUSTOMER && (
-                  <div
-                    className={styles.startContestBtn}
-                    onClick={() => {
-                      this.startContests();
-                      this.closeMobileMenu();
-                    }}
-                  >
-                    START CONTEST
-                  </div>
-                )}
+            <div className={styles.nav}>
+              <ul>
+                <li>
+                  <span>NAME IDEAS</span>
+                  <img
+                    src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
+                    alt="menu"
+                  />
+                  <ul>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        BEAUTY
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        CONSULTING
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        E-COMMERCE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        FASHION & CLOTHING
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        FINANCE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        REAL ESTATE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        TECH
+                      </a>
+                    </li>
+                    <li className={styles.last}>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        MORE CATEGORIES
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span>CONTESTS</span>
+                  <img
+                    src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
+                    alt="menu"
+                  />
+                  <ul>
+                    <li>
+                      <a
+                        href="http://localhost:3000/howItWorks"
+                        onClick={closeMobileMenu}
+                      >
+                        HOW IT WORKS
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        PRICING
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        AGENCY SERVICE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        ACTIVE CONTESTS
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        WINNERS
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        LEADERBOARD
+                      </a>
+                    </li>
+                    <li className={styles.last}>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        BECOME A CREATIVE
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span>OUR WORK</span>
+                  <img
+                    src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
+                    alt="menu"
+                  />
+                  <ul>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        NAMES
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        TAGLINES
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        LOGOS
+                      </a>
+                    </li>
+                    <li className={styles.last}>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        TESTIMONIALS
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span>NAMES FOR SALE</span>
+                  <img
+                    src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
+                    alt="menu"
+                  />
+                  <ul>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        POPULAR NAMES
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        SHORT NAMES
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        INTRIGUING NAMES
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        NAMES BY CATEGORY
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        VISUAL NAME SEARCH
+                      </a>
+                    </li>
+                    <li className={styles.last}>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        SELL YOUR DOMAINS
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <span>BLOG</span>
+                  <img
+                    src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`}
+                    alt="menu"
+                  />
+                  <ul>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        ULTIMATE NAMING GUIDE
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        POETIC DEVICES IN BUSINESS NAMING
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        CROWDED BAR THEORY
+                      </a>
+                    </li>
+                    <li className={styles.last}>
+                      <a
+                        href="http://www.google.com"
+                        onClick={closeMobileMenu}
+                      >
+                        ALL ARTICLES
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
             </div>
+            {data && data.role === CONSTANTS.CUSTOMER && (
+              <div
+                className={styles.startContestBtn}
+                onClick={() => {
+                  startContests();
+                  closeMobileMenu();
+                }}
+              >
+                START CONTEST
+              </div>
+            )}
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => state.userStore;
 const mapDispatchToProps = (dispatch) => ({
