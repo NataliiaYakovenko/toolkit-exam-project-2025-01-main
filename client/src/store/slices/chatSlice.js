@@ -350,7 +350,7 @@ const reducers = {
   },
 
   addMessage: (state, { payload }) => {
-    const { message, preview } = payload;
+    const { preview } = payload;
     const { messagesPreview } = state;
     let isNew = true;
     messagesPreview.forEach((preview) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './ButtonGroup.module.sass';
 import CONSTANTS from '../../constants';
 

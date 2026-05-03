@@ -8,7 +8,7 @@ const AgreeTermOfServiceInput = ({ id, type, classes, label, ...rest }) => (
         meta: { touched, error },
         field,
       } = props;
-
+     
       return (
         <div>
           <div className={classes.container}>

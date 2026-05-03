@@ -28,7 +28,7 @@ class Dialog extends React.Component {
   };
 
 
-    componentWillReceiveProps(nextProps, nextContext) {
+    componentWillReceiveProps(nextProps) {
     if (nextProps.interlocutor && 
         nextProps.interlocutor.id && 
         this.props.interlocutor && 

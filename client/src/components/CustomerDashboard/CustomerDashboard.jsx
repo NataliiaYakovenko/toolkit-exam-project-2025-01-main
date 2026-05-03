@@ -33,7 +33,7 @@ class CustomerDashboard extends React.Component {
     });
   };
 
-  componentDidUpdate (prevProps, prevState, snapshot) {
+  componentDidUpdate (prevProps) {
     if (this.props.customerFilter !== prevProps.customerFilter) {
       this.getContests();
     }

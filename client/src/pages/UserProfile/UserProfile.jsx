@@ -28,6 +28,7 @@ const UserProfile = (props) => {
     error,
     clearPaymentStore,
   } = props;
+
   return (
     <div>
       <div className={styles.mainContainer}>
@@ -35,21 +36,37 @@ const UserProfile = (props) => {
           <span className={styles.headerAside}>Select Option</span>
           <div className={styles.optionsContainer}>
             <div
+              role="button"
+              tabIndex={0}
               className={classNames(styles.optionContainer, {
                 [styles.currentOption]:
                   profileViewMode === CONSTANTS.USER_INFO_MODE,
               })}
               onClick={() => changeProfileViewMode(CONSTANTS.USER_INFO_MODE)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  changeProfileViewMode(CONSTANTS.USER_INFO_MODE);
+                }
+              }}
             >
               UserInfo
             </div>
             {role === CONSTANTS.CREATOR && (
               <div
+                role="button"
+                tabIndex={0}
                 className={classNames(styles.optionContainer, {
                   [styles.currentOption]:
                     profileViewMode === CONSTANTS.CASHOUT_MODE,
                 })}
                 onClick={() => changeProfileViewMode(CONSTANTS.CASHOUT_MODE)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    changeProfileViewMode(CONSTANTS.CASHOUT_MODE);
+                  }
+                }}
               >
                 Cashout
               </div>
