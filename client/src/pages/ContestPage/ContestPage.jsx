@@ -171,22 +171,22 @@ const ContestPage = ({
         <div className={styles.mainInfoContainer}>
           <div className={styles.infoContainer}>
             <div className={styles.buttonsContainer}>
-              <span
+              <button
                 onClick={() => changeContestViewMode(true)}
                 className={classNames(styles.btn, {
                   [styles.activeBtn]: isBrief,
                 })}
               >
                 Brief
-              </span>
-              <span
+              </button>
+              <button
                 onClick={() => changeContestViewMode(false)}
                 className={classNames(styles.btn, {
                   [styles.activeBtn]: !isBrief,
                 })}
               >
                 Offer
-              </span>
+              </button>
             </div>
             {isBrief ? (
               <Brief contestData={contestData} role={role} goChat={goChat} />
