@@ -117,6 +117,7 @@ const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
                     logOut();
                     closeMobileMenu();
                   }}
+                
                   className={styles.logoutBtn}
                 >
                   Logout
