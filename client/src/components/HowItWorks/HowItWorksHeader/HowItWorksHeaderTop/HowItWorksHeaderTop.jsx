@@ -4,7 +4,7 @@ import CONSTANTS from '../../../../constants';
 
 const HowItWorksHeaderTop = () => {
   return (
-    <div className={styles.containerTop}>
+    <section className={styles.containerTop}>
       <div
         className={styles.wrapperBunner}
         style={{
@@ -28,24 +28,24 @@ const HowItWorksHeaderTop = () => {
             </a>
           </div>
 
-          <div className={styles.rightBunner}>
+          <aside className={styles.rightBunner}>
             <p className={styles.hurryText}>Hurry! Sale Ends In:</p>
             <p className={styles.mobileHurryText}>Hurry! Ends In:</p>
 
             <div className={styles.bannerTimer}>
               <div className={styles.timerItem}>
                 <p className={styles.timerNumber}>4</p>
-                <p className={styles.timerLabel}>DAYS</p>
+                <span className={styles.timerLabel}>DAYS</span>
               </div>
 
               <div className={styles.timerItem}>
                 <p className={styles.timerNumber}>17</p>
-                <p className={styles.timerLabel}>HOURS</p>
+                <span className={styles.timerLabel}>HOURS</span>
               </div>
 
               <div className={styles.timerItem}>
                 <p className={styles.timerNumber}>58</p>
-                <p className={styles.timerLabel}>MOUNTS</p>
+                <span className={styles.timerLabel}>MONTH</span>
               </div>
             </div>
             <a
@@ -54,10 +54,10 @@ const HowItWorksHeaderTop = () => {
             >
               Shop Now
             </a>
-          </div>
+          </aside>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
