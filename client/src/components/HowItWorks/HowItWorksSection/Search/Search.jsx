@@ -11,7 +11,7 @@ const Search = () => {
   };
 
   return (
-    <div className={styles.searchContainer}>
+    <section className={styles.searchContainer}>
       <div className={styles.searchWrapper}>
         <div className={styles.searchBox}>
           <img
@@ -35,7 +35,7 @@ const Search = () => {
             />
           </button>
         </div>
-        <div className={styles.searchList}>
+        <ul className={styles.searchList}>
           <SearchElement
             link="https://www.atom.com/premium-domains-for-sale/q/technology"
             title="Tech"
@@ -64,9 +64,9 @@ const Search = () => {
             link="https://www.atom.com/premium-domains-for-sale/type_of_name/One%20Word"
             title="One Word"
           />
-        </div>
+        </ul>
       </div>
-    </div>
+    </section>
   );
 };
 
