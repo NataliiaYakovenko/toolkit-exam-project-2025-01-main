@@ -12,14 +12,14 @@ const HowItWorksHeaderBottom = () => {
   const [activeTab, setActiveTab] = useState('');
 
   return (
-    <div className={styles.headerBottom}>
-      <div className={styles.headerContainer}>
+    <header className={styles.headerBottom}>
+      <nav className={styles.headerContainer}>
         <div className={styles.headerWrapper}>
-          <div>
+          <section>
             <HowItWorksHeaderLogo />
-          </div>
+          </section>
 
-          <div className={styles.navigationContainer}>
+          <section className={styles.navigationContainer}>
             <div className={styles.navigationWrapper}>
               <ul>
                 <li
@@ -54,20 +54,20 @@ const HowItWorksHeaderBottom = () => {
                   onMouseEnter={() => setActiveTab('wyAtom')}
                   onMouseLeave={() => setActiveTab('')}
                 >
-                  <div className={styles.titleDomians}>Wy Atom</div>
+                  <div className={styles.titleDomians}>Why Atom</div>
                   {activeTab === 'wyAtom' && <WyAtom />}
                 </li>
               </ul>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.headerIconsContainer}>
+          <section className={styles.headerIconsContainer}>
             <HeaderIcons />
             <HeaderMobile className={styles.headerMobileContainer} />
-          </div>
+          </section>
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
