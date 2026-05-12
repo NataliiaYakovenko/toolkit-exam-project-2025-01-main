@@ -3,7 +3,7 @@ import styles from './HowAtomWorks.module.sass';
 
 const HowAtomWorks = () => {
   return (
-    <div className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.wrapperParts}>
           <div className={styles.leftPart}>
@@ -17,17 +17,17 @@ const HowAtomWorks = () => {
           </div>
 
           <div className={styles.rightPart}>
-            <div className={styles.videoWrapper}>
+            <figure className={styles.videoWrapper}>
               <iframe
                 className={styles.video}
                 src="https://iframe.mediadelivery.net/embed/239474/327efcdd-b1a2-4891-b274-974787ae8362?autoplay=false&loop=false&muted=false&preload=true&responsive=true"
                 title="Business name"
               />
-            </div>
+            </figure>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
