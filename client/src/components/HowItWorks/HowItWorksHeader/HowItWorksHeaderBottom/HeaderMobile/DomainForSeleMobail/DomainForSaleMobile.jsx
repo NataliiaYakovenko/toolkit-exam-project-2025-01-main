@@ -22,7 +22,7 @@ const DomainForSaleMobile = () => {
   ]
 
   return (
-    <div className={styles.domainMobileContainer}>
+    <section className={styles.domainMobileContainer}>
       <div className={styles.domainsMobileTop}>
         <FeatureCard
           link="https://accessibe.com/blog/knowledgebase/screen-reader-guide"
@@ -67,7 +67,7 @@ const DomainForSaleMobile = () => {
             src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_DUNDRUFF}
             alt="dandruff"
           />
-          <span className={styles.getMobileStartTitle}>Get Started</span>
+          <strong className={styles.getMobileStartTitle}>Get Started</strong>
           <img
             className={styles.getMobileStartedArrow}
             src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
@@ -79,7 +79,7 @@ const DomainForSaleMobile = () => {
           marketplace.
         </p>
       </a>
-    </div>
+    </section>
   );
 };
 
