@@ -15,7 +15,7 @@ const WyAtomMobile = () => {
   ];
 
   return (
-    <div className={styles.atomMobileContainer}>
+    <section className={styles.atomMobileContainer}>
       <div className={styles.atomMobileWrapperTop}>
         <FeatureList title="Atom.com" items={atomItems} />
       </div>
@@ -54,7 +54,7 @@ const WyAtomMobile = () => {
           showIcon={false}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
