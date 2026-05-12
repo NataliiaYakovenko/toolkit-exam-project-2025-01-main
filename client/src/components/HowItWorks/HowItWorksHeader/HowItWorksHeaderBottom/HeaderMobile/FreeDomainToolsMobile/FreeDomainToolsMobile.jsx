@@ -4,7 +4,7 @@ import styles from './FreeDomainToolsMobile.module.sass';
 
 const FreeDomainToolsMobile = () => {
   return (
-    <div className={styles.containerMobileTools}>
+    <section className={styles.containerMobileTools}>
       <div className={styles.wrapperMobileTools}>
         <FeatureCard
           link="https://www.atom.com/domain-name-generator"
@@ -30,7 +30,7 @@ const FreeDomainToolsMobile = () => {
           showIcon={false}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
