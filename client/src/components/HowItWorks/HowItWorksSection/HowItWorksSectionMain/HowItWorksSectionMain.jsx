@@ -8,7 +8,7 @@ import Search from '../Search/Search';
 
 const HowItWorksSectionMain = () => {
   return (
-    <div className={styles.sectionMainContainer}>
+    <main className={styles.sectionMainContainer}>
       <div className={styles.howAtomWorks}>
         <HowAtomWorks />
         <WaysUseAtom />
@@ -16,7 +16,7 @@ const HowItWorksSectionMain = () => {
         <Questions />
         <Search/>
       </div>
-    </div>
+    </main>
   );
 };
 
