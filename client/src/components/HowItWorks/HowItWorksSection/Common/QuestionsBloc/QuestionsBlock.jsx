@@ -25,11 +25,11 @@ const QuestionsBlock = ({ items = [], title = '' }) => {
     const isOpen = openIndex === index;
 
     return (
-      <div 
+      <section 
         key={index} 
         className={`${styles.questionItem} ${isOpen ? styles.open : ''}`}
       >
-        <div
+        <button
           className={styles.questionHeader}
           onClick={() => toggleSign(index)}
         >
@@ -44,7 +44,7 @@ const QuestionsBlock = ({ items = [], title = '' }) => {
             }
             alt={isOpen ? "Close" : "Open"}
           />
-        </div>
+        </button>
         
         <div 
           className={styles.answerContainer}
@@ -58,15 +58,15 @@ const QuestionsBlock = ({ items = [], title = '' }) => {
             <p className={styles.text}>{item.text}</p>
           </div>
         </div>
-      </div>
+      </section>
     );
   });
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <h4 className={styles.title}>{title}</h4>
       {list}
-    </div>
+    </section>
   );
 };
 
