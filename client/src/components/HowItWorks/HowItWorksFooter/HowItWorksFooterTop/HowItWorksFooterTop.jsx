@@ -50,9 +50,9 @@ const HowItWorksFooterTop = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <footer className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.section}>
+        <section className={styles.section}>
           <button
             className={`${styles.sectionHeader} ${
               openSections.services ? styles.active : ''
@@ -60,7 +60,7 @@ const HowItWorksFooterTop = () => {
             onClick={() => toggleSection('services')}
             aria-expanded={openSections.services}
           >
-            <span>Domain Services</span>
+            <strong>Domain Services</strong>
 
             <img
               className={styles.arrow}
@@ -78,10 +78,10 @@ const HowItWorksFooterTop = () => {
               items={servicesItems}
             />
           </div>
-        </div>
+        </section>
 
         <div>
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.tools ? styles.active : ''
@@ -89,7 +89,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('tools')}
               aria-expanded={openSections.tools}
             >
-              <span>Domain Tools</span>
+              <strong>Domain Tools</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -108,9 +108,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.sellers ? styles.active : ''
@@ -118,7 +118,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('sellers')}
               aria-expanded={openSections.sellers}
             >
-              <span>Domain Sellers</span>
+              <strong>Domain Sellers</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -137,11 +137,11 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
         </div>
 
         <div>
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.namingBranding ? styles.active : ''
@@ -149,7 +149,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('namingBranding')}
               aria-expanded={openSections.namingBranding}
             >
-              <span>Naming & Branding</span>
+              <strong>Naming & Branding</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -168,9 +168,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.brandProtection ? styles.active : ''
@@ -178,7 +178,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('brandProtection')}
               aria-expanded={openSections.brandProtection}
             >
-              <span>Brand Protection</span>
+              <strong>Brand Protection</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -197,9 +197,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.creatives ? styles.active : ''
@@ -207,7 +207,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('creatives')}
               aria-expanded={openSections.creatives}
             >
-              <span>Creatives</span>
+              <strong>Creatives</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -226,11 +226,11 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
         </div>
 
         <div>
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.atom ? styles.active : ''
@@ -238,7 +238,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('atom')}
               aria-expanded={openSections.atom}
             >
-              <span>Atom</span>
+              <strong>Atom</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -257,9 +257,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.support ? styles.active : ''
@@ -267,7 +267,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('support')}
               aria-expanded={openSections.support}
             >
-              <span>Support</span>
+              <strong>Support</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -286,9 +286,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.partner ? styles.active : ''
@@ -296,7 +296,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('partner')}
               aria-expanded={openSections.partner}
             >
-              <span>Partner with Us</span>
+              <strong>Partner with Us</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -315,9 +315,9 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className={styles.section}>
+          <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
                 openSections.legal ? styles.active : ''
@@ -325,7 +325,7 @@ const HowItWorksFooterTop = () => {
               onClick={() => toggleSection('legal')}
               aria-expanded={openSections.legal}
             >
-              <span>Legal</span>
+              <strong>Legal</strong>
               <img
                 className={styles.arrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
@@ -344,10 +344,10 @@ const HowItWorksFooterTop = () => {
                 />
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
