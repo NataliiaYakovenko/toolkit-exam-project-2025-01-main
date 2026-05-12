@@ -12,10 +12,10 @@ const MobileFormMain = () => {
   };
 
   return (
-    <div className={styles.mobileWrapper}>
-      <div onClick={toggleMenu}>
+    <nav className={styles.mobileWrapper}>
+      <button onClick={toggleMenu}>
         <MobileIcon isMobileOpen={isMobileOpen} />
-      </div>
+      </button>
 
       {isMobileOpen && (
         <div className={styles.mobileMenuContainer}>
@@ -28,7 +28,7 @@ const MobileFormMain = () => {
           </div>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
