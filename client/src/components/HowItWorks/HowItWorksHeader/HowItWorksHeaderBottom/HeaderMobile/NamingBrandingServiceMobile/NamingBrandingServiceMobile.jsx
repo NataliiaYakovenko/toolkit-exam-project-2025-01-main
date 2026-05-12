@@ -4,7 +4,7 @@ import FeatureCard from '../../HeaderNavigation/Common/FeatureCard/FeatureCard';
 
 const NamingBrandingServiceMobile = () => {
   return (
-    <div className={styles.nameMobileContainer}>
+    <section className={styles.nameMobileContainer}>
       <div className={styles.nameMobileWrapperLeft}>
         <FeatureCard
           link="https://www.atom.com/branding-marketing-naming-contests"
@@ -52,7 +52,7 @@ const NamingBrandingServiceMobile = () => {
           showIcon={false}
         />
       </div>
-    </div>
+    </section>
   );
 };
 
