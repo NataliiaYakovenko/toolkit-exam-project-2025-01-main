@@ -5,7 +5,7 @@ import StepBlock from '../Common/StepBlock/StepBlock';
 
 const NamingContests = () => {
   return (
-    <div className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.topPart}>
           <img
@@ -21,7 +21,7 @@ const NamingContests = () => {
             description="Fill out your Naming Brief and begin receiving name ideas in minutes"
           />
           <StepBlock
-          title='Step2'
+          title='Step 2'
           description='Rate the submissions and provide feedback to creatives. Creatives submit even more names based on your feedback.'
           />
            <StepBlock
@@ -34,7 +34,7 @@ const NamingContests = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
