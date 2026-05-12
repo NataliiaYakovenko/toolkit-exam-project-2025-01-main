@@ -40,42 +40,42 @@ const MobileNavigation = () => {
 
   return (
     <div>
-      <div className={styles.mobileNavigation}>
+      <nav className={styles.mobileNavigation}>
         <ul>
           
           <li className={styles.navigationValues}>
-            <div className={styles.navigationName} onClick={toggleDomains}>
-              <span>Domains for Sale</span>
+            <button className={styles.navigationName} onClick={toggleDomains}>
+              <strong>Domains for Sale</strong>
               {arrowDown(isDomainsOpen)}
-            </div>
+            </button>
             {isDomainsOpen && <DomainForSaleMobile />}
           </li>
 
           <li className={styles.navigationValues}>
-            <div className={styles.navigationName} onClick={toggleTools}>
-              <span> Free Domain Tools</span>
+            <button className={styles.navigationName} onClick={toggleTools}>
+              <strong>Free Domain Tools</strong>
               {arrowDown(isToolsOpen)}
-            </div>
+            </button>
             {isToolsOpen && <FreeDomainToolsMobile />}
           </li>
 
           <li className={styles.navigationValues}>
-            <div className={styles.navigationName} onClick={toggleNaming}>
-              <span> Naming & Branding Services</span>
+            <button className={styles.navigationName} onClick={toggleNaming}>
+              <strong>Naming & Branding Services</strong>
               {arrowDown(isNamingOpen)}
-            </div>
+            </button>
             {isNamingOpen && <NamingBrandingServiceMobile />}
           </li>
 
           <li className={styles.navigationValues}>
-            <div className={styles.navigationName} onClick={toggleWayAtom}>
-              <span> Wy Atom</span>
+            <button className={styles.navigationName} onClick={toggleWayAtom}>
+              <strong>Wy Atom</strong>
               {arrowDown(isWyAtomOpen)}
-            </div>
+            </button>
             {isWyAtomOpen && <WyAtomMobile />}
           </li>
         </ul>
-      </div>
+      </nav>
     </div>
   );
 };
