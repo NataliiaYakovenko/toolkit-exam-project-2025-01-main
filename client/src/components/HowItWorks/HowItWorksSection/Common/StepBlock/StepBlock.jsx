@@ -7,7 +7,7 @@ const StepBlock = (props) => {
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.titleContainer}>
-          <span className={styles.title}>{props.title}</span>
+          <strong className={styles.title}>{props.title}</strong>
         </div>
         <p className={styles.description}>{props.description}</p>
         <img
