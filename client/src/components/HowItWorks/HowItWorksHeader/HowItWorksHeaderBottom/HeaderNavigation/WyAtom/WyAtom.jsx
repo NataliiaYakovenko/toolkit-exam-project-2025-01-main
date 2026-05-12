@@ -14,7 +14,7 @@ const WyAtom =()=> {
 
     return (
       <>
-        <div className={styles.atomContainer}>
+        <section className={styles.atomContainer}>
           <div className={styles.atomWrapperLeft}>
            <FeatureList title="Atom.com" items={atomItems}
            />
@@ -55,7 +55,7 @@ const WyAtom =()=> {
               description="Learn more about our full partner ecosystem."
             />
           </div>
-        </div>
+        </section>
       </>
     );
   }
