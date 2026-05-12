@@ -24,7 +24,7 @@ const DomainForSale =()=> {
     
     return (
       <>
-        <div className={styles.domainContainer}>
+        <section className={styles.domainContainer}>
           <div className={styles.domainsLeft}>
             <FeatureCard
               link="https://accessibe.com/blog/knowledgebase/screen-reader-guide"
@@ -76,7 +76,7 @@ const DomainForSale =()=> {
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_DUNDRUFF}
                 alt="dandruff"
               />
-              <span className={styles.getStartTitle}>Get Started</span>
+              <strong className={styles.getStartTitle}>Get Started</strong>
               <img
                 className={styles.getStartedArrow}
                 src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW}
@@ -88,7 +88,7 @@ const DomainForSale =()=> {
               marketplace.
             </p>
           </a>
-        </div>
+        </section>
       </>
     );
   }
