@@ -4,7 +4,7 @@ import CONSTANTS from '../../../../../../../constants';
 
 const FeatureCard = (props) => {
   return (
-    <div className={styles.featureWrapper}>
+    <article className={styles.featureWrapper}>
       <a className={styles.featureLink} href={props.link}>
         {props.showIcon !== false && props.icon && (
           <img
@@ -27,7 +27,7 @@ const FeatureCard = (props) => {
           <p className={styles.featureComment}>{props.description}</p>
         </div>
       </a>
-    </div>
+    </article>
   );
 };
 
