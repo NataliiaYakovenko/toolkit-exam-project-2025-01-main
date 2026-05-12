@@ -10,7 +10,7 @@ const MobileSearch = () => {
 
   return (
     <div>
-      <div className={styles.mobileSearchWrapper}>
+      <section className={styles.mobileSearchWrapper}>
         <img
           className={styles.mobileDundruff}
           src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SEARCH}
@@ -21,7 +21,6 @@ const MobileSearch = () => {
           type="text"
           name="searchForm"
           placeholder="Search Over 300,000+ Premium Names"
-          autoFocus
         />
 
         <button onClick={handlerSearch} className={styles.btnMobileSearch}>
@@ -31,7 +30,7 @@ const MobileSearch = () => {
             alt="Arrow"
           />
         </button>
-      </div>
+      </section>
     </div>
   );
 };
