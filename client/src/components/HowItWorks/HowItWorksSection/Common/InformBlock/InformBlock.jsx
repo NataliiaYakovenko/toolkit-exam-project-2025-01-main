@@ -4,7 +4,7 @@ import CONSTANTS from '../../../../../constants';
 
 const InformBlock = (props) => {
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <div className={styles.wrapperInfo}>
         <img className={styles.icon} src={props.icon} alt={props.altIcon} />
         <h3 className={styles.title}>{props.title}</h3>
@@ -18,7 +18,7 @@ const InformBlock = (props) => {
           alt="arrow"
         />
       </a>
-    </div>
+    </article>
   );
 };
 
