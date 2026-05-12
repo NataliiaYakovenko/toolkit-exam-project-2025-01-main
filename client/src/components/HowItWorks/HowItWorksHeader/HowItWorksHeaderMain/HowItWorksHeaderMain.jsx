@@ -2,20 +2,18 @@ import React from 'react';
 import HowItWorksHeaderTop from '../HowItWorksHeaderTop/HowItWorksHeaderTop';
 import HowItWOrksHeaderBottom from '../HowItWorksHeaderBottom/HowItWorksHeaderBottom/HowItWorksHeaderBottom';
 
-class HowItWorksHeaderMain extends React.Component {
-  render() {
-    return (
+const HowItWorksHeaderMain = () => {
+  return (
+    <header>
       <div>
-        <div>
-          <HowItWorksHeaderTop />
-        </div>
-
-        <div>
-          <HowItWOrksHeaderBottom />
-        </div>
+        <HowItWorksHeaderTop />
       </div>
-    );
-  }
-}
+
+      <div>
+        <HowItWOrksHeaderBottom />
+      </div>
+    </header>
+  );
+};
 
 export default HowItWorksHeaderMain;
