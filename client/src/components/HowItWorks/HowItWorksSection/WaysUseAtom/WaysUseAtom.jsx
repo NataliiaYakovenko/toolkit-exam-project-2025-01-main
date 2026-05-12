@@ -5,7 +5,7 @@ import CONSTANTS from '../../../../constants';
 
 const WaysUseAtom = () => {
   return (
-    <div className={styles.section}>
+    <section className={styles.section}>
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <div className={styles.topPartContaner}>
@@ -16,7 +16,7 @@ const WaysUseAtom = () => {
             </p>
           </div>
 
-          <div className={styles.lowerPartContainer}>
+          <ul className={styles.lowerPartContainer}>
             <InformBlock
               icon={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_FLASH}
               altIcon="Flash"
@@ -43,10 +43,10 @@ const WaysUseAtom = () => {
               link="https://www.atom.com/managed-contests"
               linkTitle="Learn More"
             />
-          </div>
+          </ul>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
