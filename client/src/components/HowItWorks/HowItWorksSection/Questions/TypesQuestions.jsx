@@ -23,10 +23,8 @@ const TypesQuestions = () => {
       questionOpen: 'What if I do not like any submissions?',
       text: (
         <>
-          <p>
-            While it is unusually rare that you will not like any names
-            provided, we have a few options in case this problem occurs:
-          </p>
+          While it is unusually rare that you will not like any names provided,
+          we have a few options in case this problem occurs:
           <ul style={{ color: '#525177' }}>
             <li>
               If the contest ends and you have not yet found a name that you'd
@@ -60,19 +58,17 @@ const TypesQuestions = () => {
       questionOpen: 'How much does it cost?',
       text: (
         <>
-          <p>
-            Our naming competitions start at $299, and our logo design
-            competitions start at $299. Also, there are three additional contest
-            level that each offer more features and benefits. See our {''}
-            <a
-              style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
-              href="https://www.atom.com/pricing"
-            >
-              Pricing Page
-            </a>{' '}
-            {''}
-            for details
-          </p>
+          Our naming competitions start at $299, and our logo design
+          competitions start at $299. Also, there are three additional contest
+          level that each offer more features and benefits. See our {''}
+          <a
+            style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
+            href="https://www.atom.com/pricing"
+          >
+            Pricing Page
+          </a>{' '}
+          {''}
+          for details
         </>
       ),
     },
@@ -83,18 +79,16 @@ const TypesQuestions = () => {
         'I need both a Name and a Logo. Do you offer any discount for multiple contests?',
       text: (
         <>
-          <p>
-            'Yes! We have many contest bundles - our most popular being our
-            Name, Tagline, and Logo bundle. Bundles allow you to purchase
-            multiple contests at one time and save as much as from $75 - $400.
-            You can learn more about our bundle options on our
-            <a
-              style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
-              href="https://www.atom.com/pricing"
-            >
-              Pricing Page
-            </a>
-          </p>
+          'Yes! We have many contest bundles - our most popular being our Name,
+          Tagline, and Logo bundle. Bundles allow you to purchase multiple
+          contests at one time and save as much as from $75 - $400. You can
+          learn more about our bundle options on our
+          <a
+            style={{ marginLeft: '4px', marginRight: '4px', color: 'white' }}
+            href="https://www.atom.com/pricing"
+          >
+            Pricing Page
+          </a>
         </>
       ),
     },
@@ -113,11 +107,10 @@ const TypesQuestions = () => {
       questionOpen: 'Can I see any examples?',
       text: (
         <>
-          <p>
-            Our creatives have submitted more than 6 Million names and thousands
-            of logos on our platform. Here are some examples of Names, Taglines,
-            and Logos that were submitted in recent contests.
-          </p>
+          Our creatives have submitted more than 6 Million names and thousands
+          of logos on our platform. Here are some examples of Names, Taglines,
+          and Logos that were submitted in recent contests.
+          <br />
           <a
             style={{ color: 'white' }}
             href="https://www.atom.com/business-name-generator"
@@ -169,28 +162,24 @@ const TypesQuestions = () => {
       questionOpen: 'What are Managed Contests?',
       text: (
         <>
-          <p>
-            The 'Managed' option is a fully managed service by Atom Branding
-            experts. It includes a formal brief preparation by Atom team and
-            management of your contest. Managed Contests are a great fit for
-            companies that are looking for an 'Agency' like experience and they
-            do not want to manage the contest directly.
-          </p>
-          <p>
-            Our branding team has directly managed hundreds of branding projects
-            and has learned several best practices that lead to successful
-            project outcomes. Our team will apply all best practices towards the
-            management of your branding project.
-          </p>
-          <p>
-            Learn more about our
-            <a
-              style={{ color: 'white', marginLeft: '4px' }}
-              href="https://www.atom.com/managed-contests"
-            >
-              Managed Contests Service
-            </a>
-          </p>
+          The 'Managed' option is a fully managed service by Atom Branding
+          experts. It includes a formal brief preparation by Atom team and
+          management of your contest. Managed Contests are a great fit for
+          companies that are looking for an 'Agency' like experience and they do
+          not want to manage the contest directly.
+          <br/>
+          Our branding team has directly managed hundreds of branding projects and has learned several
+          best practices that lead to successful project outcomes. Our team will
+          apply all best practices towards the management of your branding
+          project.
+          <br/>
+          Learn more about our
+          <a
+            style={{ color: 'white', marginLeft: '4px' }}
+            href="https://www.atom.com/managed-contests"
+          >
+            Managed Contests Service
+          </a>
         </>
       ),
     },
@@ -199,7 +188,7 @@ const TypesQuestions = () => {
       questionOpen: "What's a typical timeline for a Managed Contest?",
       text: (
         <>
-          <p>The overall process takes 12-13 days.</p>
+          The overall process takes 12-13 days.
           <ul style={{ color: '#525177' }}>
             <li>
               The Managed projects start with a project kick-off call with your
@@ -230,10 +219,8 @@ const TypesQuestions = () => {
       questionOpen: 'How much do Managed Contests cost? ',
       text: (
         <>
-          <p>
-            We offer two levels of Managed Contests. Standard ($1499) and
-            Enterprise ($2999). The Enterprise managed contest includes:
-          </p>
+          We offer two levels of Managed Contests. Standard ($1499) and
+          Enterprise ($2999). The Enterprise managed contest includes:
           <ul style={{ color: '#525177' }}>
             <li>
               (1) a $500 award amount (instead of $300), which will attract our
@@ -279,23 +266,21 @@ const TypesQuestions = () => {
       questionOpen: 'Can anyone join your platform?',
       text: (
         <>
-          <p>
-            We are open to anyone to signup. However, we have an extensive
-            <a
-              style={{
-                marginLeft: '4px',
-                marginRight: '4px',
-                color: 'white',
-              }}
-              href="https://helpdesk.atom.com/en/articles/91702-percentile-ranking-score"
-            >
-              Quality Scoring
-            </a>
-            process which ensures that high quality creatives have the ability
-            to continue to participate in the platform. On the other hand, we
-            limit the participation from those creatives who do not consistently
-            receive high ratings.
-          </p>
+          We are open to anyone to signup. However, we have an extensive
+          <a
+            style={{
+              marginLeft: '4px',
+              marginRight: '4px',
+              color: 'white',
+            }}
+            href="https://helpdesk.atom.com/en/articles/91702-percentile-ranking-score"
+          >
+            Quality Scoring
+          </a>
+          process which ensures that high quality creatives have the ability to
+          continue to participate in the platform. On the other hand, we limit
+          the participation from those creatives who do not consistently receive
+          high ratings.
         </>
       ),
     },

@@ -55,7 +55,7 @@ const QuestionsBlock = ({ items = [], title = '' }) => {
           ref={el => contentRefs.current[index] = el}
         >
           <div className={styles.answerContent}>
-            <p className={styles.text}>{item.text}</p>
+            <div className={styles.text}>{item.text}</div>
           </div>
         </div>
       </section>
