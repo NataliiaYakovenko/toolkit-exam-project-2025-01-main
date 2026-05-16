@@ -4,6 +4,7 @@ import FeatureList from '../../HowItWorksHeader/HowItWorksHeaderBottom/HeaderNav
 import CONSTANTS from '../../../../constants';
 import {
   servicesItems,
+  registrationItems,
   toolsItems,
   sellersItems,
   namingItems,
@@ -40,7 +41,6 @@ const HowItWorksFooterTop = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  
 
   const toggleSection = (section) => {
     setOpenSections((prev) => ({
@@ -52,33 +52,63 @@ const HowItWorksFooterTop = () => {
   return (
     <footer className={styles.container}>
       <div className={styles.wrapper}>
-        <section className={styles.section}>
-          <button
-            className={`${styles.sectionHeader} ${
-              openSections.services ? styles.active : ''
-            }`}
-            onClick={() => toggleSection('services')}
-            aria-expanded={openSections.services}
-          >
-            <strong>Domain Services</strong>
+        <div>
+          <section className={styles.section}>
+            <button
+              className={`${styles.sectionHeader} ${
+                openSections.services ? styles.active : ''
+              }`}
+              onClick={() => toggleSection('services')}
+              aria-expanded={openSections.services}
+            >
+              <strong>Domain Services</strong>
 
-            <img
-              className={styles.arrow}
-              src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
-              alt="ArrowDown"
-            />
-          </button>
-          <div
-            className={`${styles.sectionContent} ${
-              openSections.services ? styles.active : ''
-            }`}
-          >
-            <FeatureList
-              title={isMobile ? null : 'Domain Tools'}
-              items={servicesItems}
-            />
-          </div>
-        </section>
+              <img
+                className={styles.arrow}
+                src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
+                alt="ArrowDown"
+              />
+            </button>
+            <div
+              className={`${styles.sectionContent} ${
+                openSections.services ? styles.active : ''
+              }`}
+            >
+              <FeatureList
+                title={isMobile ? null : 'Domain Services'}
+                items={servicesItems}
+              />
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <button
+              className={`${styles.sectionHeader} ${
+                openSections.registration ? styles.active : ''
+              }`}
+              onClick={() => toggleSection('registration')}
+              aria-expanded={openSections.registration}
+            >
+              <strong>Domain Registration</strong>
+
+              <img
+                className={styles.arrow}
+                src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_ARROW_DOWN}
+                alt="ArrowDown"
+              />
+            </button>
+            <div
+              className={`${styles.sectionContent} ${
+                openSections.registration ? styles.active : ''
+              }`}
+            >
+              <FeatureList
+                title={isMobile ? null : 'Domain Registration'}
+                items={registrationItems}
+              />
+            </div>
+          </section>
+        </div>
 
         <div>
           <section className={styles.section}>
