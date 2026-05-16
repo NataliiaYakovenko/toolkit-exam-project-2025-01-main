@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './MobileFormMain.module.sass';
 import MobileIcon from '../MobileIcon/MobileIcon';
 import MobileSearch from '../MobileSearch/MobileSearch';
@@ -10,6 +10,21 @@ const MobileFormMain = () => {
   const toggleMenu = () => {
     setIsMobileOpen(!isMobileOpen);
   };
+
+  useEffect(() => {
+    if (isMobileOpen) {
+      document.documentElement.classList.add('no-scroll');
+      document.body.classList.add('no-scroll');
+    } else {
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
+    }
+
+    return () => {
+      document.documentElement.classList.remove('no-scroll');
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isMobileOpen]);
 
   return (
     <nav className={styles.mobileWrapper}>

@@ -4,25 +4,25 @@ button
   font-size: clamp(14px, 2.5vw, 16px)
   color: #343434
   cursor: pointer 
-  
+
+
 .mobileMenuContainer    
   opacity: 1
   z-index: 99
   visibility: visible
-  position: absolute 
-  top: 100% 
+  position: fixed
+  top: 0
   left: 0
-  right: 0 
+  right: 0
+  bottom: 0
   background-color: #fff
   transition: all ease .3s
   overflow-y: auto
-  max-height: 70vh
-  min-height: 70vh
-  width: 80%
+  width: 90%
   box-shadow: 2px 3px 12px rgb(164 172 185 / .24)
   padding: 25px 
   color: #343434
-  font-size: clamp(14px, 2.5vw, 16px)
+  font-size: clamp(14px, 2.5vw, 16px) 
 
   @media(min-width: 992px)   
     display: none
