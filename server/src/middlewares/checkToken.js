@@ -36,12 +36,14 @@ module.exports.checkToken = async (req, res, next) => {
     return next(new TokenError('need token', 401));
   }
   try {
-
     req.tokenData = jwt.verify(accessToken, CONSTANTS.JWT_SECRET);
 
     next();
   } catch (err) {
     logError(err);
-    next(new TokenError('Text', 401));
+    return res.status(401).json({
+      message: 'Token expired or invalid',
+      status: 401,
+    });
   }
 };

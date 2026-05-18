@@ -25,6 +25,21 @@ instance.interceptors.response.use(
     return response;
   },
   err => {
+     if (err.response?.status === 401) {
+      window.localStorage.removeItem(CONSTANTS.ACCESS_TOKEN);
+ 
+      const publicPages = ['/login', '/registration', '/'];
+      const isPublicPage = publicPages.includes(history.location.pathname);
+      
+      if (!isPublicPage) {
+        if (err.response?.data?.message) {
+          console.log(err.response.data.message);
+        }
+        history.replace('/login');
+      }
+      
+      return Promise.reject(err);
+    }
     if (
       err.response.status === 408 &&
       history.location.pathname !== '/login' &&
