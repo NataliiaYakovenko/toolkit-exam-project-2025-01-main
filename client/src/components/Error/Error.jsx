@@ -18,6 +18,9 @@ const Error = (props) => {
       case 400:
         return data || 'Check the input data';
 
+      case 401:
+        return data || 'Authorization error';
+
       case 409:
         return data || 'Conflict error';
 
@@ -36,7 +39,18 @@ const Error = (props) => {
   return (
     <div className={styles.errorContainer}>
       <span>{getMessage()}</span>
-      <i className="far fa-times-circle" onClick={() => clearError()} />
+      <i
+        className="far fa-times-circle"
+        onClick={() => clearError()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            clearError();
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label="Close error message"
+      />
     </div>
   );
 };

@@ -17,11 +17,25 @@ module.exports.login = async (req, res, next) => {
     if (!email || !password) {
       return res.status(400).send('Email and password are required');
     }
-    const foundUser = await userQueries.findUser({ email });
-    if (!foundUser) {
+
+    let foundUser;
+    try {
+      foundUser = await userQueries.findUser({ email });
+    } catch (error) {
+      if (error.code === 404) {
+        return res.status(401).send('Email or password are invalid');
+      }
+      throw error;
+    }
+
+    const isPasswordValid = await userQueries.passwordCompare(
+      password,
+      foundUser.password
+    );
+    if (!isPasswordValid) {
       return res.status(401).send('Email or password are invalid');
     }
-    await userQueries.passwordCompare(password, foundUser.password);
+
     const accessToken = jwt.sign(
       {
         firstName: foundUser.firstName,
@@ -35,7 +49,7 @@ module.exports.login = async (req, res, next) => {
         rating: foundUser.rating,
       },
       CONSTANTS.JWT_SECRET,
-      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME },
+      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME }
     );
     await userQueries.updateUser({ accessToken }, foundUser.id);
     return res.status(200).send({ token: accessToken });
@@ -48,7 +62,7 @@ module.exports.login = async (req, res, next) => {
 module.exports.registration = async (req, res, next) => {
   try {
     const newUser = await userQueries.userCreation(
-      Object.assign(req.body, { password: req.hashPass }),
+      Object.assign(req.body, { password: req.hashPass })
     );
     if (!newUser) {
       return res.status(500).send('User registration failed');
@@ -66,7 +80,7 @@ module.exports.registration = async (req, res, next) => {
         rating: newUser.rating,
       },
       CONSTANTS.JWT_SECRET,
-      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME },
+      { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME }
     );
     await userQueries.updateUser({ accessToken }, newUser.id);
     return res.status(201).send({ token: accessToken });
@@ -88,7 +102,7 @@ function getQuery(offerId, userId, mark, isFirst, transaction) {
         mark,
         userId,
       },
-      transaction,
+      transaction
     );
   const getUpdateQuery = () =>
     ratingQueries.updateRating({ mark }, { offerId, userId }, transaction);
@@ -199,7 +213,7 @@ module.exports.payment = async (req, res, next) => {
           ],
         },
       },
-      transaction,
+      transaction
     );
     const orderId = uuid();
     const contestsToCreate = contests.map((contest, index) => {
@@ -225,7 +239,10 @@ module.exports.payment = async (req, res, next) => {
     if (transaction) {
       await transaction.rollback();
     }
-    if (err.name === 'BankDeclineError' || (err.message && err.message.includes('Bank decline'))) {
+    if (
+      err.name === 'BankDeclineError' ||
+      (err.message && err.message.includes('Bank decline'))
+    ) {
       return res.status(400).send('Transaction failed: ' + err.message);
     }
     if (err.message && err.message.includes('balance')) {
@@ -245,7 +262,7 @@ module.exports.updateUser = async (req, res, next) => {
     }
     const updatedUser = await userQueries.updateUser(
       req.body,
-      req.tokenData.userId,
+      req.tokenData.userId
     );
     if (!updatedUser) {
       return res.status(404).send('User not found');
@@ -278,7 +295,7 @@ module.exports.cashout = async (req, res, next) => {
     const updatedUser = await userQueries.updateUser(
       { balance: bd.sequelize.literal('balance - ' + sum) },
       userId,
-      transaction,
+      transaction
     );
     await bankQueries.updateBankBalance(
       {
@@ -303,7 +320,7 @@ module.exports.cashout = async (req, res, next) => {
           ],
         },
       },
-      transaction,
+      transaction
     );
     transaction.commit();
     return res.status(200).send({ balance: updatedUser.balance });
