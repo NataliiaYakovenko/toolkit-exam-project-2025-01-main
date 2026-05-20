@@ -53,7 +53,7 @@ const HowItWorksFooterTop = () => {
   return (
     <footer className={styles.container}>
       <div className={styles.wrapper}>
-        <div>
+        <div className={styles.column}>
           <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
