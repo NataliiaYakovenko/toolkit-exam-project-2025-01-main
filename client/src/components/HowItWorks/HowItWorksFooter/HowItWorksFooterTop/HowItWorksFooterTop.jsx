@@ -19,6 +19,7 @@ import {
 const HowItWorksFooterTop = () => {
   const [openSections, setOpenSections] = useState({
     services: false,
+    registration: false,
     tools: false,
     sellers: false,
     namingBranding: false,
@@ -110,7 +111,7 @@ const HowItWorksFooterTop = () => {
           </section>
         </div>
 
-        <div>
+        <div className={styles.column}>
           <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
@@ -170,7 +171,7 @@ const HowItWorksFooterTop = () => {
           </section>
         </div>
 
-        <div>
+        <div className={styles.column}>
           <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
@@ -259,7 +260,7 @@ const HowItWorksFooterTop = () => {
           </section>
         </div>
 
-        <div>
+        <div className={styles.column}>
           <section className={styles.section}>
             <button
               className={`${styles.sectionHeader} ${
