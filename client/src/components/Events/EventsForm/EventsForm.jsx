@@ -17,6 +17,16 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
 
   const submitHandler = (values, actions) => {
     const { eventName, eventDateTime, notificationTime } = values;
+    const now = new Date();
+    const eventTime = new Date(eventDateTime);
+    const diffMinutes = (eventTime - now) / (60 * 1000);
+    if (notificationTime >= diffMinutes) {
+      actions.setFieldError(
+        'notificationTime',
+        'The reminder must be less than the time until the event'
+      );
+      return;
+    }
     addEvent({
       name: eventName,
       eventDateTime,
@@ -45,7 +55,9 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
               <Form>
                 <div className={styles.wrapper}>
                   <div className={styles.box}>
-                    <label className={styles.title}>Event name *</label>
+                    <label className={styles.title} htmlFor="eventName">
+                      Event name *
+                    </label>
                     <Field
                       className={cx(styles.eventInput, {
                         [styles.inValidInput]:
@@ -65,7 +77,7 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
                   </div>
 
                   <div className={styles.box}>
-                    <label className={styles.title}>
+                    <label className={styles.title} htmlFor="eventDateTime">
                       Event date and time *
                     </label>
                     <Field
@@ -83,7 +95,7 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
                   </div>
 
                   <div className={styles.box}>
-                    <label className={styles.title}>
+                    <label className={styles.title} htmlFor="notificationTime">
                       Notify me (minutes before) *
                     </label>
                     <Field
