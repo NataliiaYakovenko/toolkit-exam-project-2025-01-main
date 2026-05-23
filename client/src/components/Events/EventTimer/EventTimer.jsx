@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EventTimer.module.sass';
 
-const EventTimer = ({ eventDateTime, isActive, eventName }) => {
+const EventTimer = ({ eventDateTime, isActive, eventName, className }) => {
   const [timeLeft, setTimeLeft] = useState(eventDateTime - Date.now());
 
   useEffect(() => {
@@ -16,7 +16,11 @@ const EventTimer = ({ eventDateTime, isActive, eventName }) => {
 
   if (!isActive || timeLeft <= 0) {
     return (
-      <div className={styles.completed}>
+      <div
+        className={
+          className ? `${styles.completed} ${className}` : styles.completed
+        }
+      >
         <span>{eventName}</span>
         Event <br /> ended
       </div>
@@ -29,7 +33,7 @@ const EventTimer = ({ eventDateTime, isActive, eventName }) => {
   const minutes = totalMinutes % 60;
 
   return (
-    <div className={styles.timer}>
+    <div className={className ? `${styles.timer} ${className}` : styles.timer}>
       {days > 0 && <>{days}d:</>}
       {hours.toString().padStart(2, '0')}h:
       {minutes.toString().padStart(2, '0')}m
