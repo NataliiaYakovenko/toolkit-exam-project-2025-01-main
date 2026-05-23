@@ -37,9 +37,10 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
 
   const getCurrentDateTime = () => {
     const currentDate = new Date();
-
     currentDate.setHours(currentDate.getHours() + 1);
-    return currentDate.toISOString().slice(0, 16);
+    const tzOffset = currentDate.getTimezoneOffset() * 60000;
+    const localISO = new Date(currentDate - tzOffset).toISOString().slice(0, 16);
+    return localISO;
   };
 
   return (
