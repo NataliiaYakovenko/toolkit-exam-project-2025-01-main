@@ -22,10 +22,10 @@ const EventsList = ({ events, removeEvent }) => {
             0,
             Math.min(100, 100 - (event.timeLeft / maxTime) * 100)
           );
-          
+
           let progressHeight = 4;
           if (progress > 80) {
-            progressHeight = 4 + ((progress - 80) / 20) * 56; 
+            progressHeight = 4 + ((progress - 80) / 20) * 56;
           }
           return (
             <div className={styles.wrapper} key={event.id}>
@@ -33,7 +33,10 @@ const EventsList = ({ events, removeEvent }) => {
                 <span>{event.name}</span>
                 <div
                   className={styles.progress}
-                  style={{ width: `${progress}%`, height: `${progressHeight}px` }}
+                  style={{
+                    width: `${progress}%`,
+                    height: `${progressHeight}px`,
+                  }}
                 />
               </div>
               <div className={styles.rightPart}>
@@ -41,7 +44,6 @@ const EventsList = ({ events, removeEvent }) => {
                   className={styles.eventTimer}
                   eventDateTime={event.eventDateTime}
                   isActive={event.isActive}
-                  eventName={event.eventName}
                 />
                 <button onClick={() => removeEvent(event.id)}>
                   <img
