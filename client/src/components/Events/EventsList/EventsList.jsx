@@ -6,7 +6,6 @@ import styles from './EventsList.module.sass';
 import CONSTANTS from '../../../constants';
 
 const EventsList = ({ events, removeEvent }) => {
-  const maxTime = 30 * 24 * 60 * 60 * 1000;
 
   return (
     <div className={styles.container}>
@@ -18,15 +17,12 @@ const EventsList = ({ events, removeEvent }) => {
       </div>
       <div className={styles.list}>
         {events.map((event) => {
+          const startTime = new Date(event.createdAt).getTime();
+          const maxTime = event.eventDateTime - startTime;
           const progress = Math.max(
             0,
             Math.min(100, 100 - (event.timeLeft / maxTime) * 100)
           );
-
-          let progressHeight = 4;
-          if (progress > 80) {
-            progressHeight = 4 + ((progress - 80) / 20) * 56;
-          }
           return (
             <div className={styles.wrapper} key={event.id}>
               <div className={styles.eventName}>
@@ -35,7 +31,7 @@ const EventsList = ({ events, removeEvent }) => {
                   className={styles.progress}
                   style={{
                     width: `${progress}%`,
-                    height: `${progressHeight}px`,
+                    height: '100%',
                   }}
                 />
               </div>
