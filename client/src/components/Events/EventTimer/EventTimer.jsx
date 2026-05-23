@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styles from './EventTimer.module.sass';
 
 const EventTimer = ({ eventDateTime, isActive, eventName, className }) => {
-  const [timeLeft, setTimeLeft] = useState(eventDateTime - Date.now());
+  const [timeLeft, setTimeLeft] = useState(() => eventDateTime - Date.now());
 
   useEffect(() => {
     if (!isActive) return;
 
     const intervalId = setInterval(() => {
-      setTimeLeft(eventDateTime - Date.now());
+      const newTimeLeft = eventDateTime - Date.now();
+      setTimeLeft(newTimeLeft > 0 ? newTimeLeft : 0);
     }, 1000);
 
     return () => clearInterval(intervalId);
