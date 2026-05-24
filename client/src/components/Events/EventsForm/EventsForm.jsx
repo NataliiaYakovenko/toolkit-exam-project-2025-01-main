@@ -6,7 +6,6 @@ import { addEvent } from '../../../store/slices/eventSlice';
 import Schema from '../../../utils/validators/validationSchems';
 import styles from './EventsForm.module.sass';
 import EventsList from '../EventsList/EventsList';
-import EventsBadges from '../EventsBadges/EventBadges';
 
 const EventsForm = ({ addEvent, defaultNotification }) => {
   const initialState = {
@@ -123,8 +122,6 @@ const EventsForm = ({ addEvent, defaultNotification }) => {
             );
           }}
         </Formik>
-
-        <EventsBadges />
       </div>
 
       <EventsList />
