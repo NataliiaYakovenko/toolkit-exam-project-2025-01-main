@@ -1,10 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styles from './ButtonGroup.module.sass';
 import CONSTANTS from '../../constants';
 
 const ButtonGroup = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
-  const firstButton = useRef(null);
 
   return (
     <div className={styles.buttonGroupContainer}>
@@ -13,7 +12,6 @@ const ButtonGroup = () => {
       </h3>
       <div className={styles.answersWrapper}>
         <button
-          ref={firstButton}
           className={`${styles.answerBox} ${selectedIndex === 0 ? styles.selected : ''}`}
           type="button"
           onClick={() => setSelectedIndex(0)}
