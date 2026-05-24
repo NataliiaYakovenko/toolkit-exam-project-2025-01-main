@@ -1,3 +1,11 @@
+.toast-red {
+  background: #d32f2f !important;
+  color: #fff !important;
+}
+
+.toast-red-body {
+  color: #fff !important;
+}
 .App {
   text-align: center;
 }

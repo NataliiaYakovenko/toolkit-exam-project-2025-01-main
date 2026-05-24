@@ -37,20 +37,26 @@ class App extends Component {
     this.intervalId = setInterval(() => {
       updateTimers();
 
-      this.props.events.forEach((event) => {
-        if (event.isNotified && event.isActive) {
-          toast.info(`Reminder about your event: ${event.name}`, {
-            toastId: event.id, 
-          });
-        }
-      });
+      const notifiedEvents = this.props.events.filter(
+        (event) => event.isNotified && event.isActive
+      );
+
+      if (notifiedEvents.length > 0) {
+        toast.info(
+          `Remainder ${notifiedEvents.length} events for which the reminder time has arrived!`,
+          {
+            toastId: 'notified-events-count',
+            className: 'toast-red',
+            bodyClassName: 'toast-red-body',
+          }
+        );
+      }
     }, 5000);
   }
 
   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
-
 
   render() {
     return (
