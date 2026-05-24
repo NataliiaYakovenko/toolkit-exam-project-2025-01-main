@@ -1,10 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 import styles from './ButtonGroup.module.sass';
 import CONSTANTS from '../../constants';
 
 const AnswerButton = ({ selected, onSelect, mark, strong, text }) => (
   <button
-    className={`${styles.answerBox} ${selected ? styles.selected : ''}`}
+    className={classNames(styles.answerBox, { [styles.selected]: selected })}
     type="button"
     onClick={onSelect}
   >
