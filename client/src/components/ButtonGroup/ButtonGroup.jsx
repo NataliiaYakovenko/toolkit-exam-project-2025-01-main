@@ -16,7 +16,7 @@ const ButtonGroup = () => {
           type="button"
           onClick={() => setSelectedIndex(0)}
         >
-          <legend className={styles.answerMark}>Recommended</legend>
+          <span className={styles.answerMark}>Recommended</span>
           <div className={styles.textWrapper}>
             <img src={CONSTANTS.BUTTON_GROUP_MARK} alt="Mark" />
             <strong>Yes</strong>
