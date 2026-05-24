@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import styles from './ButtonGroup.module.sass';
-import CONSTANTS from '../../constants';
+import AnswerButton from './AnswerButton';
 
 const ButtonGroup = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
+
+  const handleSelect0 = useCallback(() => setSelectedIndex(0), []);
+  const handleSelect1 = useCallback(() => setSelectedIndex(1), []);
+  const handleSelect2 = useCallback(() => setSelectedIndex(2), []);
 
   return (
     <div className={styles.buttonGroupContainer}>
@@ -11,40 +15,25 @@ const ButtonGroup = () => {
         Do you want a matching domain (.com URL) with your name?
       </h3>
       <div className={styles.answersWrapper}>
-        <button
-          className={`${styles.answerBox} ${selectedIndex === 0 ? styles.selected : ''}`}
-          type="button"
-          onClick={() => setSelectedIndex(0)}
-        >
-          <span className={styles.answerMark}>Recommended</span>
-          <div className={styles.textWrapper}>
-            <img src={CONSTANTS.BUTTON_GROUP_MARK} alt="Mark" />
-            <strong>Yes</strong>
-            <p>But minor variations are allowed</p>
-          </div>
-        </button>
-        <button
-          className={`${styles.answerBox} ${selectedIndex === 1 ? styles.selected : ''}`}
-          type="button"
-          onClick={() => setSelectedIndex(1)}
-        >
-          <div className={styles.textWrapper}>
-            <img src={CONSTANTS.BUTTON_GROUP_MARK} alt="Mark" />
-            <strong>Yes</strong>
-            <p>The Domain should exactly match the name</p>
-          </div>
-        </button>
-        <button
-          className={`${styles.answerBox} ${selectedIndex === 2 ? styles.selected : ''}`}
-          type="button"
-          onClick={() => setSelectedIndex(2)}
-        >
-          <div className={styles.textWrapper}>
-            <img src={CONSTANTS.BUTTON_GROUP_MARK} alt="Mark" />
-            <strong>No</strong>
-            <p>I am only looking for a name, not a Domain</p>
-          </div>
-        </button>
+        <AnswerButton
+          selected={selectedIndex === 0}
+          onSelect={handleSelect0}
+          mark="Recommended"
+          strong="Yes"
+          text="But minor variations are allowed"
+        />
+        <AnswerButton
+          selected={selectedIndex === 1}
+          onSelect={handleSelect1}
+          strong="Yes"
+          text="The Domain should exactly match the name"
+        />
+        <AnswerButton
+          selected={selectedIndex === 2}
+          onSelect={handleSelect2}
+          strong="No"
+          text="I am only looking for a name, not a Domain"
+        />
       </div>
     </div>
   );
