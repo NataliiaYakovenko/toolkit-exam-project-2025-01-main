@@ -33,27 +33,29 @@ const ModeratorPage = () => {
           {offers.map((offer) => (
             <ModeratorOffersBox key={offer.id} offer={offer} />
           ))}
-          <div className={styles.pagination}>
-            <button
-              className={styles.previous}
-              disabled={page === 1}
-              onClick={() => dispatch(getModeratorOffers({ page: page - 1 }))}
-            >
-              Previous
-            </button>
+          {totalPages > 1 && (
+            <div className={styles.pagination}>
+              <button
+                className={styles.previous}
+                disabled={page === 1}
+                onClick={() => dispatch(getModeratorOffers({ page: page - 1 }))}
+              >
+                Previous
+              </button>
 
-            <span>
-              Page {page} of {totalPages}
-            </span>
+              <span>
+                Page {page} of {totalPages}
+              </span>
 
-            <button
-              className={styles.next}
-              disabled={page === totalPages}
-              onClick={() => dispatch(getModeratorOffers({ page: page + 1 }))}
-            >
-              Next
-            </button>
-          </div>
+              <button
+                className={styles.next}
+                disabled={page === totalPages}
+                onClick={() => dispatch(getModeratorOffers({ page: page + 1 }))}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>
