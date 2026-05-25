@@ -56,6 +56,7 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
+              console.error('Failed to resolve offer:', error);
             } finally {
               setIsSubmitting(false);
             }
@@ -85,6 +86,7 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
+              console.error('Failed to resolve offer:', error);
             } finally {
               setIsSubmitting(false);
             }
@@ -136,10 +138,10 @@ const OfferBox = (props) => {
   const { data, role, id, contestType } = props;
   const { avatar, firstName, lastName, email, rating } = props.data.User;
   return (
-    <div className={styles.offerContainer}>
+    <article className={styles.offerContainer}>
       {offerStatus()}
       <div className={styles.mainInfoContainer}>
-        <div className={styles.userInfo}>
+        <section className={styles.userInfo}>
           <div className={styles.creativeInfoContainer}>
             <img
               src={
@@ -180,10 +182,10 @@ const OfferBox = (props) => {
               readonly
             />
           </div>
-        </div>
-        <div className={styles.responseConainer}>
+        </section>
+        <section className={styles.responseConainer}>
           {contestType === CONSTANTS.LOGO_CONTEST ? (
-            <img
+            <button
               onClick={() =>
                 props.changeShowImage({
                   imagePath: data.fileName,
@@ -222,32 +224,32 @@ const OfferBox = (props) => {
               placeholderRating={data.mark}
             />
           )}
-        </div>
+        </section>
         {role !== CONSTANTS.CREATOR && (
-          <i onClick={goChat} className="fas fa-comments" />
+          <button onClick={goChat} className="fas fa-comments" />
         )}
       </div>
       {props.needButtons(data.status) && !hideButtons && (
         <div className={styles.btnsContainer}>
-          <div
+          <button
             onClick={!isSubmitting ? resolveOffer : undefined}
             className={classNames(styles.resolveBtn, {
               [styles.disabled]: isSubmitting,
             })}
           >
             Resolve
-          </div>
-          <div
+          </button>
+          <button
             onClick={!isSubmitting ? rejectOffer : undefined}
             className={classNames(styles.rejectBtn, {
               [styles.disabled]: isSubmitting,
             })}
           >
             Reject
-          </div>
+          </button>
         </div>
       )}
-    </div>
+    </article>
   );
 };
 
