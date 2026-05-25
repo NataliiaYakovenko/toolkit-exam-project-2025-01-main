@@ -32,10 +32,9 @@ const ModeratorOffersBox = ({ offer }) => {
   };
 
   return (
-    <div className={styles.offerContainer}>
+    <article className={styles.offerContainer}>
       <div className={styles.mainInfoContainer}>
-
-        <div className={styles.contestInfo}>
+        <section className={styles.contestInfo}>
           <div className={styles.contestField}>
             <span className={styles.label}>Title of contest:</span>
             <span className={styles.value}>{title}</span>
@@ -44,9 +43,9 @@ const ModeratorOffersBox = ({ offer }) => {
             <span className={styles.label}>Industry:</span>
             <span className={styles.value}>{industry}</span>
           </div>
-        </div>
+        </section>
 
-        <div className={styles.responseContainer}>
+        <section className={styles.responseContainer}>
           {contestType === CONSTANTS.LOGO_CONTEST ? (
             <img
               className={styles.responseLogo}
@@ -56,7 +55,7 @@ const ModeratorOffersBox = ({ offer }) => {
           ) : (
             <span className={styles.responseText}>{text}</span>
           )}
-        </div>
+        </section>
       </div>
 
       {status === CONSTANTS.OFFER_STATUS_PENDING && (
@@ -75,7 +74,7 @@ const ModeratorOffersBox = ({ offer }) => {
           </button>
         </div>
       )}
-    </div>
+    </article>
   );
 };
 
