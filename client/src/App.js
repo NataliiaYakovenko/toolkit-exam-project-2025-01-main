@@ -33,12 +33,11 @@ class App extends Component {
     const { loadEvents, updateTimers } = this.props;
 
     loadEvents();
-
+    const notifiedEventIds = new Set();
     this.intervalId = setInterval(() => {
       updateTimers();
-
       const notifiedEvents = this.props.events.filter(
-        (event) => event.isNotified && event.isActive
+        (event) => event.isNotified && event.isActive && !notifiedEventIds.has(event.id)
       );
 
       if (notifiedEvents.length > 0) {
@@ -48,6 +47,15 @@ class App extends Component {
             toastId: 'notified-events-count',
             className: 'toast-red',
             bodyClassName: 'toast-red-body',
+            onClose: (reason) => {
+              if (reason) {
+                this.props.events.forEach((event) => {
+                  if (event.isNotified && event.isActive) {
+                    notifiedEventIds.add(event.id);
+                  }
+                });
+              }
+            },
           }
         );
       }
@@ -71,6 +79,7 @@ class App extends Component {
           pauseOnVisibilityChange
           draggable
           pauseOnHover
+          c
         />
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -139,3 +148,4 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+

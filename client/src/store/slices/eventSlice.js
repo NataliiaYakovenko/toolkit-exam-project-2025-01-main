@@ -79,22 +79,17 @@ export const addEvent = createAsyncThunk(
 export const removeEvent = createAsyncThunk(
   `${EVENTS_SLICE_NAME}/removeEvent`,
   async (eventId, { getState }) => {
-    const {event} = getState();
-    const eventToRemove = event.events.find(
-      (event) => event.id === eventId
-    );
+    const { event } = getState();
+    const eventToRemove = event.events.find((event) => event.id === eventId);
 
     if (!eventToRemove) {
       throw new Error('Event not found');
     }
 
-    const updatedEvents = event.events.filter(
-      (event) => event.id !== eventId
-    );
+    const updatedEvents = event.events.filter((event) => event.id !== eventId);
     saveEventsToLocalStorage(updatedEvents);
 
     return { eventId, event: eventToRemove };
-
   }
 );
 
@@ -106,7 +101,6 @@ const reducers = {
     state.events.forEach((event) => {
       if (event.isActive) {
         event.timeLeft = event.eventDateTime - currentTime;
-
         if (!event.isNotified && event.timeLeft <= event.notificationOffset) {
           event.isNotified = true;
           notificationsCount++;
@@ -221,7 +215,7 @@ const eventSlice = createSlice({
 });
 
 export const selectEventBadges = (state) => {
-  const {events, defaultNotification} = state.event
+  const { events, defaultNotification } = state.event;
 
   let expired = 0;
   let lessDefault = 0;
