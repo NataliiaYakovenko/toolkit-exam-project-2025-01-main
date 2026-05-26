@@ -67,7 +67,7 @@ const OfferForm = (props) => {
       : Schems.TextOfferSchema;
 
   return (
-    <div className={styles.offerContainer}>
+    <section className={styles.offerContainer}>
       {addOfferError && (
         <Error
           data={addOfferError.data}
@@ -89,7 +89,7 @@ const OfferForm = (props) => {
           </button>
         </Form>
       </Formik>
-    </div>
+    </section>
   );
 };
 
