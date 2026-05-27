@@ -28,6 +28,7 @@ import EventsPage from './pages/EventsPage/EventsPage';
 import ModeratorPage from './pages/ModeratorPage/ModeratorPage';
 import OnlyForModerator from './components/Routes/OnlyForModerator/OnlyForModerator';
 import OnlyForCreatorAndCustomer from './components/Routes/OnlyForCreatorAndCustomer/OnlyForCreatorAndCustomer';
+import OnlyForCustomer from './components/Routes/OnlyForCustomer/OnlyForCustomer';
 
 class App extends Component {
   componentDidMount() {
@@ -38,7 +39,8 @@ class App extends Component {
     this.intervalId = setInterval(() => {
       updateTimers();
       const notifiedEvents = this.props.events.filter(
-        (event) => event.isNotified && event.isActive && !notifiedEventIds.has(event.id)
+        (event) =>
+          event.isNotified && event.isActive && !notifiedEventIds.has(event.id)
       );
 
       if (notifiedEvents.length > 0) {
@@ -92,43 +94,47 @@ class App extends Component {
             </Route>
 
             <Route element={<PrivateRoute />}>
-              <Route path="/payment" element={<Payment />} />
-              <Route path="/startContest" element={<StartContestPage />} />
-              <Route
-                path="/startContest/nameContest"
-                element={
-                  <ContestCreationPage
-                    contestType={CONSTANTS.NAME_CONTEST}
-                    title="Company Name"
-                  />
-                }
-              />
-              <Route
-                path="/startContest/taglineContest"
-                element={
-                  <ContestCreationPage
-                    contestType={CONSTANTS.TAGLINE_CONTEST}
-                    title="TAGLINE"
-                  />
-                }
-              />
-              <Route
-                path="/startContest/logoContest"
-                element={
-                  <ContestCreationPage
-                    contestType={CONSTANTS.LOGO_CONTEST}
-                    title="LOGO"
-                  />
-                }
-              />
+              <Route element={<OnlyForCustomer />}>
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/startContest" element={<StartContestPage />} />
+                <Route
+                  path="/startContest/nameContest"
+                  element={
+                    <ContestCreationPage
+                      contestType={CONSTANTS.NAME_CONTEST}
+                      title="Company Name"
+                    />
+                  }
+                />
+                <Route
+                  path="/startContest/taglineContest"
+                  element={
+                    <ContestCreationPage
+                      contestType={CONSTANTS.TAGLINE_CONTEST}
+                      title="TAGLINE"
+                    />
+                  }
+                />
+                <Route
+                  path="/startContest/logoContest"
+                  element={
+                    <ContestCreationPage
+                      contestType={CONSTANTS.LOGO_CONTEST}
+                      title="LOGO"
+                    />
+                  }
+                />
+              </Route>
               <Route element={<OnlyForCreatorAndCustomer />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/contest/:id" element={<ContestPage />} />
               </Route>
-                <Route path="/account" element={<UserProfile />} />
+              <Route path="/account" element={<UserProfile />} />
+            </Route>
+            <Route element={<OnlyForCustomer />}>
+              <Route path="/events" element={<EventsPage />} />
             </Route>
             <Route path="*" element={<NotFound />} />
-            <Route path="/events" element={<EventsPage />} />
             <Route element={<OnlyForModerator />}>
               <Route path="/moderator/offers" element={<ModeratorPage />} />
             </Route>
@@ -151,4 +157,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
