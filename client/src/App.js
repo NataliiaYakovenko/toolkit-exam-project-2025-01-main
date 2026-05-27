@@ -27,6 +27,7 @@ import HowItWorksPage from './pages/HowItWorksPage/HowItWorksPage';
 import EventsPage from './pages/EventsPage/EventsPage';
 import ModeratorPage from './pages/ModeratorPage/ModeratorPage';
 import OnlyForModerator from './components/Routes/OnlyForModerator/OnlyForModerator';
+import OnlyForCreatorAndCustomer from './components/Routes/OnlyForCreatorAndCustomer/OnlyForCreatorAndCustomer';
 
 class App extends Component {
   componentDidMount() {
@@ -120,9 +121,11 @@ class App extends Component {
                   />
                 }
               />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/contest/:id" element={<ContestPage />} />
-              <Route path="/account" element={<UserProfile />} />
+              <Route element={<OnlyForCreatorAndCustomer />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/contest/:id" element={<ContestPage />} />
+              </Route>
+                <Route path="/account" element={<UserProfile />} />
             </Route>
             <Route path="*" element={<NotFound />} />
             <Route path="/events" element={<EventsPage />} />
