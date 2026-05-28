@@ -25,7 +25,7 @@ function logError(error, code = 500) {
   ensureLogDir(() => {
     fs.appendFile(LOG_FILE, JSON.stringify(logEntry) + '\n', (err) => {
       if (err) {
-        console.error('Failed to write log:', err);
+         process.stderr.write('Failed to write log:', err);
       }
     });
   });

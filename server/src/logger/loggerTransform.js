@@ -35,7 +35,7 @@ async function rotateLogs() {
 
     await fs.truncate(LOG_FILE, 0);
   } catch (err) {
-    console.error('Log rotation failed:', err);
+    process.stderr.write('Log rotation failed:', err);
   }
 }
 

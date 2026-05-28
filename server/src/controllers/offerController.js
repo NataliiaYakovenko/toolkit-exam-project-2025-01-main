@@ -115,7 +115,7 @@ module.exports.moderateOffer = async (req, res, next) => {
         contestTitle: foundOffer.Contest.title,
       });
     } catch (emailError) {
-      console.error('Failed to send email:', emailError);
+      logError('Failed to send email:', emailError);
     }
 
     return res.status(200).send({
