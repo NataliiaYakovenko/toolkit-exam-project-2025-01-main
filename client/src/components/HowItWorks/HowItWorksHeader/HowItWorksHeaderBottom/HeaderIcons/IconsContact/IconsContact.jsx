@@ -45,7 +45,6 @@ const IconsContact = () => {
                 type="text"
                 name="searchForm"
                 placeholder="Search Over 300,000+ Premium Names"
-                autoFocus
               />
               <button
                 onClick={handleSearch}
