@@ -41,7 +41,7 @@ const BundleBox = props => {
 
   const { setBundle, header, describe } = props;
   return (
-    <div
+    <button
       onMouseOver={mouseOverHandler}
       onMouseOut={mouseOutHandler}
       onClick={() => setBundle(header)}
@@ -54,7 +54,7 @@ const BundleBox = props => {
         <hr />
         <span className={styles.infoBundle}>{describe}</span>
       </div>
-    </div>
+    </button>
   );
 };
 

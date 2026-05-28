@@ -5,8 +5,8 @@ const TryAgain = props => {
   const { getData } = props;
   return (
     <div className={styles.container}>
-      <span onClick={() => getData()}>Server Error. Try again</span>
-      <i className='fas fa-redo' onClick={() => getData()} />
+      <button onClick={() => getData()}>Server Error. Try again</button>
+      <button className='fas fa-redo' onClick={() => getData()} />
     </div>
   );
 };

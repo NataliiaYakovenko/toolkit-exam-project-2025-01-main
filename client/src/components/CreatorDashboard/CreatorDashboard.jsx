@@ -245,7 +245,7 @@ const CreatorDashboard = ({
       <div className={styles.filterContainer}>
         <span className={styles.headerFilter}>Filter Results</span>
         <div className={styles.inputsContainer}>
-          <div
+          <button
             onClick={() =>
               changePredicate({
                 name: 'ownEntries',
@@ -257,7 +257,7 @@ const CreatorDashboard = ({
             })}
           >
             My Entries
-          </div>
+          </button>
           <div className={styles.inputContainer}>
             <span>By contest type</span>
             {renderSelectType()}

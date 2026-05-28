@@ -25,7 +25,7 @@ const ContestBox = props => {
 
   const { id, title, contestType, prize, count } = props.data;
   return (
-    <div
+    <button
       className={styles.contestBoxContainer}
       onClick={() => props.goToExtended(id)}
     >
@@ -80,7 +80,7 @@ const ContestBox = props => {
           <span>Going</span>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

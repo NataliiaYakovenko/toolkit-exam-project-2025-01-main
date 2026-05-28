@@ -23,14 +23,14 @@ const CatalogListHeader = (props) => {
   } = props;
   return (
     <div className={styles.headerContainer}>
-      <i
+      <button
         className="fas fa-long-arrow-alt-left"
         onClick={() => changeShowModeCatalog()}
       />
       {!isRenameCatalog && (
         <div className={styles.infoContainer}>
           <span>{catalogName}</span>
-          <i
+          <button
             className="fas fa-edit"
             onClick={() => changeRenameCatalogMode()}
           />

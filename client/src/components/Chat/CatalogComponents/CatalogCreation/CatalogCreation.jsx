@@ -30,12 +30,12 @@ const CatalogCreation = (props) => {
     <>
       {!isFetching && (
         <div className={styles.catalogCreationContainer}>
-          <i
+          <button
             className="far fa-times-circle"
             onClick={() => changeShowAddChatToCatalogMenu()}
           />
           <div className={styles.buttonsContainer}>
-            <span
+            <button
               onClick={() => changeTypeOfChatAdding(ADD_CHAT_TO_OLD_CATALOG)}
               className={classNames({
                 [styles.active]:
@@ -43,8 +43,8 @@ const CatalogCreation = (props) => {
               })}
             >
               Old
-            </span>
-            <span
+            </button>
+            <button
               onClick={() =>
                 changeTypeOfChatAdding(CREATE_NEW_CATALOG_AND_ADD_CHAT)
               }
@@ -54,7 +54,7 @@ const CatalogCreation = (props) => {
               })}
             >
               New
-            </span>
+            </button>
           </div>
           {catalogCreationMode === CREATE_NEW_CATALOG_AND_ADD_CHAT ? (
             <CreateCatalog />

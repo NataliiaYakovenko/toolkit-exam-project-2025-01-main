@@ -23,7 +23,6 @@ const Chat = ({
   chatStore,
   changeShow,
   setChatPreviewMode,
-  changeShowModeCatalog,
   clearChatError,
   getPreviewChat,
 }) => {
@@ -55,38 +54,38 @@ const Chat = ({
         )}
         {!isShowChatsInCatalog && (
           <div className={styles.buttonsContainer}>
-            <span
+            <button
               onClick={() => setChatPreviewMode(NORMAL_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button, {
                 [styles.activeButton]: chatMode === NORMAL_PREVIEW_CHAT_MODE,
               })}
             >
               Normal
-            </span>
-            <span
+            </button>
+            <button
               onClick={() => setChatPreviewMode(FAVORITE_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button, {
                 [styles.activeButton]: chatMode === FAVORITE_PREVIEW_CHAT_MODE,
               })}
             >
               Favorite
-            </span>
-            <span
+            </button>
+            <button
               onClick={() => setChatPreviewMode(BLOCKED_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button, {
                 [styles.activeButton]: chatMode === BLOCKED_PREVIEW_CHAT_MODE,
               })}
             >
               Blocked
-            </span>
-            <span
+            </button>
+            <button
               onClick={() => setChatPreviewMode(CATALOG_PREVIEW_CHAT_MODE)}
               className={classNames(styles.button, {
                 [styles.activeButton]: chatMode === CATALOG_PREVIEW_CHAT_MODE,
               })}
             >
               Catalog
-            </span>
+            </button>
           </div>
         )}
         {chatMode === CATALOG_PREVIEW_CHAT_MODE ? (
@@ -112,9 +111,9 @@ const Chat = ({
       )}
       {isShowCatalogCreation && <CatalogCreation />}
       {isExpanded ? <Dialog userId={id} /> : renderDialogList()}
-      <div className={styles.toggleChat} onClick={() => changeShow()}>
+      <button className={styles.toggleChat} onClick={() => changeShow()}>
         {isShow ? 'Hide Chat' : 'Show Chat'}
-      </div>
+      </button>
     </div>
   );
 };

@@ -31,15 +31,15 @@ const ContestInfo = props => {
             <span className={styles.data}>{contestType}</span>
           </div>
           {User.id === userId && status !== CONSTANTS.CONTEST_STATUS_FINISHED && (
-            <div
+            <button
               onClick={() => changeEditContest(true)}
               className={styles.editBtn}
             >
               Edit
-            </div>
+            </button>
           )}
           {role !== CONSTANTS.CUSTOMER && (
-            <i onClick={goChat} className='fas fa-comments' />
+            <button onClick={goChat} className='fas fa-comments' />
           )}
         </div>
         <div className={styles.dataContainer}>

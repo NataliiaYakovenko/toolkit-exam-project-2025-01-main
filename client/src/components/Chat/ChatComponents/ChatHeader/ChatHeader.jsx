@@ -34,7 +34,7 @@ const ChatHeader = (props) => {
   const { backToDialogList, chatData, userId } = props;
   return (
     <div className={styles.chatHeader}>
-      <div
+      <button
         className={styles.buttonContainer}
         onClick={() => backToDialogList()}
       >
@@ -42,7 +42,7 @@ const ChatHeader = (props) => {
           src={`${CONSTANTS.STATIC_IMAGES_PATH}arrow-left-thick.png`}
           alt="back"
         />
-      </div>
+      </button>
       <div className={styles.infoContainer}>
         <div>
           <img
@@ -57,7 +57,7 @@ const ChatHeader = (props) => {
         </div>
         {chatData && (
           <div>
-            <i
+            <button
               onClick={(event) =>
                 changeFavorite(
                   {
@@ -72,7 +72,7 @@ const ChatHeader = (props) => {
                 'fas fa-heart': isFavorite(chatData, userId),
               })}
             />
-            <i
+            <button
               onClick={(event) =>
                 changeBlackList(
                   {

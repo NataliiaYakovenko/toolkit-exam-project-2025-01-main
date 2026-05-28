@@ -20,11 +20,11 @@ const IconsContact = () => {
   return (
     <>
       {isSearchOpen && (
-        <div className={styles.overlay} onClick={toggleSearch} />
+        <button className={styles.overlay} onClick={toggleSearch} />
       )}
 
       <div className={styles.iconsContactContainer}>
-        <div
+        <button
           className={`${styles.search} ${
             isSearchOpen ? styles.searchActive : ''
           }`}
@@ -35,7 +35,7 @@ const IconsContact = () => {
             src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SEARCH}
             alt="Search"
           />
-        </div>
+        </button>
 
         {isSearchOpen && (
           <div className={styles.searchForm}>

@@ -31,7 +31,7 @@ const DialogBox = (props) => {
   const isFavorite = favoriteList[participants.indexOf(userId)];
   const isBlocked = blackList[participants.indexOf(userId)];
   return (
-    <div
+    <button
       className={styles.previewChatBox}
       onClick={() => {
         if (actualInterlocutor && actualInterlocutor.id) {
@@ -66,7 +66,7 @@ const DialogBox = (props) => {
         </div>
         <div className={styles.buttonsContainer}>
           <span className={styles.time}>{getTimeStr(createAt)}</span>
-          <i
+          <button
             onClick={(event) =>
               changeFavorite(
                 {
@@ -81,7 +81,7 @@ const DialogBox = (props) => {
               'fas fa-heart': isFavorite,
             })}
           />
-          <i
+          <button
             onClick={(event) =>
               changeBlackList(
                 {
@@ -96,7 +96,7 @@ const DialogBox = (props) => {
               'fas fa-unlock': isBlocked,
             })}
           />
-          <i
+          <button
             onClick={(event) => catalogOperation(event, id)}
             className={classNames({
               'far fa-plus-square':
@@ -107,7 +107,7 @@ const DialogBox = (props) => {
           />
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

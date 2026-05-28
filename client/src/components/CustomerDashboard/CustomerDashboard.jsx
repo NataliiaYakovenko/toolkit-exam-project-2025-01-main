@@ -85,7 +85,7 @@ const CustomerDashboard = ({
   return (
     <div className={styles.mainContainer}>
       <div className={styles.filterContainer}>
-        <div
+        <button
           onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_ACTIVE)}
           className={classNames({
             [styles.activeFilter]:
@@ -94,8 +94,8 @@ const CustomerDashboard = ({
           })}
         >
           Active contests
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_FINISHED)}
           className={classNames({
             [styles.activeFilter]:
@@ -105,8 +105,8 @@ const CustomerDashboard = ({
           })}
         >
           Completed contests
-        </div>
-        <div
+        </button>
+        <button
           onClick={() => newFilter(CONSTANTS.CONTEST_STATUS_PENDING)}
           className={classNames({
             [styles.activeFilter]:
@@ -116,7 +116,7 @@ const CustomerDashboard = ({
           })}
         >
           Inactive contests
-        </div>
+        </button>
       </div>
       <div className={styles.contestsContainer}>
         {error ? (
