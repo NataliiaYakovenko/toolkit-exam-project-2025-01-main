@@ -1,13 +1,13 @@
 import React from 'react';
-// import HowItWorksHeaderTop from '../HowItWorksHeaderTop/HowItWorksHeaderTop';
+import HowItWorksHeaderTop from '../HowItWorksHeaderTop/HowItWorksHeaderTop';
 import HowItWOrksHeaderBottom from '../HowItWorksHeaderBottom/HowItWorksHeaderBottom/HowItWorksHeaderBottom';
 
 const HowItWorksHeaderMain = () => {
   return (
     <header>
-      {/* <div>
+      <div>
         <HowItWorksHeaderTop />
-      </div> */}
+      </div>
 
       <div>
         <HowItWOrksHeaderBottom />
