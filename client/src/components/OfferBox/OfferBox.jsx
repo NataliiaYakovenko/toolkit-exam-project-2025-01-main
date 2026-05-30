@@ -56,7 +56,6 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
-              console.error('Failed to resolve offer:', error);
             } finally {
               setIsSubmitting(false);
             }
@@ -86,7 +85,6 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
-              console.error('Failed to resolve offer:', error);
             } finally {
               setIsSubmitting(false);
             }
@@ -185,7 +183,7 @@ const OfferBox = (props) => {
         </section>
         <section className={styles.responseConainer}>
           {contestType === CONSTANTS.LOGO_CONTEST ? (
-            <button
+            <img
               onClick={() =>
                 props.changeShowImage({
                   imagePath: data.fileName,
@@ -226,7 +224,7 @@ const OfferBox = (props) => {
           )}
         </section>
         {role !== CONSTANTS.CREATOR && (
-          <button onClick={goChat} className="fas fa-comments" />
+          <i onClick={goChat} className="fas fa-comments" />
         )}
       </div>
       {props.needButtons(data.status) && !hideButtons && (
