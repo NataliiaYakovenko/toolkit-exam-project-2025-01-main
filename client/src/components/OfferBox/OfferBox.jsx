@@ -56,6 +56,9 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
+              console.error(
+                'Error: Failed to change offer status. Please try again.'
+              );
             } finally {
               setIsSubmitting(false);
             }
@@ -85,6 +88,7 @@ const OfferBox = (props) => {
               );
               setHideButtons(true);
             } catch (error) {
+              console.error('Error: Failed to reject offer. Please try again.');
             } finally {
               setIsSubmitting(false);
             }
@@ -183,17 +187,23 @@ const OfferBox = (props) => {
         </section>
         <section className={styles.responseConainer}>
           {contestType === CONSTANTS.LOGO_CONTEST ? (
-            <img
+            <button
               onClick={() =>
                 props.changeShowImage({
                   imagePath: data.fileName,
                   isShowOnFull: true,
                 })
               }
-              className={styles.responseLogo}
-              src={`${CONSTANTS.publicURL}${data.fileName}`}
-              alt="logo"
-            />
+              className={styles.logoButton}
+              type="button"
+              aria-label="View full size logo"
+            >
+              <img
+                className={styles.responseLogo}
+                src={`${CONSTANTS.publicURL}${data.fileName}`}
+                alt="logo"
+              />
+            </button>
           ) : (
             <span className={styles.response}>{data.text}</span>
           )}
@@ -224,7 +234,14 @@ const OfferBox = (props) => {
           )}
         </section>
         {role !== CONSTANTS.CREATOR && (
-          <i onClick={goChat} className="fas fa-comments" />
+          <button
+            onClick={goChat}
+            className={styles.chatButton}
+            type="button"
+            aria-label="Open chat with creator"
+          >
+            <i className="fas fa-comments" />
+          </button>
         )}
       </div>
       {props.needButtons(data.status) && !hideButtons && (
