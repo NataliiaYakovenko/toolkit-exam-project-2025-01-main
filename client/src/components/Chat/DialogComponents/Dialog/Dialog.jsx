@@ -24,20 +24,13 @@ const Dialog = ({
     messagesEnd.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  useEffect(() => {
-    if (interlocutor && interlocutor.id) {
-      getDialog({ interlocutorId: interlocutor.id });
-    } else {
-      console.error('Dialog: interlocutor is null or missing id', interlocutor);
-    }
-    scrollToBottom();
-  }, [interlocutor, getDialog, scrollToBottom]);
+  const interlocutorId = interlocutor?.id;
 
-  useEffect(() => {
-    if (interlocutor?.id && interlocutor.id !== interlocutor?.id) {
-      getDialog({ interlocutorId: interlocutor.id });
-    }
-  }, [interlocutor, getDialog]);
+useEffect(() => {
+  if (interlocutorId) {
+    getDialog({ interlocutorId });
+  }
+}, [interlocutorId]);
 
   useEffect(() => {
     return () => {

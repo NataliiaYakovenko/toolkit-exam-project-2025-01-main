@@ -5,9 +5,8 @@ import {
   changeBlockStatusInStore,
 } from '../../../store/slices/chatSlice';
 
-
 class ChatSocket extends WebSocket {
-  constructor (dispatch, getState, room) {
+  constructor(dispatch, getState, room) {
     super(dispatch, getState, room);
   }
 
@@ -17,22 +16,24 @@ class ChatSocket extends WebSocket {
   };
 
   onChangeBlockStatus = () => {
-    this.socket.on(CONSTANTS.CHANGE_BLOCK_STATUS, data => {
+    this.socket.off(CONSTANTS.CHANGE_BLOCK_STATUS);
+    this.socket.on(CONSTANTS.CHANGE_BLOCK_STATUS, (data) => {
       this.dispatch(changeBlockStatusInStore(data.message));
     });
   };
 
   onNewMessage = () => {
-    this.socket.on('newMessage', data => {
+    this.socket.off('newMessage');
+    this.socket.on('newMessage', (data) => {
       this.dispatch(addMessage(data.message));
     });
   };
 
-  subscribeChat = id => {
+  subscribeChat = (id) => {
     this.socket.emit('subscribeChat', id);
   };
 
-  unsubscribeChat = id => {
+  unsubscribeChat = (id) => {
     this.socket.emit('unsubscribeChat', id);
   };
 }
