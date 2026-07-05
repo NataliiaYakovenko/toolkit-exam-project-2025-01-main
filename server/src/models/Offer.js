@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'contestId',
       sourceKey: 'id',
     });
+    Offer.hasOne(models.Ratings, { foreignKey: 'offerId', sourceKey: 'id' });
   };
 
   return Offer;

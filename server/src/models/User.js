@@ -63,6 +63,8 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function (models) {
     User.hasMany(models.Offers, { foreignKey: 'userId', targetKey: 'id' });
+    User.hasMany(models.Contests, { foreignKey: 'userId', targetKey: 'id' });
+    User.hasMany(models.Ratings, { foreignKey: 'userId', targetKey: 'id' });
     User.hasMany(models.Messages, {
       foreignKey: 'sender',
       sourceKey: 'id',
