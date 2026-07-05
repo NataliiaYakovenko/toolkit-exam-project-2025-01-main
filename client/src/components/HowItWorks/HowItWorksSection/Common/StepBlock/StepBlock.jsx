@@ -4,11 +4,11 @@ import CONSTANTS from '../../../../../constants';
 
 const StepBlock = (props) => {
   return (
-    <div className={styles.container}>
+    <article className={styles.container}>
       <div className={styles.wrapper}>
-        <div className={styles.titleContainer}>
+        <header className={styles.titleContainer}>
           <strong className={styles.title}>{props.title}</strong>
-        </div>
+        </header>
         <p className={styles.description}>{props.description}</p>
         <img
           className={styles.arrow}
@@ -16,7 +16,7 @@ const StepBlock = (props) => {
           alt="Arrow"
         />
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -11,15 +11,25 @@ const Search = () => {
   };
 
   return (
-    <section className={styles.searchContainer}>
+    <section
+      className={styles.searchContainer}
+      aria-labelledby="search-heading"
+    >
       <div className={styles.searchWrapper}>
-        <div className={styles.searchBox}>
+        <form className={styles.searchBox} onSubmit={handlerSearch}>
           <img
             className={styles.searchDundruff}
             src={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_SEARCH}
             alt="Search"
           />
+          <label
+            className={styles.visuallyHidden}
+            htmlFor="premium-domain-search"
+          >
+            Search premium domain names
+          </label>
           <input
+            id="premium-domain-search"
             className={styles.searchInput}
             type="text"
             name="searchForm"
@@ -27,14 +37,14 @@ const Search = () => {
           />
           <div className={styles.toolTip}>{searchToolTip.toolTip}</div>
 
-          <button onClick={handlerSearch} className={styles.btnSearch}>
+          <button type="submit" className={styles.btnSearch}>
             <img
               className={styles.btnSearchDundruff}
               src={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_SEARCH_WHITE}
               alt="Search"
             />
           </button>
-        </div>
+        </form>
         <ul className={styles.searchList}>
           <SearchElement
             link="https://www.atom.com/premium-domains-for-sale/q/technology"

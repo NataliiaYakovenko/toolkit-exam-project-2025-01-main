@@ -5,32 +5,34 @@ import StepBlock from '../Common/StepBlock/StepBlock';
 
 const NamingContests = () => {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} aria-labelledby="naming-contests-title">
       <div className={styles.container}>
-        <div className={styles.topPart}>
+        <header className={styles.topPart}>
           <img
             className={styles.image}
             src={CONSTANTS.HOW_IT_WORKS_SECTION_ICON_CUP}
             alt="Cup"
           />
-          <h3 className={styles.title}>How Do Naming Contests Work?</h3>
-        </div>
+          <h3 id="naming-contests-title" className={styles.title}>
+            How Do Naming Contests Work?
+          </h3>
+        </header>
         <div className={styles.lowerPart}>
           <StepBlock
             title="Step 1"
             description="Fill out your Naming Brief and begin receiving name ideas in minutes"
           />
           <StepBlock
-          title='Step 2'
-          description='Rate the submissions and provide feedback to creatives. Creatives submit even more names based on your feedback.'
+            title="Step 2"
+            description="Rate the submissions and provide feedback to creatives. Creatives submit even more names based on your feedback."
           />
-           <StepBlock
-          title='Step 3'
-          description='Our team helps you test your favorite names with your target audience. We also assist with Trademark screening.'
+          <StepBlock
+            title="Step 3"
+            description="Our team helps you test your favorite names with your target audience. We also assist with Trademark screening."
           />
-           <StepBlock
-          title='Step 4'
-          description='Pick a Winner. The winner gets paid for their submission.'
+          <StepBlock
+            title="Step 4"
+            description="Pick a Winner. The winner gets paid for their submission."
           />
         </div>
       </div>

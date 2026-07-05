@@ -20,10 +20,15 @@ const Questions = () => {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} aria-labelledby="faq-title">
       <div className={styles.container}>
-        <h3 className={styles.title}>Frequently Asked Questions</h3>
-        <div className={styles.wrapperTypesQuestions}>
+        <h3 id="faq-title" className={styles.title}>
+          Frequently Asked Questions
+        </h3>
+        <nav
+          className={styles.wrapperTypesQuestions}
+          aria-label="FAQ categories"
+        >
           {[
             'Launching A Contest',
             'Buying From Marketplace',
@@ -40,7 +45,7 @@ const Questions = () => {
               {item}
             </button>
           ))}
-        </div>
+        </nav>
 
         <TypesQuestions />
       </div>

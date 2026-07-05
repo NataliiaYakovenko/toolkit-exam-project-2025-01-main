@@ -5,16 +5,18 @@ import CONSTANTS from '../../../../constants';
 
 const WaysUseAtom = () => {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} aria-labelledby="ways-use-atom-title">
       <div className={styles.container}>
         <div className={styles.wrapper}>
-          <div className={styles.topPartContaner}>
+          <header className={styles.topPartContaner}>
             <span className={styles.miniTitle}>Our Services</span>
-            <h2 className={styles.mainTitle}>3 Ways To Use Atom</h2>
+            <h2 id="ways-use-atom-title" className={styles.mainTitle}>
+              3 Ways To Use Atom
+            </h2>
             <p className={styles.description}>
               Atom offers 3 ways to get you a perfect name for your business.
             </p>
-          </div>
+          </header>
 
           <ul className={styles.lowerPartContainer}>
             <InformBlock

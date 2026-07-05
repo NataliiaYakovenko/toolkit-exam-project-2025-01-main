@@ -9,13 +9,16 @@ import Search from '../Search/Search';
 const HowItWorksSectionMain = () => {
   return (
     <main className={styles.sectionMainContainer}>
-      <div className={styles.howAtomWorks}>
+      <section
+        className={styles.howAtomWorks}
+        aria-label="How It Works sections"
+      >
         <HowAtomWorks />
         <WaysUseAtom />
         <NamingContests />
         <Questions />
-        <Search/>
-      </div>
+        <Search />
+      </section>
     </main>
   );
 };

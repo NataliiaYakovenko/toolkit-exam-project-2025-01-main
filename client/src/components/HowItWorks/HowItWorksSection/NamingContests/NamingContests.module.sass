@@ -1,33 +1,33 @@
 .section
-  padding: 80px 0
+  padding: clamp(3rem, 6vw, 5rem) 0
   position: relative
   background: linear-gradient(271.19deg, rgb(68 51 241 / .04) 0%, rgb(98 142 255 / .04) 100%), #FFFFFF
   overflow: hidden
 
   .container
-    max-width: 1480px
+    max-width: 92.5rem
     width: 100%
-    padding-right: 12px
-    padding-left: 12px
+    padding-right: 0.75rem
+    padding-left: 0.75rem
     margin-right: auto
     margin-left: auto
     color: #343434
 
     .topPart
-      margin: 0 0 40px 0
+      margin: 0 0 clamp(1.5rem, 3vw, 2.5rem) 0
       text-align: center
       color: #343434
 
       .image
-        margin-bottom: 20px
+        margin-bottom: 1.25rem
         max-width: 100%
         vertical-align: middle
-        width: clamp(50px, 8vw, 70px)
-        
+        width: clamp(3.125rem, 8vw, 4.375rem)
+
       .title
         display: inline-block
         width: 100%
-        margin-bottom: 35px
+        margin-bottom: 2rem
         color: #19184a
         font-weight: 700
         font-family: "Product Sans", sans-serif
@@ -36,18 +36,18 @@
 
     .lowerPart
       display: grid
-      gap: 25px
+      gap: clamp(1rem, 2vw, 1.5rem)
       color: #343434
       font-family: "Product Sans", sans-serif
 
       @media (min-width: 992px)
         grid-template-columns: repeat(4, 1fr)
-        gap: 20px
-   
+        gap: 1.25rem
+
       @media (min-width: 576px) and (max-width: 991px)
         grid-template-columns: repeat(2, 1fr)
-        gap: 20px
+        gap: 1.25rem
 
       @media (max-width: 575px)
         grid-template-columns: 1fr
-        gap: 16px  
+        gap: 1rem

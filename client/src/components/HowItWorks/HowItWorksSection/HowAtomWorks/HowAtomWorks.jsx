@@ -3,20 +3,24 @@ import styles from './HowAtomWorks.module.sass';
 
 const HowAtomWorks = () => {
   return (
-    <section className={styles.section}>
+    <section className={styles.section} aria-labelledby="atom-work-title">
       <div className={styles.container}>
         <div className={styles.wrapperParts}>
-          <div className={styles.leftPart}>
-            <h4 className={styles.miniTitle}>World's #1 Naming Platform</h4>
-            <h1 className={styles.mainTitle}>How Does Atom Work?</h1>
+          <article className={styles.leftPart}>
+            <header className={styles.contentHeader}>
+              <p className={styles.miniTitle}>World's #1 Naming Platform</p>
+              <h2 id="atom-work-title" className={styles.mainTitle}>
+                How Does Atom Work?
+              </h2>
+            </header>
             <p className={styles.description}>
               Atom helps you come up with a great name for your business by
               combining the power of crowdsourcing with sophisticated technology
               and Agency-level validation services.
             </p>
-          </div>
+          </article>
 
-          <div className={styles.rightPart}>
+          <aside className={styles.rightPart}>
             <figure className={styles.videoWrapper}>
               <iframe
                 className={styles.video}
@@ -24,7 +28,7 @@ const HowAtomWorks = () => {
                 title="Business name"
               />
             </figure>
-          </div>
+          </aside>
         </div>
       </div>
     </section>
