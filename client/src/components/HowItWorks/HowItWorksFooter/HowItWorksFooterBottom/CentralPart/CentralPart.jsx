@@ -8,9 +8,9 @@ const CentralPart = () => {
       className={styles.container}
       href="https://www.trustpilot.com/review/atom.com"
     >
-      <div className={styles.excellentWrapper}>
+      <section className={styles.excellentWrapper}>
         <strong className={styles.title}>Excellent</strong>
-        <div className={styles.starsWrapper}>
+        <figure className={styles.starsWrapper}>
           <img
             className={styles.star}
             src={CONSTANTS.HOW_IT_WORKS_FOOTER_STAR}
@@ -36,11 +36,11 @@ const CentralPart = () => {
             src={CONSTANTS.HOW_IT_WORKS_FOOTER_HALFSTAR}
             alt="half-star"
           />
-        </div>
+        </figure>
         <span className={styles.text}>Trustpilot</span>
-      </div>
+      </section>
 
-      <div className={styles.ratingWrapper}>
+      <section className={styles.ratingWrapper}>
         <strong className={styles.rating}>
           4.5/
           <span className={styles.maxReting}>5</span>
@@ -49,7 +49,7 @@ const CentralPart = () => {
           based on
           <span> 751 ratings</span>
         </p>
-      </div>
+      </section>
     </a>
   );
 };

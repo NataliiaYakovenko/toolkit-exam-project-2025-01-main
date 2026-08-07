@@ -4,7 +4,7 @@ import CONSTANTS from '../../../../../constants';
 
 const Social = () => {
   return (
-    <div className={styles.container}>
+    <nav className={styles.container}>
       <a href="https://www.facebook.com/atomdotcom">
         <img src={CONSTANTS.HOW_IT_WORKS_FOOTER_FACEBOOK} alt="Facebook" />
       </a>
@@ -20,7 +20,7 @@ const Social = () => {
       <a href="https://www.youtube.com/@atomdotcom">
         <img src={CONSTANTS.HOW_IT_WORKS_FOOTER_YOUTUBE} alt="YouTube" />
       </a>
-    </div>
+    </nav>
   );
 };
 

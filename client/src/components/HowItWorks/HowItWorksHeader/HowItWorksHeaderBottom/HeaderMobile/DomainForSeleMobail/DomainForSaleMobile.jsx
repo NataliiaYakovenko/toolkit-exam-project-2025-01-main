@@ -49,10 +49,10 @@ const DomainForSaleMobile = () => {
         />
       </div>
 
-      <div className={styles.domainsMobileCenter}>
+      <section className={styles.domainsMobileCenter}>
         <FeatureList title="Top Domain Collections" items={domainItems} />
         <FeatureList title="Domain Services" items={servicesItem}/>
-      </div>
+      </section>
 
       <a
         className={styles.getMobileStarted}

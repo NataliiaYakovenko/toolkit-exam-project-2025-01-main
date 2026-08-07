@@ -5,7 +5,7 @@ import styles from './ContactForm.module.sass';
 
 const ContactForm = () => {
   return (
-    <div className={styles.contactFormContainer}>
+    <section className={styles.contactFormContainer}>
       <UserContactInfo
         link="https://www.atom.com/login"
         image={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_USER_FORM}
@@ -18,7 +18,7 @@ const ContactForm = () => {
         alt="User"
         title="Signup"
       />
-    </div>
+    </section>
   );
 };
 

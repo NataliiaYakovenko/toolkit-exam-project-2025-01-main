@@ -52,7 +52,7 @@ const HowItWorksFooterTop = () => {
 
   return (
     <footer className={styles.container}>
-      <div className={styles.wrapper}>
+      <nav className={styles.wrapper}>
         <div className={styles.column}>
           <section className={styles.section}>
             <button
@@ -377,7 +377,7 @@ const HowItWorksFooterTop = () => {
             </div>
           </section>
         </div>
-      </div>
+      </nav>
     </footer>
   );
 };

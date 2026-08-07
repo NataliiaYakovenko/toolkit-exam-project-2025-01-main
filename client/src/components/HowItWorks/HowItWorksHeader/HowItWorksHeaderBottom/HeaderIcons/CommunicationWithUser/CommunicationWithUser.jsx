@@ -7,7 +7,7 @@ import styles from './CommunicationWithUser.module.sass';
 
 const CommunicationWithUser = () => {
   return (
-    <div className={styles.communictionContainer}>
+    <section className={styles.communictionContainer}>
       <UserContactInfo
         link="https://www.atom.com/tel:1-877-355-3585"
         image={CONSTANTS.HOW_IT_WORKS_HEADER_ICON_PHONE}
@@ -32,7 +32,7 @@ const CommunicationWithUser = () => {
         alt="Help desk"
         title="Help Desk"
       />
-    </div>
+    </section>
   );
 };
 
