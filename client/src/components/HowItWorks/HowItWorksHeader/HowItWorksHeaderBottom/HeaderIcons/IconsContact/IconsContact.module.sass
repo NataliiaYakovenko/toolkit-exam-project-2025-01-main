@@ -1,9 +1,9 @@
 .overlay
   position: fixed
-  top: 14.375rem 
+  top: 230px 
   left: 0
   width: 100%
-  height: calc(100% - 9.125rem)
+  height: calc(100% - 146px)
   background-color: rgb(0 0 0 / .1)
   z-index: 998 
   animation: fadeIn 0.3s ease   
@@ -13,11 +13,11 @@
   display: flex
   align-items: center
   justify-content: space-between
-  gap: 1.5625rem
+  gap: 25px
   
   .search
-    font-size: clamp(0.875rem, 2vw, 1rem)
-    font-weight: 400
+    font-size: clamp(14px, 2vw, 16px)
+    font-weight: 400px
     display: block
     line-height: 1.5
     unicode-bidi: isolate
@@ -27,15 +27,16 @@
     transition: all ease .3s
     margin: 0
     flex-shrink: 0
-    width: 1.875rem
-    height: 1.875rem
+    width: 30px
+    height: 30px
     background-repeat: no-repeat
     background-position: center center
-    background-size: 1.4375rem auto
+    background-size: 23px auto
     color: #343434
     display: flex
     align-items: center
     justify-content: center
+    // @media( max-width: 770px )
     @media(max-width: 991px)   
       display: none
 
@@ -52,16 +53,16 @@
     background: transparent
     border-top: 1px solid #edeff3
     transition: all ease .3s
-    top: 9.125rem 
+    top: 146px 
     width: 100%
-    padding: 1.25rem 0
-    box-shadow: 0 0.3125rem 1.25rem rgba(0, 0, 0, 0.15)
+    padding: 20px 0 
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15)
     animation: slideDown 0.3s ease
 
     .searchFormOpen
-      max-width: 90rem
+      max-width: 1440px
       margin: 0 auto
-      padding: 0 0.9375rem
+      pading: 0 15px
       position: relative
       display: flex
       align-items: center
@@ -73,26 +74,26 @@
         display: block
         width: 100%
         text-align: left  
-        height: 2.5rem
-        line-height: 1.5
+        height: 40px
+        line-height: 60px
         color: #343434
-        font-size: clamp(0.875rem, 2.5vw, 1.125rem)
+        font-size: clamp(14px, 2.5vw, 18px)
         box-shadow: none
 
       .btnSearch
         position: absolute
-        right: 0.3125rem
-        top: -0.25rem
+        right: 5px
+        top: -4px
         background: #ff6955
-        font-size: clamp(0.875rem, 2vw, 1rem)
-        width: 4.25rem
-        height: 3.375rem
+        font-size: clamp(14px, 2vw, 16px)
+        width: 68px
+        height: 54px
         padding: 0
         cursor: pointer
         border: none
         border-radius: 40%
         transition: all ease .6s
-        box-shadow: 0.1875rem 0.1875rem 0.625rem 0 rgb(255 104 85 / .3)
+        box-shadow: 3px 3px 10px 0 rgb(255 104 85 / .3)
         background-repeat: no-repeat
         background-position: center
   
@@ -105,24 +106,24 @@
       cursor: pointer
       background-repeat: no-repeat
       background-position: center center
-      width: 1.25rem
-      height: 1.25rem
+      width: 20px
+      height: 20px
       flex-shrink: 0
       margin: 0
 
 
   .communicationWithUserContainer
-    margin-top: -0.25rem  
+    margin-top: -4px   
 
     .communicationWithUserIcon
       cursor: pointer
       background-repeat: no-repeat
       background-position: center center
-      width: 1.25rem
-      height: 1.25rem
+      width: 20px
+      height: 20px
       flex-shrink: 0
       margin: 0
 
   .likesContainer
-    margin-top: -0.25rem  
+    margin-top: -4px   
     .likesIcon   
