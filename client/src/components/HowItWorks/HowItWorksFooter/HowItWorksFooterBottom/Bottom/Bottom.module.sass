@@ -7,26 +7,28 @@
   color: #19184a
   line-height: 1.5
   font-weight: 400
-  margin-left: 50px
-  margin-right: 50px
+  margin-left: 3.125rem
+  margin-right: 3.125rem
+
+
 
   .wrapper
     border-top: 1px solid #ddd
-    max-width: 1480px
+    max-width: 92.5rem
     width: 100%
     display: flex
     flex-wrap: wrap
     align-items: center
     justify-content: space-between
-    padding: 55px 0
+    padding: 3.4375rem 0
     margin-right: auto
     margin-left: auto
 
     @media (max-width: 990px)
       flex-direction: column
       align-items: center
-      padding: 40px 0
-      gap: 30px
+      padding: clamp(2.5rem, 4vw, 3.4375rem) 0
+      gap: 1.875rem
       
       
       > *:nth-child(1)  
