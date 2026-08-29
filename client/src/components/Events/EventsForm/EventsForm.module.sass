@@ -1,54 +1,65 @@
+
 .container
+  box-sizing: border-box
   display: flex
   gap: 10%
   width: 1400px
-  background-color: transparent
+  max-width: 1160px  
+  background-color: #28d2d0
   border-radius: 10px
   box-shadow: 0px 0px 30px rgb(138, 151, 148)
   padding: 20px
-  margin: 15px
-  background-color: #28d2d0
+  margin: 15px auto
   @media(max-width: 1450px)
     width: 1000px
   @media(max-width: 1030px)
     width: 750px
     flex-direction: column
     align-items: center
-  @media(max-width: 792px)  
+  @media(max-width: 792px)
     width: 500px
   @media(max-width: 555px)
     width: 100%
-  @media(max-width: 430px)
-    width: 100%        
+
+  .leftPart
+    @media(max-width: 1030px)
+      width: 100%  
 
   .wrapper
+    box-sizing: border-box
     display: flex
     flex-direction: column
     align-items: flex-start
     justify-content: space-between
     gap: 40px
+    width: 100%
     margin-top: 25px
     margin-left: 20px
     @media(max-width: 1030px)
+      width: 94%
       margin-bottom: 20px
-    @media(max-width: 792px)   
+      margin-left: 20px
+    @media(max-width: 792px)
+      width: 100%
       align-items: center
-    @media(max-width: 555px) 
       margin-left: 0
-      
+    @media(max-width: 555px)
+      margin-left: 0
+
     .box
+      box-sizing: border-box
       display: flex
       flex-direction: column
       gap: 5px
-
-      .title
-        color: white
-        font-size: 20px 
-        font-weight: bolder 
+      width: 100%
+      max-width: 560px
+      @media(max-width: 1030px)
+        max-width: none
 
       .eventInput
-        width: 500px
-        height: 50px 
+        box-sizing: border-box
+        width: 100%
+        height: 50px
         border: 2px solid #dfe6e9
         border-radius: 8px
         font-size: 20px
@@ -56,24 +67,14 @@
         text-align: left
         padding: 5px
         cursor: pointer
-        @media(max-width: 1450px)
-          width: 400px
-        @media(max-width: 1030px)
-          width: 500px
-        @media(max-width: 792px) 
-          width: 400px 
-        @media (max-width: 555px)
-          width: 346px
-        @media (max-width: 430px)
-          width: 296px  
-      
-        &:focus 
+
+        &:focus
           outline: none
           border-color: #3498db
           box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2)
-        
-        &:hover 
-          border-color: #4e618d     
+
+        &:hover
+          border-color: #4e618d
       
       .error
         font-size: 15px
@@ -88,26 +89,20 @@
         border-color: red
 
     button
-      width: 500px
-      height: 70px 
+      box-sizing: border-box
+      width: 100%
+      max-width: 560px
+      height: 70px
       border: 2px solid #4e618d
       border-radius: 8px
       font-size: 30px
       color: white
-      background-color:#4e618d
+      background-color: #4e618d
       text-align: center
       padding: 5px
-      @media(max-width: 1450px)
-        width: 400px
       @media(max-width: 1030px)
-        width: 500px
-      @media(max-width: 792px) 
-          width: 400px
-      @media (max-width: 555px)
-        width: 346px
-      @media (max-width: 430px) 
-        width: 296px
+        max-width: none
 
-      &:hover 
+      &:hover
         background-color: #9ca8b7
         border-color: #9ca8b7
