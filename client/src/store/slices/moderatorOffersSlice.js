@@ -25,8 +25,15 @@ export const getModeratorOffers = decorateAsyncThunk({
 
 export const moderateOffer = decorateAsyncThunk({
   key: `${MODERATOR_OFFERS_SLICE}/moderateOffer`,
-  thunk: async ({ offerId, status }) => {
+  thunk: async ({ offerId, status }, { dispatch, getState }) => {
     await restController.moderateOffer(offerId, status);
+
+    const { page, offers } = getState().moderatorOffers;
+    const isLastOfferOnPage = offers.length === 1;
+    const nextPage = isLastOfferOnPage && page > 1 ? page - 1 : page;
+
+    await dispatch(getModeratorOffers({ page: nextPage }));
+
     return offerId;
   },
 });
