@@ -171,26 +171,21 @@ const extraReducers = (builder) => {
   });
 
   builder.addCase(addEvent.pending, (state) => {
-    state.isFeatching = true;
     state.error = null;
   });
   builder.addCase(addEvent.fulfilled, (state, { payload }) => {
-    state.isFeatching = false;
     state.events.push(payload);
     state.events.sort((a, b) => a.eventDateTime - b.eventDateTime);
     saveEventsToLocalStorage(state.events);
   });
   builder.addCase(addEvent.rejected, (state, { error }) => {
-    state.isFeatching = false;
     state.error = error.message;
   });
 
   builder.addCase(removeEvent.pending, (state) => {
-    state.isFeatching = true;
     state.error = null;
   });
   builder.addCase(removeEvent.fulfilled, (state, { payload }) => {
-    state.isFeatching = false;
     const eventIndex = state.events.findIndex(
       (event) => event.id === payload.eventId
     );
@@ -202,7 +197,6 @@ const extraReducers = (builder) => {
     }
   });
   builder.addCase(removeEvent.rejected, (state, { error }) => {
-    state.isFeatching = false;
     state.error = error.message;
   });
 };
