@@ -21,9 +21,7 @@ const ButtonGroup = () => {
               onSelect={() => {
                 setSelectedId(answer.id);
               }}
-              mark={answer.mark}
-              strong={answer.strong}
-              text={answer.text}
+              answer={answer}
             />
           );
         })}
