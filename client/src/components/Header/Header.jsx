@@ -7,7 +7,14 @@ import { clearUserStore } from '../../store/slices/userSlice';
 import { getUser } from '../../store/slices/userSlice';
 import withRouter from '../../hocs/withRouter';
 
-const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
+const Header = ({
+  data,
+  isFetching,
+  navigate,
+  getUser,
+  clearUserStore,
+  notifications,
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -97,6 +104,9 @@ const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
                     onClick={closeMobileMenu}
                   >
                     <span>My Events</span>
+                    {notifications > 0 && (
+                      <span className={styles.badge}>{notifications}</span>
+                    )}
                   </Link>
                 </li>
               )}
@@ -117,7 +127,6 @@ const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
                     logOut();
                     closeMobileMenu();
                   }}
-                
                   className={styles.logoutBtn}
                 >
                   Logout
@@ -155,7 +164,7 @@ const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
         </Link>
       </>
     );
-  }, [data, closeMobileMenu, logOut]);
+  }, [data, closeMobileMenu, logOut, notifications]);
 
   if (isFetching) {
     return null;
@@ -376,7 +385,10 @@ const Header = ({ data, isFetching, navigate, getUser, clearUserStore }) => {
   );
 };
 
-const mapStateToProps = (state) => state.userStore;
+const mapStateToProps = (state) => ({
+  ...state.userStore,
+  notifications: state.event.notifications,
+});
 const mapDispatchToProps = (dispatch) => ({
   getUser: () => dispatch(getUser()),
   clearUserStore: () => dispatch(clearUserStore()),

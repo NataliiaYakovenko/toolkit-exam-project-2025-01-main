@@ -42,6 +42,7 @@ export const loadEvents = createAsyncThunk(
 
       if (
         !updatedEvent.isNotified &&
+        updatedEvent.isActive &&
         updatedEvent.timeLeft <= updatedEvent.notificationOffset
       ) {
         updatedEvent.isNotified = true;
@@ -109,6 +110,7 @@ const reducers = {
         if (event.timeLeft <= 0) {
           event.isActive = false;
           event.timeLeft = 0;
+          event.isNotified = true;
         }
       }
     });
@@ -124,8 +126,12 @@ const reducers = {
   clearNotifications: (state) => {
     state.notifications = 0;
     state.events.forEach((event) => {
-      if (event.isNotified) {
+      if (event.isNotified && event.isActive) {
         event.isNotified = false;
+      }
+
+      if (!event.isActive) {
+        event.isNotified = true;
       }
     });
     saveEventsToLocalStorage(state.events);
