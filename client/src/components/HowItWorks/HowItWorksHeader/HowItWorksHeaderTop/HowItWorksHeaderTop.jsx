@@ -11,7 +11,7 @@ const HowItWorksHeaderTop = () => {
           backgroundImage: `url(${CONSTANTS.HOW_IT_WORKS_HEADER_BACKGROUND})`,
         }}
       >
-        <div className={styles.bunner}>
+        <article className={styles.bunner}>
           <div className={styles.leftBunner}></div>
 
           <div className={styles.middleBunner}>
@@ -55,7 +55,7 @@ const HowItWorksHeaderTop = () => {
               Shop Now
             </a>
           </aside>
-        </div>
+        </article>
       </div>
     </section>
   );

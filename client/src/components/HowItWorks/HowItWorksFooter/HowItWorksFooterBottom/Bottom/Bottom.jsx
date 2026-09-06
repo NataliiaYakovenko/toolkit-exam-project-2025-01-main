@@ -6,13 +6,13 @@ import Social from '../Social/Social';
 
 const Bottom = () => {
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.wrapper}>
         <LeftPart />
-        <CentralPart/>
-        <Social/>
+        <CentralPart />
+        <Social />
       </div>
-    </div>
+    </section>
   );
 };
 

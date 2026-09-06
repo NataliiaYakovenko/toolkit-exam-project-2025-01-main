@@ -51,7 +51,7 @@ const HowItWorksFooterTop = () => {
   };
 
   return (
-    <footer className={styles.container}>
+    <section className={styles.container}>
       <nav className={styles.wrapper}>
         <div className={styles.column}>
           <section className={styles.section}>
@@ -378,7 +378,7 @@ const HowItWorksFooterTop = () => {
           </section>
         </div>
       </nav>
-    </footer>
+    </section>
   );
 };
 

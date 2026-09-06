@@ -3,12 +3,12 @@ import HowItWorksFooterTop from '../HowItWorksFooterTop/HowItWorksFooterTop';
 import HowItWorksFooterBottom from '../HowItWorksFooterBottom/Bottom/Bottom';
 
 const HowItWorksFooterMain = () => {
-    return (
-        <div>
-          <HowItWorksFooterTop/>
-          <HowItWorksFooterBottom/>
-        </div>
-    );
-}
+  return (
+    <footer>
+      <HowItWorksFooterTop />
+      <HowItWorksFooterBottom />
+    </footer>
+  );
+};
 
 export default HowItWorksFooterMain;
